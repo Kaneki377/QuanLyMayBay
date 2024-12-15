@@ -12,7 +12,6 @@ struct Plane{
 
 	//
 	int flyTimes;
-	bool isAvail;
 };
 typedef Plane plane;
 
@@ -23,15 +22,15 @@ struct PlaneList {
 typedef struct PlaneList planeList;
 
 //Fucntion in Plane.cpp
-void initListPlane(PlaneList& pl);
-int findIndexPlane(PlaneList pl, const char* id);
-bool planeDataIsEmpty(Plane* p);
-bool removePlaneIsSucceed(PlaneList& pl, char idToRemove[]);
-void showPlane(Plane* p, int position);
-void showListPlaneOnePage(PlaneList pl, int index);
-void changePlaneMenuManagerPage(PlaneList pl);
-void inputPlane(PlaneList& pl, bool confirm);
-void menuManagerPlane(PlaneList& pl);
+void initListPlane(planeList& pl);
+int findIndexPlane(planeList pl, const char* id);
+bool planeDataIsEmpty(plane* p);
+bool removePlaneIsSucceed(planeList& pl, char idToRemove[]);
+void showPlane(plane* p, int position);
+void showListPlaneOnePage(planeList pl, int index);
+void changePlaneMenuManagerPage(planeList pl);
+void inputPlane(planeList& pl, bool confirm);
+void menuManagerPlane(planeList& pl);
 
 
 
