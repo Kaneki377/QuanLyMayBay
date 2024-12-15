@@ -80,3 +80,11 @@ const int MaxItem = 9;
 // Toa do phan thong bao
 #define X_Notification 115
 #define Y_Notification 26
+
+// Toa do de tao ra bang them thong tin
+#define X_Add 115
+#define Y_Add 4
+
+// toa do cho vi tri xac nhan xoa
+#define X_RemoveConfirm 80
+#define Y_RemoveConfirm 27

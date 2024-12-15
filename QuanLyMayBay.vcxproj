@@ -127,11 +127,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Constraint.h" />
+    <ClInclude Include="GlobalVariable.h" />
+    <ClInclude Include="MyLib.h" />
     <ClInclude Include="Plane.h" />
+    <ClInclude Include="Process.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Constraint.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MyLib.cpp" />
     <ClCompile Include="Plane.cpp" />
-    <ClCompile Include="MainSource.cpp" />
+    <ClCompile Include="Process.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
