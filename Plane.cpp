@@ -92,13 +92,13 @@ void showListPlaneOnePage(planeList pl, int index)
 	cout << "Page: " << CurAirplanePage << "/" << TotalAirplanePage;
 }
 
-void changePlaneMenuManagerPage(planeList lp)
+void changePlaneMenuManagerPage(planeList pl)
 {
 	gotoxy(X_TitlePage, Y_TitlePage);
 	cout << "Plane Management";
 
 	Display(ContentAirplane, sizeof(ContentAirplane) / sizeof(string));
-	showListPlaneOnePage(lp, (CurAirplanePage - 1) * NumberPerPage);
+	showListPlaneOnePage(pl, (CurAirplanePage - 1) * NumberPerPage);
 }
 
 /*Input plane detail - requirement input*/
@@ -255,7 +255,6 @@ void inputPlane(planeList& pl, bool EditedOrNot,bool DeleteOrNot)
 				pl.PList[target]->cols = nCol;
 				gotoxy(X_Notification, Y_Notification + 1);
 				cout << " Edit Success! ";
-				RemoveForm();
 			}
 			//Add new plane
 			else {
@@ -269,7 +268,6 @@ void inputPlane(planeList& pl, bool EditedOrNot,bool DeleteOrNot)
 
 				gotoxy(X_Notification, Y_Notification + 1);
 				cout << " Add Success! ";
-				RemoveForm();
 			}
 			WritePlaneToFile(pl);
 			ID = "";
@@ -277,7 +275,7 @@ void inputPlane(planeList& pl, bool EditedOrNot,bool DeleteOrNot)
 			nRow = 0;
 			nCol = 0;
 			index = 0;
-			
+			RemoveForm();
 		}
 		break;
 		}//switch

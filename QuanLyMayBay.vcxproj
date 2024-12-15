@@ -132,14 +132,17 @@
     <ClInclude Include="MyLib.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Process.h" />
+    <ClInclude Include="Ticket.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Constraint.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyLib.cpp" />
+    <ClCompile Include="Passenger.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Process.cpp" />
+    <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
