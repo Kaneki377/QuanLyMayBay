@@ -139,6 +139,7 @@
     <ClCompile Include="Constraint.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyLib.cpp" />
+    <ClCompile Include="Passenger.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Process.cpp" />
     <ClCompile Include="Ticket.cpp" />
