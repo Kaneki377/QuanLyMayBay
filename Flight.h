@@ -3,7 +3,6 @@
 #include "Plane.h"
 #include "Ticket.h"
 #include "GlobalVariable.h"
-#include "Process.h"
 #include "DateTime.h"
 
 //--- Cau truc thong tin 1 chuyen bay

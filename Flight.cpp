@@ -6,6 +6,7 @@
 #include "DateTime.h"
 #include "Flight.h"
 #include "Constraint.h"
+#include "ProcessFile.h"
 
 
 /*Vi tri cua danh sach chuyen bay*/

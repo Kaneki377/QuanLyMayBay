@@ -133,18 +133,19 @@
     <ClInclude Include="GlobalVariable.h" />
     <ClInclude Include="MyLib.h" />
     <ClInclude Include="Plane.h" />
-    <ClInclude Include="Process.h" />
+    <ClInclude Include="ProcessFile.h" />
     <ClInclude Include="Ticket.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Constraint.cpp" />
     <ClCompile Include="DateTime.cpp" />
+    <ClCompile Include="Flight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyLib.cpp" />
     <ClCompile Include="Passenger.cpp" />
     <ClCompile Include="Plane.cpp" />
-    <ClCompile Include="Process.cpp" />
+    <ClCompile Include="ProcessFile.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>

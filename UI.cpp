@@ -8,7 +8,7 @@
 #include "MyLib.h"
 #include "GlobalVariable.h"
 #include "Plane.h"
-#include "Process.h"
+#include "ProcessFile.h"
 
 using namespace std;
 

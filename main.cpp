@@ -2,7 +2,8 @@
 #include "UI.h"
 #include "GlobalVariable.h"
 #include "Plane.h"
-#include "Process.h"
+#include "Flight.h"
+#include "ProcessFile.h"
 #include "MyLib.h"
 int main() {
 	system("color 0E");
