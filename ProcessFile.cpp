@@ -105,9 +105,48 @@ void readFlightFromFile(flightList& fl, planeList& pl)
 				}
 			}
 
-			addEndingList(fl, f);
+			//addEndingList(fl, f);
+			insertFlightAfter(fl, f);
 		}
 		fl.numsOfFlight++;
 	}
 	fileIn.close();
+}
+
+void saveTicketListOfOneFlight(flight& f)
+{
+}
+
+void saveFlight(flight &f, ofstream &fileOut)
+{
+	fileOut << f.idFlight << endl;
+	fileOut << f.airportTo << endl;
+	fileOut << f.idPlane << endl;
+	fileOut << f.departureTime.hour << endl;
+	fileOut << f.departureTime.minutes << endl;
+	fileOut << f.departureTime.day << endl;
+	fileOut << f.departureTime.month << endl;
+	fileOut << f.departureTime.year << endl;
+	fileOut << f.totalTickets << endl;
+	fileOut << f.status << endl;
+	saveTicketListOfOneFlight(f);
+}
+
+void writeFlightToFile(flightList &fl)
+{
+	ofstream fileOut;
+	fileOut.open("FlightList.TXT", ios_base::out);
+
+	if (fileOut.is_open()) {
+		fileOut << fl.numsOfFlight << endl;
+		for (flightNode* search = fl.pHead; search != NULL; search = search->pNext) {
+			saveFlight(search->data, fileOut);
+		}
+	}
+	else {
+		gotoxy(X_Notification, Y_Notification + 1);
+		cout << " Ket noi file de ghi vao that bai!";
+	}
+
+	fileOut.close();
 }

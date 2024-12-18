@@ -53,7 +53,7 @@ int RemoveConfirm()
 	gotoxy(X_RemoveConfirm, Y_RemoveConfirm);
 	cout << " Ban co chac chan muon xoa ??";
 
-	char Option[2][4] = { "Yes" ,"No" };
+	char Option[2][4] = {"Yes" ,"No" };
 	for (int i = 0; i < 2;i++)
 	{
 		gotoxy(X_RemoveConfirm, Y_RemoveConfirm + i * 2 + 2);

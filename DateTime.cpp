@@ -14,7 +14,7 @@ void initDateTime(dateTime &dt) {
 	//Lay ngay gio hien tai theo may tinh
 	time_t nowTime = time(0);
 	//Con tror the hien ngay gio hien tai
-	tm* localTime = localtime(&nowTime);
+	tm *localTime = localtime(&nowTime);
 
 	dt.hour = localTime->tm_hour;
 	dt.minutes = localTime->tm_min;

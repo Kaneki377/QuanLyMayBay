@@ -41,7 +41,7 @@ flightNode* createFlightNode(flight data);
 void addBeginningList(flightList &fl, flight data);
 void addEndingList(flightList &fl, flight data);
 
-void insertFlightAfter();
+void insertFlightAfter(flightList &fl, flight data);
 
 int findIndexFlightById(flightList fl, const char* idFlightToFind);
 int findDestinationByAirPort(flightList fl, const char* airportToFind);

@@ -77,6 +77,32 @@ void addEndingList(flightList &fl, flight data)
 	fl.numsOfFlight++;
 }
 
+//Function them chuyen bay moi vao theo ma thu tu tang dan(ma chuyen bay)
+void insertFlightAfter(flightList &fl, flight data)
+{
+	flightNode* newNode = createFlightNode(data);
+	//Neu danh sach rong hoac ma chuyen bay moi nho hon ma chuyen bay node dau tien
+	if (fl.pHead == NULL || _stricmp(data.idFlight, fl.pHead->data.idFlight) < 0) {
+		newNode->pNext = fl.pHead;
+		fl.pHead = newNode;
+		if (fl.pTail == NULL) {
+			fl.pTail = newNode;
+		}
+	}
+	else {
+		flightNode* tempNode = fl.pHead;
+		while (tempNode->pNext != NULL && _stricmp(data.idFlight, tempNode->pNext->data.idFlight) > 0) {
+			tempNode = tempNode->pNext;
+		}
+		newNode->pNext = tempNode->pNext;
+		tempNode->pNext = newNode;
+		if (newNode->pNext == NULL) {
+			fl.pTail = newNode;
+		}
+	}
+	fl.numsOfFlight++;
+}
+
 //Linear search
 int findIndexFlightById(flightList fl, const char *idFlightToFind)
 {
@@ -121,8 +147,10 @@ FlightNode *findFlightById(flightList fl, const char *idFlightToFind)
 
 void inputDateTimeInfor(dateTime &dt, int ordinal)
 {
+	//Vi tri khoi dau cho viec nhap
 	int dateTimeOrdinal = 0;
 	bool saveOrCancel = false;
+	//Form hien thi ngay - gio
 	gotoxy(X_Add + 12 + 2, ordinal * 3 + Y_Add);
 	cout << ":";
 	gotoxy(X_Add + 12 + 8, ordinal * 3 + Y_Add);
@@ -429,11 +457,11 @@ void inputFlightInFor(flightList &fl, bool editedOrNot, bool deleteOrNot)
 
 					RemoveFormComplete();
 					//Xoa theo ma chuyen bay duoc nhap
-					if (!removeFlightById(fl, idFlight.c_str())) {
+					if ( !removeFlightById(fl, idFlight.c_str() )) {
 						gotoxy(X_Notification, Y_Notification);
 ;						cout << " Thong Bao";
 						gotoxy(X_Notification, Y_Notification + 1);
-						cout << " Xoa f khong thanh cong";
+						cout << " Xoa khong thanh cong";
 					}
 					else {
 						gotoxy(X_Notification, Y_Notification);
@@ -602,7 +630,8 @@ void inputFlightInFor(flightList &fl, bool editedOrNot, bool deleteOrNot)
 				}
 				else { //Them moi
 					addingFlight.totalTicketsSold = 0;
-					addEndingList(fl, addingFlight);
+					//addEndingList(fl, addingFlight);
+					insertFlightAfter(fl, addingFlight);
 				}
 
 				idFlight = "";
@@ -632,6 +661,7 @@ void menuManageFlightList(flightList &fl)
 	TotalFlightPage = (int)ceil((double)fl.numsOfFlight / NumberPerPage);
 
 	Display(ContentFlight, sizeof(ContentFlight) / sizeof(string));
+
 	showFlightListPerPage(fl, 0);
 
 	int signal;
