@@ -59,6 +59,7 @@ void WritePlaneToFile(planeList& pl)
 	fileout.close();
 }
 
+//Function doc chuyen bay tu file.
 void readFlightFromFile(flightList& fl, planeList& pl)
 {
 	ifstream fileIn;

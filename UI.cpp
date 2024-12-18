@@ -14,7 +14,7 @@ using namespace std;
 
 //Global var
 planeList PList;
-
+flightList fList;
 
 int xKeyDisplay[7] = { 1,20,45,63,83,95, 107 };// toa do X cac diem nut
 char TenHocVien[100] = { "POST AND TELECOMUNICATIONS INSTITUTE OF TECHNOLOGY IN HO CHI MINH CITY" };
@@ -429,8 +429,8 @@ void CenterMenu()
 	initListPlane(PList);
 	ReadPlaneFile(PList);
 
-	//InitFlightList(FL);
-	//ReadFlightFileFromFile(FL, LA);
+	initFlightList(fList);
+	readFlightFromFile(fList, PList);
 
 
 	//CreateAVLTree(root);
@@ -454,7 +454,7 @@ void CenterMenu()
 			break;
 		case 2:
 			system("color 0E");
-			//MenuManageFlightLisht(FL);
+			menuManageFlightList(fList);
 			break;
 		case 3:
 			system("color 0E");
@@ -481,7 +481,7 @@ void CenterMenu()
 			//WatchFlightsWithDateTimeAndDestination();
 			break;
 		case MaxItem:
-			//WriteFlightToFile(FL);
+			//writeFlightToFile(fList);
 			//SavePassengerToFile(root);
 			system("color 0E");
 			Exit = true;// xac nhan thoat

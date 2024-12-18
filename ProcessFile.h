@@ -12,3 +12,6 @@ void WritePlaneToFile(planeList& pl);
 
 /*Xu li chuyen bay*/
 void readFlightFromFile(flightList& fl, planeList& pl);
+void saveTicketListOfOneFlight(flight& f);
+void saveFlight(flight& f, ofstream& fileout);
+void writeFlightToFile(flightList& fl);

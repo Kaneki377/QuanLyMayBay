@@ -36,31 +36,31 @@ typedef struct FlightList flightList;
 //Function 
 
 void initFlight(flight &f);
-void initFlightList(flightList &fL);
+void initFlightList(flightList &fl);
 flightNode* createFlightNode(flight data);
-void addBeginningList(flightList &fL, flight data);
-void addEndingList(flightList &fL, flight data);
+void addBeginningList(flightList &fl, flight data);
+void addEndingList(flightList &fl, flight data);
 
 void insertFlightAfter();
 
-int findIndexFlightById(flightList fL, const char* idFlight);
-int findDestinationByAirPort(flightList fL, const char* airportTo);
-FlightNode* findFlightById(flightList fL, const char* idFlight);
+int findIndexFlightById(flightList fl, const char* idFlightToFind);
+int findDestinationByAirPort(flightList fl, const char* airportToFind);
+FlightNode* findFlightById(flightList fl, const char* idFlightToFind);
 void inputDateTimeInfor(dateTime &dt, int ordinal);
-bool removeHead(flightList &fL);
-bool removeEnding(flightList &fL);
-bool removeAfterAnother(flightList &fL, flightNode *temporFlight);
-bool removeFlightById(flightList &fL, const char* idFlight);
-bool cleanUpFlightList(flightList &fL);
-void updateFlightStatus(flightList &fL);
+bool removeHead(flightList &fl);
+bool removeEnding(flightList &fl);
+bool removeAfterAnother(flightList &fl, flightNode *tempFlight);
+bool removeFlightById(flightList &fl, const char* idFlightToFind);
+bool cleanUpFlightList(flightList &fl);
+void updateFlightStatus(flightList &fl);
 void showTicketChairBoard(flight f);
 void effectTicketMenu(int index, int PreColor);
 int chooseTicket(flight &f);
 void showFlightInfor(flight f, int position);
-void showFlightList(flightList fL);
-void showFlightListPerPage(flightList fL, int StartIndex);
-void changePageManageFlightList(flightList fL);
+void showFlightListInfor(flightList fl);
+void showFlightListPerPage(flightList fl, int startIndex);
+void changePageManageFlightList(flightList fl);
 bool isFlightDataEmpty(flight f);
-void inputFlightInFor(flightList &fL, bool editedOrNot = false, bool deleteOrNot = false);
-void MenuManageFlightList(flightList &fL);
+void inputFlightInFor(flightList &fl, bool editedOrNot = false, bool deleteOrNot = false);
+void menuManageFlightList(flightList &fl);
 int checkOutTicket(flight f, int x);
