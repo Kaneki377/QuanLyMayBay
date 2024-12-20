@@ -6,25 +6,25 @@
 #include"GlobalVariable.h"
 #include"Flight.h"
 #include"Plane.h"
-int CurPosPassenger = 1;
-int CurPassengerPage = 1;
-int TotalPassengerPage = 0;
+int curPosPassenger = 1;
+int curPassengerPage = 1;
+int totalPassengerPage = 0;
 
 extern FlightList fList;
 extern planeList LA;
 extern string ContentPassenger[5];
 extern string ContentFlight[6];
-int nPassenger;
-unsigned int* ArrPassengerId;
+extern int nPassenger;
+unsigned int* arrPassengerId;
 /*Noi dung cho chuc nang thu 8*/
-string SpecifedFlight[6] = {
+string specifedFlight[6] = {
 		"Ma Chuyen Bay",
 		"So Hieu May Bay",
 		"Tong So Ve",
 		"Gio Khoi Hanh",
 		"Da Ban",
 		"Con Trong" };
-void CreateAVLTree(AVLTree& root)
+void createAVLTree(AVLTree& root)
 {
 	root = NULL;
 	nPassenger = 0;
@@ -49,9 +49,9 @@ int height(AVLTree root)
 	return root->height;
 }
 
-AVLTree CreateTree(Passenger data)
+AVLTree createTree(passenger data)
 {
-	AVLTree newpassenger = new PassengerNode;
+	AVLTree newpassenger = new passengerNode;
 	newpassenger->data = data;
 	newpassenger->pLeft = NULL;
 	newpassenger->pRight = NULL;
@@ -59,7 +59,7 @@ AVLTree CreateTree(Passenger data)
 	return newpassenger;
 }
 /*BE LEFT*/
-AVLTree RightRotate(AVLTree y)
+AVLTree rightRotate(AVLTree y)
 {
 	AVLTree x = y->pLeft;
 	AVLTree T2 = x->pRight;
@@ -75,7 +75,7 @@ AVLTree RightRotate(AVLTree y)
 	return x;
 }
 /*BE RIGHT*/
-AVLTree LeftRotate(AVLTree x)
+AVLTree leftRotate(AVLTree x)
 {
 	AVLTree y = x->pRight;
 	AVLTree T2 = y->pLeft;
@@ -102,20 +102,20 @@ int getBalanceFactor(AVLTree root)
 }
 
 // them theo toan bo thong tin cua hanh khach
-AVLTree AddPassenger(AVLTree& root, Passenger data)
+AVLTree addPassenger(AVLTree& root, passenger data)
 {
 	//them nhu cay nhi phan binh thuong
 	if (root == NULL)
 	{
-		return CreateTree(data);
+		return createTree(data);
 	}
-	if (data.CMND < root->data.CMND)
+	if (data.idCard < root->data.idCard)
 	{
-		root->pLeft = AddPassenger(root->pLeft, data);
+		root->pLeft = addPassenger(root->pLeft, data);
 	}
-	else if (data.CMND > root->data.CMND)
+	else if (data.idCard > root->data.idCard)
 	{
-		root->pRight = AddPassenger(root->pRight, data);
+		root->pRight = addPassenger(root->pRight, data);
 	}
 	else  return root;
 	/*cap nhat lai chieu cao cho cay*/
@@ -123,37 +123,37 @@ AVLTree AddPassenger(AVLTree& root, Passenger data)
 
 
 	/*kiem tra xem co bi mat can bang hay khong*/
-	int BalanceFactor = getBalanceFactor(root);
+	int balanceFactor = getBalanceFactor(root);
 	// height(root->pLeft) - height(root->pRight);
 
 	/*neu no mat can bang thi xay ra 4 truong hop*/
 
 	// Left left case
-	if (BalanceFactor > 1 &&
-		data.CMND < root->pLeft->data.CMND)
+	if (balanceFactor > 1 &&
+		data.idCard < root->pLeft->data.idCard)
 	{
-		return RightRotate(root);
+		return rightRotate(root);
 	}
 	// right right case
-	if (BalanceFactor < -1 &&
-		data.CMND > root->pRight->data.CMND)
+	if (balanceFactor < -1 &&
+		data.idCard > root->pRight->data.idCard)
 	{
-		return LeftRotate(root);
+		return leftRotate(root);
 	}
 	// left right case
-	if (BalanceFactor > 1 &&
-		data.CMND > root->pLeft->data.CMND)
+	if (balanceFactor > 1 &&
+		data.idCard > root->pLeft->data.idCard)
 	{
-		root->pLeft = LeftRotate(root->pLeft);
-		return  RightRotate(root);
+		root->pLeft = leftRotate(root->pLeft);
+		return  rightRotate(root);
 	}
 
 	// right left case
-	if (BalanceFactor < -1 &&
-		data.CMND < root->pRight->data.CMND)
+	if (balanceFactor < -1 &&
+		data.idCard < root->pRight->data.idCard)
 	{
-		root->pRight = RightRotate(root->pRight);
-		return LeftRotate(root);
+		root->pRight = rightRotate(root->pRight);
+		return leftRotate(root);
 	}
 
 	return root;
@@ -172,7 +172,7 @@ AVLTree minValuePassenger(AVLTree root)
 }
 
 // xoa theo CMND cua hanh khach
-AVLTree RemovePassenger(AVLTree& root, Passenger data)
+AVLTree removePassenger(AVLTree& root, passenger data)
 {
 	// B1 tim vi tri ung voi cai node can xoa
 	if (root == NULL)
@@ -180,13 +180,13 @@ AVLTree RemovePassenger(AVLTree& root, Passenger data)
 		return root;
 	}
 
-	if (data.CMND < root->data.CMND)
+	if (data.idCard < root->data.idCard)
 	{
-		root->pLeft = RemovePassenger(root->pLeft, data);
+		root->pLeft = removePassenger(root->pLeft, data);
 	}
-	else if (data.CMND > root->data.CMND)
+	else if (data.idCard > root->data.idCard)
 	{
-		root->pRight = RemovePassenger(root->pRight, data);
+		root->pRight = removePassenger(root->pRight, data);
 	}
 	// neu da tim ra CMND bang dung CMND co trong cay AVL,thi no la node can xoa
 	else
@@ -220,101 +220,101 @@ AVLTree RemovePassenger(AVLTree& root, Passenger data)
 			xoa*/
 			root->data = tempo->data;
 			/*xoa node thay the o vi tri cu di*/
-			root->pRight = RemovePassenger(root->pRight, tempo->data);
+			root->pRight = removePassenger(root->pRight, tempo->data);
 		}
 		// B2: cap nhat do cao cua node
 		root->height = maxi(height(root->pLeft), height(root->pRight)) + 1;
 		// B3 : can bang cay
-		int BalanceFactor = getBalanceFactor(root);
+		int balanceFactor = getBalanceFactor(root);
 
 		// Left left case
-		if (BalanceFactor > 1 &&
-			data.CMND < root->pLeft->data.CMND)
+		if (balanceFactor > 1 &&
+			data.idCard < root->pLeft->data.idCard)
 		{
-			return RightRotate(root);
+			return rightRotate(root);
 		}
 		// right right case
-		if (BalanceFactor < -1 &&
-			data.CMND > root->pRight->data.CMND)
+		if (balanceFactor < -1 &&
+			data.idCard > root->pRight->data.idCard)
 		{
-			return LeftRotate(root);
+			return leftRotate(root);
 		}
 		// left right case
-		if (BalanceFactor > 1 &&
-			data.CMND > root->pLeft->data.CMND)
+		if (balanceFactor > 1 &&
+			data.idCard > root->pLeft->data.idCard)
 		{
-			root->pLeft = LeftRotate(root->pLeft);
-			return RightRotate(root);
+			root->pLeft = leftRotate(root->pLeft);
+			return rightRotate(root);
 		}
 
 		// right left case
-		if (BalanceFactor < -1 &&
-			data.CMND < root->pRight->data.CMND)
+		if (balanceFactor < -1 &&
+			data.idCard < root->pRight->data.idCard)
 		{
-			root->pRight = RightRotate(root->pRight);
-			return LeftRotate(root);
+			root->pRight = rightRotate(root->pRight);
+			return leftRotate(root);
 		}
 	}
 }
 
-bool FindPassengerFollowID(AVLTree root, unsigned int CMNDcantim)
+bool findPassengerFollowID(AVLTree root, unsigned int idCardToFind)
 {
 	if (root != NULL)
 	{
-		if (root->data.CMND == CMNDcantim)
+		if (root->data.idCard == idCardToFind)
 		{
 			return true;
 		}
-		else if (root->data.CMND < CMNDcantim)
+		else if (root->data.idCard < idCardToFind)
 		{
-			FindPassengerFollowID(root->pLeft, CMNDcantim);
+			findPassengerFollowID(root->pLeft, idCardToFind);
 		}
-		else if (root->data.CMND > CMNDcantim)
+		else if (root->data.idCard > idCardToFind)
 		{
-			FindPassengerFollowID(root->pRight, CMNDcantim);
+			findPassengerFollowID(root->pRight, idCardToFind);
 		}
 	}
 	return false;
 }
 
-PassengerNode* FindPassenger(AVLTree root, unsigned int CMNDcantim)
+passengerNode* findPassenger(AVLTree root, unsigned int idCardToFind)
 {
 	if (root == NULL) return NULL;
-	if (root->data.CMND == CMNDcantim)
+	if (root->data.idCard == idCardToFind)
 		return root;
-	if (root->data.CMND > CMNDcantim)
-		FindPassenger(root->pLeft, CMNDcantim);
+	if (root->data.idCard > idCardToFind)
+		findPassenger(root->pLeft, idCardToFind);
 	else
-		FindPassenger(root->pRight, CMNDcantim);
+		findPassenger(root->pRight, idCardToFind);
 }
 
-void ShowPassenger(Passenger P, int position)
+void showPassenger(passenger p, int position)
 {
 	int xKeyDisplay[7] = { 1,20,45,63,80,95, 107 };// toa do X cac diem nut
 	gotoxy(xKeyDisplay[0] + 3, Y_Display + 3 + position * 3);printf("%-5d", position + 1);
-	gotoxy(xKeyDisplay[1] + 3, Y_Display + 3 + position * 3);printf("%-12d", P.CMND);
-	gotoxy(xKeyDisplay[2] + 3, Y_Display + 3 + position * 3);printf("%-20s", P.Ho);
-	gotoxy(xKeyDisplay[3] + 3, Y_Display + 3 + position * 3);printf("%-10s", P.Ten);
+	gotoxy(xKeyDisplay[1] + 3, Y_Display + 3 + position * 3);printf("%-12d", p.idCard);
+	gotoxy(xKeyDisplay[2] + 3, Y_Display + 3 + position * 3);printf("%-20s", p.firstname);
+	gotoxy(xKeyDisplay[3] + 3, Y_Display + 3 + position * 3);printf("%-10s", p.lastName);
 	gotoxy(xKeyDisplay[4] + 5, Y_Display + 3 + position * 3);
-	if (P.GioiTinh == 1)
+	if (p.gender == 1)
 		std::cout << "Nam";
-	if (P.GioiTinh == 0)
+	if (p.gender == 0)
 		std::cout << "Nu";
 }
 
-void ShowListPassengerPerPage(AVLTree root, int BeginIndex)
+void showListPassengerPerPage(AVLTree root, int beginIndex)
 {
 	int i;
 
-	for (i = 0; i + BeginIndex <= nPassenger && i < NumberPerPage;i++)
+	for (i = 0; i + beginIndex <= nPassenger && i < NumberPerPage;i++)
 	{
-		PassengerNode* tempo = FindPassenger(root, ArrPassengerId[i + BeginIndex]);
-		ShowPassenger(tempo->data, i);
+		passengerNode* tempo = findPassenger(root, arrPassengerId[i + beginIndex]);
+		showPassenger(tempo->data, i);
 	}
 
 	RemoveExceedMember(i, 4);
 	gotoxy(X_Page, Y_Page);
-	std::cout << CurPassengerPage << "/" << TotalPassengerPage;
+	std::cout << curPassengerPage << "/" << totalPassengerPage;
 }
 
 void swap(unsigned int& x, unsigned int& y)
@@ -325,7 +325,7 @@ void swap(unsigned int& x, unsigned int& y)
 	y = tempo;
 }
 /*sap xep so CMND trong mang CMND[100]*/
-void QuickSort(int left, int right, unsigned int a[]) {
+void quickSort(int left, int right, unsigned int a[]) {
 	int key = a[(left + right) / 2];
 	int i = left, j = right;
 	do {
@@ -337,27 +337,27 @@ void QuickSort(int left, int right, unsigned int a[]) {
 			i++;	j--;// tiep tuc thuc hien duyet
 		}
 	} while (i <= j);
-	if (left < j) QuickSort(left, j, a);
-	if (right > i) QuickSort(i, right, a);
+	if (left < j) quickSort(left, j, a);
+	if (right > i) quickSort(i, right, a);
 }
-void WatchRoot(AVLTree root)
+void watchRoot(AVLTree root)
 {
 	if (root != NULL)
 	{
-		WatchRoot(root->pLeft);
-		std::cout << root->data.Ten << "- " << root->data.CMND << endl;
-		WatchRoot(root->pRight);
+		watchRoot(root->pLeft);
+		std::cout << root->data.lastName << "- " << root->data.idCard << endl;
+		watchRoot(root->pRight);
 	}
 }
-void InputPassenger(AVLTree& root, bool EditedOrNot, bool DeleteOrNot, int IDPassenger)
+void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, int idPassenger)
 {
 	ShowCur(true);
 	bool SaveOrNot = true;
 	bool MoveOrNot = false;
 	bool IDExisted = false;
 
-	string FirstName;// Ho
-	string LastName;// Ten
+	string first_name;// Ho
+	string last_name;// Ten
 	int gender = 1;// 0 la nu , 1 la nam
 
 	int ordinal = 1;
@@ -372,13 +372,13 @@ void InputPassenger(AVLTree& root, bool EditedOrNot, bool DeleteOrNot, int IDPas
 		{
 		case 1:// NHAP Ho
 		{
-			ConstraintsForLetterAndSpace(FirstName, MoveOrNot, ordinal, SaveOrNot, 12);
+			ConstraintsForLetterAndSpace(first_name, MoveOrNot, ordinal, SaveOrNot, 12);
 			if (SaveOrNot == false)
 			{
 				RemoveFormComplete();
 				return;
 			}
-			if (FirstName == "")
+			if (first_name == "")
 			{
 				gotoxy(X_Notification, Y_Notification);
 				std::cout << " Thong Bao ";
@@ -392,13 +392,13 @@ void InputPassenger(AVLTree& root, bool EditedOrNot, bool DeleteOrNot, int IDPas
 		break;
 		case 2:// Nhap ten
 		{
-			ConstraintForOnlyLetter(LastName, MoveOrNot, ordinal, SaveOrNot, 12);
+			ConstraintForOnlyLetter(last_name, MoveOrNot, ordinal, SaveOrNot, 12);
 			if (SaveOrNot == false)
 			{
 				RemoveFormComplete();
 				return;
 			}
-			if (LastName == "")
+			if (last_name == "")
 			{
 				gotoxy(X_Notification, Y_Notification);std::cout << " Thong Bao ";
 				gotoxy(X_Notification, Y_Notification + 1);std::cout << "Khong bo trong";
@@ -427,15 +427,15 @@ void InputPassenger(AVLTree& root, bool EditedOrNot, bool DeleteOrNot, int IDPas
 		break;
 		case 4:
 		{
-			Passenger P;
-			P.CMND = IDPassenger;
+			passenger p;
+			p.idCard = idPassenger;
 			//strcpy(P.Ho, FirstName.c_str());
 			//strcpy(P.Ten, LastName.c_str());
-			StandardName(P.Ho);
-			StandardName(P.Ten);
-			P.GioiTinh = gender;
+			StandardName(p.firstname);
+			StandardName(p.lastName);
+			p.gender = gender;
 
-			AddPassenger(root, P);
+			addPassenger(root, p);
 
 			gotoxy(X_Notification, Y_Notification);
 			std::cout << " Thong Bao ";
@@ -451,7 +451,7 @@ void InputPassenger(AVLTree& root, bool EditedOrNot, bool DeleteOrNot, int IDPas
 }
 
 
-void WatchPassengerListOfFlight(AVLTree root, Flight F)
+void watchPassengerListOfFlight(AVLTree root, Flight F)
 {
 	ShowCur(false);
 	DisplayForWatchOnly(ContentPassenger, sizeof(ContentPassenger) / sizeof(string), F.totalTicketsSold);
@@ -459,16 +459,16 @@ void WatchPassengerListOfFlight(AVLTree root, Flight F)
 	for (int i = 0; i < F.totalTicketsSold;i++)
 	{
 
-		PassengerNode* tempora = FindPassenger(root, F.TicketList[i].CMND);
+		passengerNode* tempora = findPassenger(root, F.TicketList[i].CMND);
 		if (tempora == NULL) continue;
 		//gotoxy(1,1);.
 		//cout << F.TicketList[i].CMND << endl;
-		ShowPassenger(tempora->data, i);
+		showPassenger(tempora->data, i);
 
 	}
 }
 /*"5.Xem Danh Sach Hanh Khach Chi Tiet"*/
-void SeePassengerList(AVLTree root)
+void seePassengerList(AVLTree root)
 {
 	system("cls");
 
@@ -514,7 +514,7 @@ void SeePassengerList(AVLTree root)
 
 	//int countdown = nPassenger;
 
-	WatchPassengerListOfFlight(root, WatchingFlight->data);
+	watchPassengerListOfFlight(root, WatchingFlight->data);
 
 	/*thao tac de thoat ve man hinh chinh*/
 	int signal;
@@ -531,7 +531,7 @@ void SeePassengerList(AVLTree root)
 	}
 }
 /*"4.Huy Bo Ve May Bay",*/
-void CancelFlightTicket(AVLTree root)
+void cancelFlightTicket(AVLTree root)
 {
 	system("cls");
 
@@ -630,7 +630,7 @@ void CancelFlightTicket(AVLTree root)
 	return;
 }
 /*3.Dang Ky Ve May Bay*/
-void BookTicket(AVLTree& root)
+void bookTicket(AVLTree& root)
 {
 	system("cls");
 
@@ -738,13 +738,13 @@ void BookTicket(AVLTree& root)
 		/*Khong tim ra*/
 		if (target == -1)
 		{
-			PassengerNode* tempora = FindPassenger(root, IDHanhKhach);
+			passengerNode* tempora = findPassenger(root, IDHanhKhach);
 			/*Neu chua ton tai thi nhap moi*/
 			if (tempora == NULL) {
 				CreateForm(ContentPassenger, 1, sizeof(ContentPassenger) / sizeof(string), 27);
 				gotoxy(X_Add + 12, 0 * 3 + Y_Add);
 				std::cout << IDHanhKhach;
-				InputPassenger(root, false, false, IDHanhKhach);
+				inputPassenger(root, false, false, IDHanhKhach);
 				nPassenger++;
 			}
 			Ticket AddingTicket;
@@ -756,7 +756,7 @@ void BookTicket(AVLTree& root)
 	}
 }
 /*"6.Xem So Do Cho Ngoi & Danh Sach Ve Con Trong",*/
-void WatchUnbookedTicket()
+void watchUnbookedTicket()
 {
 	system("cls");
 
@@ -813,7 +813,7 @@ void WatchUnbookedTicket()
 	}
 }
 
-void GotoDetailForWatchFlightHistory()
+void gotoDetailForWatchFlightHistory()
 {
 	string GotoDetail[5] = { "Chu thich" ,
 							"1.Aircraft Number = So Hieu May Bay",
@@ -862,7 +862,7 @@ void GotoDetailForWatchFlightHistory()
 //		}
 //	}
 //}
-void ShowSpecificFlight(Flight F, int position)
+void showSpecificFlight(Flight F, int position)
 {
 	int xKeyDisplay[7] = { 1,20,45,63,80,95, 107 };// toa do X cac diem nut
 	gotoxy(xKeyDisplay[0] + 3, Y_Display + 3 + position * 3);printf("%-20s", F.idFlight);
@@ -873,7 +873,7 @@ void ShowSpecificFlight(Flight F, int position)
 	gotoxy(xKeyDisplay[5] + 5, Y_Display + 3 + position * 3);printf("%-3d", (F.totalTickets - F.totalTicketsSold));
 }
 /*Xem Cac Chuyen Bay Di Toi Cac Dia Danh & Ngay Gio Cu The*/
-void WatchFlightsWithDateTimeAndDestination()
+void watchFlightsWithDateTimeAndDestination()
 {
 	system("cls");
 	int ordinal = 0;
@@ -947,7 +947,7 @@ void WatchFlightsWithDateTimeAndDestination()
 			ShowSpecificFlight(search->data, count++);
 		}*/
 	//}
-	DisplayForWatchOnly(SpecifedFlight, sizeof(SpecifedFlight) / sizeof(string), count);
+	DisplayForWatchOnly(specifedFlight, sizeof(specifedFlight) / sizeof(string), count);
 	int signal;
 	while (true)
 	{

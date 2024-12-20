@@ -8,7 +8,7 @@
 #include "MyLib.h"
 #include "GlobalVariable.h"
 #include "Plane.h"
-#include "Passenger.h">
+#include "Passenger.h"
 #include "ProcessFile.h"
 
 using namespace std;
@@ -16,7 +16,8 @@ using namespace std;
 //Global var
 planeList PList;
 flightList fList;
-
+AVLTree	root;
+extern int nPassenger;
 int xKeyDisplay[7] = { 1,20,45,63,83,98, 115 };// toa do X cac diem nut
 char TenHocVien[100] = { "POST AND TELECOMUNICATIONS INSTITUTE OF TECHNOLOGY IN HO CHI MINH CITY" };
 char Menu[MaxItem][70] = {
@@ -433,10 +434,9 @@ void CenterMenu()
 	initFlightList(fList);
 	readFlightFromFile(fList, PList);
 
-
-	//CreateAVLTree(root);
-	//ReadPassengerFromFile(root);
-
+	createAVLTree(root);
+	/*readPassengerFromFile(root);*/
+	
 
 	system("cls");
 	int pointer;
@@ -479,7 +479,7 @@ void CenterMenu()
 			break;
 		case 8:
 			system("color 0E");
-			WatchFlightsWithDateTimeAndDestination();
+			watchFlightsWithDateTimeAndDestination();
 			break;
 		case MaxItem:
 			//writeFlightToFile(fList);

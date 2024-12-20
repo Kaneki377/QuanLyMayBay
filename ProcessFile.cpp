@@ -6,6 +6,9 @@
 #include "Plane.h"
 #include "Flight.h"
 #include "string"
+#include "Passenger.h"
+int nPassenger;
+extern string ContentPassenger[6];
 
 void ReadOneAirplane(plane& p, ifstream& filein)
 {
@@ -150,3 +153,90 @@ void writeFlightToFile(flightList &fl)
 
 	fileOut.close();
 }
+//khach hang
+//void readPassengerFromFile(AVLTree& root)
+//{
+//	ifstream filein;
+//	filein.open("PassengerList.TXT", ios_base::in);
+//
+//	string temp;
+//
+//	char lot[50];
+//
+//	//DisplayForWatchOnly(ContentPassenger,sizeof(ContentPassenger)/sizeof(string) );
+//
+//	if (filein.is_open())
+//	{
+//
+//		filein >> nPassenger;
+//		for (int i = 0; i < nPassenger;i++)
+//		{
+//			passenger P;
+//			getline(filein, temp);
+//
+//			filein >> P.idCard;
+//
+//			filein >> P.firstname;
+//			filein >> lot;
+//
+//			strcat(P.firstname, " ");
+//			strcat(P.firstname, lot);
+//
+//			filein >> P.lastName;
+//
+//			if (strcmpi(P.lastName, "1") == 0 || strcmpi(P.lastName, "0") == 0) {
+//				P.gender = strcmpi(P.lastName, "1") == 0 ? 1 : 0;
+//				strcpy(P.lastName, lot);
+//			}
+//			else {
+//				filein >> P.gender;
+//			}
+//			
+//			filein >> P.booked;
+//
+//			//cout << P.Ten << "- " << P.GioiTinh << " - "<< P.CMND<<endl;
+//			//system("pause");
+//
+//			root = addPassenger(root, P);
+//
+//
+//			//OnlySeePassengerListPerPage(P,0);
+//
+//		}
+//	}
+//
+//	filein.close();
+//}
+//
+///*save 1 hanh khach*/
+//void saveOnePassenger(AVLTree& root, ofstream& fileout)
+//{
+//	fileout << root->data.idCard << endl;
+//	fileout << root->data.firstname << endl;
+//	fileout << root->data.lastName << endl;
+//	fileout << root->data.gender << endl;
+//	fileout << "0" << endl;//book ve hay chua
+//}
+//
+//void savePassengerList(AVLTree& root, ofstream& fileout)
+//{
+//	if (root != NULL)
+//	{
+//		saveOnePassenger(root, fileout);
+//		savePassengerList(root->pLeft, fileout);
+//		savePassengerList(root->pRight, fileout);
+//	}
+//}
+//
+//void savePassengerToFile(AVLTree& root)
+//{
+//	ofstream fileout;
+//	fileout.open("PassengerList.TXT", ios_base::out);
+//
+//	if (fileout.is_open())
+//	{
+//		fileout << nPassenger << endl;
+//		savePassengerList(root, fileout);
+//	}
+//	fileout.close();
+//}

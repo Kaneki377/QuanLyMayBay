@@ -4,46 +4,46 @@
 #include"ProcessFile.h"
 
 /*Thong tin 1 hanh khach*/
-struct passenger
+struct Passenger
 {
-	unsigned int CMND;// day la key chinh
-	char Ho[20];
-	char Ten[10];
-	int GioiTinh;// 1 la nam , 0 la nu
-	bool Booked;// kiem tra xem da mua ve chua
+	unsigned int idCard;// day la key chinh
+	char firstname[20];
+	char lastName[10];
+	int gender;// 1 la nam , 0 la nu
+	bool booked;// kiem tra xem da mua ve chua
 };
-typedef struct passenger Passenger;
+typedef struct Passenger passenger;
 
-struct passengernode
+struct Passengernode
 {
-	Passenger data;
-	struct passengernode* pLeft;
-	struct passengernode* pRight;
+	passenger data;
+	struct Passengernode* pLeft;
+	struct Passengernode* pRight;
 	int height;// chieu cao cua node
 };
-typedef struct passengernode PassengerNode;
-typedef PassengerNode* AVLTree;
+typedef struct Passengernode passengerNode;
+typedef passengerNode* AVLTree;
 
-void CreateAVLTree(AVLTree& root);
+void createAVLTree(AVLTree& root);
 int maxi(int a, int b);
 int height(AVLTree root);
-AVLTree CreateTree(Passenger data);
-AVLTree RightRotate(AVLTree root);
-AVLTree LeftRotate(AVLTree root);
+AVLTree createTree(passenger data);
+AVLTree rightRotate(AVLTree root);
+AVLTree leftRotate(AVLTree root);
 int getBalanceFactor(AVLTree root);
-AVLTree AddPassenger(AVLTree& root, Passenger data);
+AVLTree addPassenger(AVLTree& root, passenger data);
 AVLTree minValuePassenger(AVLTree root);
-AVLTree RemovePassenger(AVLTree& root, Passenger data);
-bool FindPassengerFollowID(AVLTree root, unsigned int CMNDcantim);
-PassengerNode* FindPassenger(AVLTree root, unsigned int CMNDcantim);
-void ShowPassenger(Passenger P, int position);
-void ShowListPassengerPerPage(AVLTree root, int BeginIndex);
+AVLTree removePassenger(AVLTree& root, passenger data);
+bool findPassengerFollowID(AVLTree root, unsigned int idCardToFind);
+passengerNode* findPassenger(AVLTree root, unsigned int idCardToFind);
+void showPassenger(passenger P, int position);
+void showListPassengerPerPage(AVLTree root, int beginIndex);
 //void ChangePassengerMenuManagePerPage(AVLTree root);
-void InputPassenger(AVLTree& root, bool EditedOrNot, bool DeleteOrNot, int IDPassenger);
-void SeePassengerList(AVLTree root);
-void CancelFlightTicket(AVLTree root);
-void BookTicket(AVLTree& root);
-void WatchUnbookedTicket();
+void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, int idPassenger);
+void seePassengerList(AVLTree root);
+void cancelFlightTicket(AVLTree root);
+void bookTicket(AVLTree& root);
+void watchUnbookedTicket();
 //void WatchHowManyTimeFlightTookOff();
-void WatchFlightsWithDateTimeAndDestination();
-void ShowSpecificFlight(Flight F, int position);
+void watchFlightsWithDateTimeAndDestination();
+void showSpecificFlight(Flight F, int position);
