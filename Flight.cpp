@@ -209,7 +209,7 @@ bool removeEnding(flightList& fl)
 	flightNode* tempNode = NULL;
 	for (flightNode* search = fl.pHead; search != NULL; search = search->pNext) {
 		
-		if (search = fl.pTail) {
+		if (search == fl.pTail) {
 			tempNode->pNext = NULL;
 			fl.pTail = tempNode;
 			delete search;
