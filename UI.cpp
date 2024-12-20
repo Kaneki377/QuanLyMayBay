@@ -8,6 +8,7 @@
 #include "MyLib.h"
 #include "GlobalVariable.h"
 #include "Plane.h"
+#include "Passenger.h">
 #include "ProcessFile.h"
 
 using namespace std;
@@ -478,7 +479,7 @@ void CenterMenu()
 			break;
 		case 8:
 			system("color 0E");
-			//WatchFlightsWithDateTimeAndDestination();
+			WatchFlightsWithDateTimeAndDestination();
 			break;
 		case MaxItem:
 			//writeFlightToFile(fList);

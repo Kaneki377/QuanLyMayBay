@@ -10,7 +10,7 @@ int CurPosPassenger = 1;
 int CurPassengerPage = 1;
 int TotalPassengerPage = 0;
 
-//extern flightList FL;
+extern FlightList fList;
 extern planeList LA;
 extern string ContentPassenger[5];
 extern string ContentFlight[6];
@@ -492,7 +492,7 @@ void SeePassengerList(AVLTree root)
 			return;
 		}
 
-		//WatchingFlight = findFlightById(FL, result.c_str());
+		WatchingFlight = findFlightById(fList, result.c_str());
 		if (WatchingFlight == NULL)
 		{
 			gotoxy(X_Notification, Y_Notification);
@@ -557,7 +557,7 @@ void CancelFlightTicket(AVLTree root)
 			return;
 		}
 
-		//WatchingFlight = findFlightById(FL, result.c_str());
+		WatchingFlight = findFlightById(fList, result.c_str());
 		if (WatchingFlight == NULL)
 		{
 
@@ -656,7 +656,7 @@ void BookTicket(AVLTree& root)
 			return;
 		}
 
-		//WatchingFlight = findFlightById(FL, result.c_str());
+		WatchingFlight = findFlightById(fList, result.c_str());
 		if (WatchingFlight == NULL)
 		{
 			gotoxy(X_Notification, Y_Notification);
@@ -779,7 +779,7 @@ void WatchUnbookedTicket()
 			RemoveFormComplete();
 			return;
 		}
-		//WatchingFlight = findFlightById(FL, IDFlight.c_str());
+		WatchingFlight = findFlightById(fList, IDFlight.c_str());
 		if (WatchingFlight == NULL)
 		{
 			gotoxy(X_Notification, Y_Notification + 1);
@@ -915,7 +915,7 @@ void WatchFlightsWithDateTimeAndDestination()
 				gotoxy(X_Notification, Y_Notification + 1);cout << "Vui Long Khong Bo Trong";
 			}
 			/*Xu li xem co ton tai dia danh nay khong*/
-			//DestinationExisted = findDestinationByAirPort(FL, destination.c_str());
+			DestinationExisted = findDestinationByAirPort(fList, destination.c_str());
 			StandardName((char*)destination.c_str());
 
 			if (DestinationExisted == -1)
