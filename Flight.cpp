@@ -209,7 +209,7 @@ bool removeEnding(flightList& fl)
 	flightNode* tempNode = NULL;
 	for (flightNode* search = fl.pHead; search != NULL; search = search->pNext) {
 		
-		if (search = fl.pTail) {
+		if (search == fl.pTail) {
 			tempNode->pNext = NULL;
 			fl.pTail = tempNode;
 			delete search;
@@ -452,22 +452,29 @@ void inputFlightInFor(flightList &fl, bool editedOrNot, bool deleteOrNot)
 				}
 				//Xu ly trong truong hop xoa
 				if (deleteOrNot) {
-					int checkIdFlight = RemoveConfirm();
+					int confirmResult = RemoveConfirm();
 					gotoxy(50, 50);
 
 					RemoveFormComplete();
-					//Xoa theo ma chuyen bay duoc nhap
-					if ( !removeFlightById(fl, idFlight.c_str() )) {
-						gotoxy(X_Notification, Y_Notification);
-;						cout << " Thong Bao";
-						gotoxy(X_Notification, Y_Notification + 1);
-						cout << " Xoa khong thanh cong";
+					if (confirmResult == 0) { // 0 means Yes
+						if (!removeFlightById(fl, idFlight.c_str())) {
+							gotoxy(X_Notification, Y_Notification);
+							cout << "Thong Bao";
+							gotoxy(X_Notification, Y_Notification + 1);
+							cout << "Xoa khong thanh cong";
+						}
+						else {
+							gotoxy(X_Notification, Y_Notification);
+							cout << "Thong Bao";
+							gotoxy(X_Notification, Y_Notification + 1);
+							cout << "Xoa thanh cong";
+						}
 					}
 					else {
 						gotoxy(X_Notification, Y_Notification);
-						cout << " Thong Bao";
+						cout << "Thong Bao";
 						gotoxy(X_Notification, Y_Notification + 1);
-						cout << " Xoa thanh cong";
+						cout << "Tu Choi Xoa";
 					}
 					system("color 0E");
 					return;
