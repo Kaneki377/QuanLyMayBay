@@ -209,7 +209,7 @@ bool removeEnding(flightList& fl)
 	flightNode* tempNode = NULL;
 	for (flightNode* search = fl.pHead; search != NULL; search = search->pNext) {
 		
-		if (search = fl.pTail) {
+		if (search == fl.pTail) {
 			tempNode->pNext = NULL;
 			fl.pTail = tempNode;
 			delete search;
@@ -322,7 +322,7 @@ int chooseTicket(flight& f)
 void showFlightInfor(flight f, int position)
 {
 	//Toa do tren truc x cua cac nut
-	int xKeyDisplay[7] = { 1, 20, 45, 63, 80, 95, 107 };
+	int xKeyDisplay[7] = { 1, 20, 45, 63, 83, 98, 115 };
 
 	gotoxy(xKeyDisplay[0] + 3, Y_Display + 3 + position * 3);
 	printf("%-15s", f.idFlight);
@@ -381,7 +381,7 @@ void showFlightListInfor(flightList fl)
 void showFlightListPerPage(flightList fl, int startIndex)
 {
 	gotoxy(1, 2);
-	cout << " So luong chuyen bay: " << fl.numsOfFlight;
+	cout << " Numbers of flights: " << fl.numsOfFlight;
 
 	if (fl.pHead == NULL && fl.pTail == NULL) {
 		return;
@@ -410,9 +410,9 @@ void showFlightListPerPage(flightList fl, int startIndex)
 void changePageManageFlightList(flightList fl)
 {
 	gotoxy(1, 2);
-	cout << " So luong chuyen bay : " << fl.numsOfFlight;
+	cout << " Numbers of flights: " << fl.numsOfFlight;
 	gotoxy(X_TitlePage, Y_TitlePage);
-	cout << " Quan ly chuyen bay ";
+	cout << " Flight Management ";
 
 	showFlightListPerPage(fl, (CurFlightPage - 1) * NumberPerPage);
 
@@ -670,7 +670,7 @@ void menuManageFlightList(flightList &fl)
 	system("cls");
 
 	gotoxy(X_TitlePage, Y_TitlePage);
-	cout << "Quan ly chuyen bay ";
+	cout << " Flight Management ";
 
 	CurFlightPage = 1;
 	TotalFlightPage = (int)ceil((double)fl.numsOfFlight / NumberPerPage);
