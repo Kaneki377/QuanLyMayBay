@@ -74,5 +74,8 @@
     <ClInclude Include="ProcessFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Passenger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
