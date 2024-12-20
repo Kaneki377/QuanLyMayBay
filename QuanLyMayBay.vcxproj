@@ -132,6 +132,7 @@
     <ClInclude Include="Flight.h" />
     <ClInclude Include="GlobalVariable.h" />
     <ClInclude Include="MyLib.h" />
+    <ClInclude Include="Passenger.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="ProcessFile.h" />
     <ClInclude Include="Ticket.h" />

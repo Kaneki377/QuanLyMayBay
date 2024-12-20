@@ -292,6 +292,21 @@ void updateFlightStatus(flightList &fl)
 
 void showTicketChairBoard(flight f)
 {
+	int x = X_TicketChair + 8;
+	int y = Y_TicketChair + 5;
+	int Limit = f.totalTickets;
+
+	for ( int i = 1 ; i <= Limit ; i++ )
+	{
+		TicketStack(x , y, i, checkOutTicket(f,i));
+		x += 8;
+		/*i = 10 - da den vi tri cuoi cung cua hang do*/
+		if (i % 10 == 0)
+		{
+			y += 5;
+			x = X_TicketChair + 8;
+		}
+	}
 }
 
 void effectTicketMenu(int index, int PreColor)

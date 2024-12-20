@@ -88,3 +88,7 @@ const int MaxItem = 9;
 // toa do cho vi tri xac nhan xoa
 #define X_RemoveConfirm 80
 #define Y_RemoveConfirm 27
+
+// Toa do cho vi tri ve
+#define X_TicketChair 20
+#define Y_TicketChair 4
