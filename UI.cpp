@@ -16,7 +16,7 @@ using namespace std;
 planeList PList;
 flightList fList;
 
-int xKeyDisplay[7] = { 1,20,45,63,83,95, 107 };// toa do X cac diem nut
+int xKeyDisplay[7] = { 1,20,45,63,83,98, 115 };// toa do X cac diem nut
 char TenHocVien[100] = { "POST AND TELECOMUNICATIONS INSTITUTE OF TECHNOLOGY IN HO CHI MINH CITY" };
 char Menu[MaxItem][70] = {
 					   "1.Plane Management",
@@ -341,7 +341,7 @@ void RemoveExceedMember(int count, int nContent)
 /* ========== Tao bang xuat thong tin ===============*/
 /*Noi dung hien thi trong bang liet ke*/
 string ContentAirplane[4] = { "ID", "Type", "Row", "Col" };
-string ContentFlight[6] = { "MaChuyenBay","SanBayDen","SoHieuMayBay","ThoiGianDi","TongSoVe","TrangThai" };
+string ContentFlight[6] = { "Id Flight","Airpot To","Id Plane","Departure Time","Total Tickets","Status" };
 string ContentTicket[2] = { "Ten Ve","TrangThai" };
 string ContentPassenger[5] = { "STT","CMND","Ho","Ten","GioiTinh" };
 
@@ -353,7 +353,7 @@ void Display(string content[], int nContent)// ve bang
 	//show key - the hien ra noi dung cua cac cot
 	for (int i = 0; i < nContent; i++)
 	{// Y_Display 5
-		gotoxy(xKeyDisplay[i] + 4, Y_Display + 1);
+		gotoxy(xKeyDisplay[i] + 3, Y_Display + 1);
 		cout << content[i];
 	}
 
