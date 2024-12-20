@@ -131,7 +131,7 @@ int findDestinationByAirPort(flightList fl, const char *airportToFind)
 	return -1;
 }
 
-FlightNode *findFlightById(flightList fl, const char *idFlightToFind)
+flightNode *findFlightById(flightList fl, const char *idFlightToFind)
 {
 	if (fl.pHead == NULL) {
 		return NULL;
