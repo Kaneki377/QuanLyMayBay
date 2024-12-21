@@ -211,35 +211,35 @@ void readPassengerFromFile(AVLTree& root)
 	filein.close();
 }
 
-///*save 1 hanh khach*/
-//void saveOnePassenger(AVLTree& root, ofstream& fileout)
-//{
-//	fileout << root->data.idCard << endl;
-//	fileout << root->data.firstname << endl;
-//	fileout << root->data.lastName << endl;
-//	fileout << root->data.gender << endl;
-//	fileout << "0" << endl;//book ve hay chua
-//}
-//
-//void savePassengerList(AVLTree& root, ofstream& fileout)
-//{
-//	if (root != NULL)
-//	{
-//		saveOnePassenger(root, fileout);
-//		savePassengerList(root->pLeft, fileout);
-//		savePassengerList(root->pRight, fileout);
-//	}
-//}
-//
-//void savePassengerToFile(AVLTree& root)
-//{
-//	ofstream fileout;
-//	fileout.open("PassengerList.TXT", ios_base::out);
-//
-//	if (fileout.is_open())
-//	{
-//		fileout << nPassenger << endl;
-//		savePassengerList(root, fileout);
-//	}
-//	fileout.close();
-//}
+/*save 1 hanh khach*/
+void saveOnePassenger(AVLTree& root, ofstream& fileout)
+{
+	fileout << root->data.idCard << endl;
+	fileout << root->data.firstname << endl;
+	fileout << root->data.lastName << endl;
+	fileout << root->data.gender << endl;
+	fileout << "0" << endl;//book ve hay chua
+}
+
+void savePassengerList(AVLTree& root, ofstream& fileout)
+{
+	if (root != NULL)
+	{
+		saveOnePassenger(root, fileout);
+		savePassengerList(root->pLeft, fileout);
+		savePassengerList(root->pRight, fileout);
+	}
+}
+
+void savePassengerToFile(AVLTree& root)
+{
+	ofstream fileout;
+	fileout.open("PassengerList.TXT", ios_base::out);
+
+	if (fileout.is_open())
+	{
+		fileout << nPassenger << endl;
+		savePassengerList(root, fileout);
+	}
+	fileout.close();
+}

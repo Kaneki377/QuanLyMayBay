@@ -19,3 +19,6 @@ void writeFlightToFile(flightList& fl);
 
 //  khach hang : dang fix
 void readPassengerFromFile(AVLTree &root);
+void saveOnePassenger(AVLTree& root, ofstream& fileout);
+void savePassengerList(AVLTree& root, ofstream& fileout);
+void savePassengerToFile(AVLTree& root);
