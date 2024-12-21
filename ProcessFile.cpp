@@ -96,8 +96,10 @@ void readFlightFromFile(flightList& fl, planeList& pl)
 			fileIn >> f.status;
 
 			getline(fileIn, temp);
-			//Tesst
-			cout << f.idFlight << f.airportTo << f.idPlane << f.departureTime.hour << f.departureTime.minutes << f.departureTime.day << f.departureTime.month << f.departureTime.year;
+			
+			cout << f.idFlight << f.airportTo << f.idPlane << 
+				f.departureTime.hour << f.departureTime.minutes << 
+				f.departureTime.day << f.departureTime.month << f.departureTime.year;
 
 			for (index = 0; index < pl.size; index++) {
 				if (_stricmp(f.idPlane, pl.PList[index]->id) == 0) {
@@ -108,7 +110,7 @@ void readFlightFromFile(flightList& fl, planeList& pl)
 			//addEndingList(fl, f);
 			insertFlightAfter(fl, f);
 		}
-		fl.numsOfFlight++;
+		fl.numsOfFlight = numFlight;
 	}
 	fileIn.close();
 }
