@@ -813,55 +813,74 @@ void watchUnbookedTicket()
 	}
 }
 
-void gotoDetailForWatchFlightHistory()
-{
-	string GotoDetail[5] = { "Chu thich" ,
+void gotoDetailForWatchFlightHistory() {
+	string GotoDetail[] = { "Chu thich" ,
 							"1.Aircraft Number = So Hieu May Bay",
 							"2.Airline Company = Hang May Bay",
-							"3.Number Of Seats = So Luong Ghe Ngoi",
-							"4.Flights Times = So lan thuc hien chuyen bay" };
-	for (int i = 0; i < 5; i++)
-	{
-		gotoxy(X_Add - 30, Y_Add + i * 2);
+							"3.Number Of Rows = So luong hang ghe",
+							"4.Number Of Columns = So luong cot ghe",
+							"5.Flights Times = So lan thuc hien chuyen bay"
+							 };
+
+	for (int i = 0; i < 6; i++) {  // Cập nhật vòng lặp để duyệt qua 6 phần tử mảng
+		gotoxy(X_Add - 10, Y_Add + i * 3);
 		std::cout << GotoDetail[i];
 	}
 }
-//void ShowHowManyTimesAirplaneTookOff(Airplane* A, int position)
-//{
-//	int xKeyDisplay[7] = { 1,20,45,63,80,95, 107 };
-//	gotoxy(xKeyDisplay[0] + 3, Y_Display + 3 + position * 3); printf("%-20s", A->SoHieuMB);
-//	gotoxy(xKeyDisplay[1] + 3, Y_Display + 3 + position * 3); printf("%-20s", A->LoaiMB);
-//	gotoxy(xKeyDisplay[2] + 3, Y_Display + 3 + position * 3); printf("%-5d", A->SoChoMB);
-//	gotoxy(xKeyDisplay[3] + 3, Y_Display + 3 + position * 3); printf("%-5d", A->SoLanThucHienChuyenBay);
-//}
-/*"7.Xem Chi Tiet So Lan Thuc Hien Chuyen Bay",*/
-//void WatchHowManyTimeFlightTookOff()
-//{
-//	system("cls");
-//
-//	gotoxy(X_TitlePage, Y_TitlePage);
-//	cout << " SO CHUYEN BAY DA THUC HIEN CUA CAC MAY BAY";
-//
-//	string StaticsTable[4] = { "Aircraft Number","Airline Company" ,"Number Of Seat","Flights Times" };
-//	GotoDetailForWatchFlightHistory();
-//
-//
-//	for (int i = 0; i < LA.SoLuong; i++)
-//	{
-//		ShowHowManyTimesAirplaneTookOff(LA.DSMB[i], i);
-//	}
-//	DisplayForWatchOnly(StaticsTable, 4, LA.SoLuong);
-//	/*ESC de quay lai man hinh chinh*/
-//	int signal;
-//	while (true)
-//	{
-//		signal = _getch();
-//		if (signal == ESC)
-//		{
-//			return;
-//		}
-//	}
-//}
+void showHowManyTimesAirplaneTookOff(plane* A, int position)
+{
+	int xKeyDisplay[7] = { 1,20,45,63,80,95, 107 };
+	gotoxy(xKeyDisplay[0] + 3, Y_Display + 3 + position * 3); printf("%-20s", A->id);
+	gotoxy(xKeyDisplay[1] + 3, Y_Display + 3 + position * 3); printf("%-20s", A->type);
+	gotoxy(xKeyDisplay[2] + 3, Y_Display + 3 + position * 3); printf("%-5d", A->rows);
+	gotoxy(xKeyDisplay[3] + 3, Y_Display + 3 + position * 3); printf("%-5d", A->cols);
+	gotoxy(xKeyDisplay[4] + 6, Y_Display + 3 + position * 3); printf("%-5d", A->flyTimes);
+}
+
+//sắp xếp giảm dần số lượt thực hiện chuyến bay
+void bubbleSortByFlyTimes(plane* planes[], int size) {
+	for (int i = 0; i < size - 1; i++) {
+		// Lặp qua mảng từ đầu đến cuối, giảm dần số phần tử chưa sắp xếp
+		for (int j = 0; j < size - 1 - i; j++) {
+			// So sánh flyTimes của hai phần tử liên tiếp
+			if (planes[j]->flyTimes < planes[j + 1]->flyTimes) {
+				// Hoán đổi nếu flyTimes của planes[j] nhỏ hơn planes[j+1]
+				plane* temp = planes[j];
+				planes[j] = planes[j + 1];
+				planes[j + 1] = temp;
+			}
+		}
+	}
+}
+
+/*"7.Xem Chi Tiet So Lan Thuc Hien Chuyen Bay",*/ //câu h
+void watchHowManyTimeFlightTookOff()
+{
+	system("cls");
+
+	gotoxy(X_TitlePage, Y_TitlePage);
+	cout << " SO CHUYEN BAY DA THUC HIEN CUA CAC MAY BAY";
+
+	string StaticsTable[5] = { "Aircraft Number","Airline Company" ,"Number Of Rows","Number Of Columns","Flights Times"};
+	gotoDetailForWatchFlightHistory();
+
+	bubbleSortByFlyTimes(PList.PList, PList.size);
+	for (int i = 0; i < PList.size; i++)
+	{
+		showHowManyTimesAirplaneTookOff(PList.PList[i], i);
+	}
+	DisplayForWatchOnly(StaticsTable, 5, PList.size);
+	/*ESC de quay lai man hinh chinh*/
+	int signal;
+	while (true)
+	{
+		signal = _getch();
+		if (signal == ESC)
+		{
+			return;
+		}
+	}
+}
 
 /*Xem Cac Chuyen Bay Di Toi Cac Dia Danh & Ngay Gio Cu The*/
 void watchFlightsWithDateTimeAndDestination()

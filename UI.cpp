@@ -26,11 +26,11 @@ char Menu[MaxItem][70] = {
 					   "2.Flight Management",
 					   "3.Ticket Booking",
 					   "4.Ticket Cancel",
-					   "5.Xem Danh Sach Hanh Khach Chi Tiet",
-					   "6.Xem So Do Cho Ngoi & Danh Sach Ve Con Trong",
-					   "7.Xem Chi Tiet So Lan Thuc Hien Chuyen Bay",
-					   "8.Xem Cac Chuyen Bay Di Toi Cac Dia Danh",
-					   "0.Thoat Chuong Trinh"
+					   "5.Show Detailed Passenger List",
+					   "6.Show Seating Chart & List Of Available Tickets",
+					   "7.Show Details Of Flight Times",
+					   "8.Show Flights To Destinations",
+					   "0.Exit"
 };
 
 // dong tuy chon
@@ -436,7 +436,7 @@ void CenterMenu()
 	readFlightFromFile(fList, PList);
 
 	createAVLTree(root);
-	//readPassengerFromFile(root);
+	readPassengerFromFile(root);
 	
 
 	system("cls");
@@ -460,23 +460,23 @@ void CenterMenu()
 			break;
 		case 3:
 			system("color 0E");
-			//BookTicket(root);
+			bookTicket(root);
 			break;
 		case 4:
 			system("color 0E");
-			//CancelFlightTicket(root);
+			cancelFlightTicket(root);
 			break;
 		case 5:
 			system("color 0E");
-			//SeePassengerList(root);
+			//seePassengerList(root);
 			break;
 		case 6:
 			system("color 0E");
-			//WatchUnbookedTicket();
+			watchUnbookedTicket();
 			break;
 		case 7:
 			system("color 0E");
-			//WatchHowManyTimeFlightTookOff();
+			watchHowManyTimeFlightTookOff();
 			break;
 		case 8:
 			system("color 0E");
