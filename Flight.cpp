@@ -32,7 +32,7 @@ void initFlight(flight &f) {
 void initFlightList(flightList &fl) {
 	fl.pHead = NULL;
 	fl.pTail = NULL;
-	fl.numsOfFlight = -1;
+	fl.numsOfFlight = 0;
 }
 
 //Ham tao flightNode
@@ -206,20 +206,27 @@ bool removeEnding(flightList& fl)
 		return false;
 	}
 
-	flightNode* tempNode = NULL;
-	for (flightNode* search = fl.pHead; search != NULL; search = search->pNext) {
-		
-		if (search == fl.pTail) {
-			tempNode->pNext = NULL;
-			fl.pTail = tempNode;
-			delete search;
-			--fl.numsOfFlight;
-			return true;
-		}
-		tempNode = search;
+	//Truong hop danh sach chi co 1 phan tu
+	if (fl.pHead == fl.pTail) {
+		delete fl.pHead;
+		fl.pHead = fl.pTail = NULL;
+		--fl.numsOfFlight;
+		return true;
 	}
 
-	return false;
+	//Duyet toi phan tu ke cuoi
+	flightNode* tempNode = fl.pHead;
+	while (tempNode->pNext != fl.pTail) {
+		tempNode = tempNode->pNext;
+	}
+	
+
+	tempNode->pNext = NULL;
+	delete fl.pTail;
+	fl.pTail = tempNode;
+	--fl.numsOfFlight;
+
+	return true;
 }
 
 //Function xoa node dung sau mot node khac (tempFlight)
