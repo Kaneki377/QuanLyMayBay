@@ -42,7 +42,7 @@
     <ClCompile Include="Flight.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProcessFile.cpp">
+    <ClCompile Include="ProcessingFile.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,10 +71,10 @@
     <ClInclude Include="DateTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProcessFile.h">
+    <ClInclude Include="Passenger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Passenger.h">
+    <ClInclude Include="ProcessingFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

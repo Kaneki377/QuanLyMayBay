@@ -1,7 +1,7 @@
 #pragma once
 #include"UI.h"
 #include"Constraint.h"
-#include"ProcessFile.h"
+#include"Flight.h"
 
 /*Thong tin 1 hanh khach*/
 struct Passenger
@@ -46,4 +46,4 @@ void bookTicket(AVLTree& root);
 void watchUnbookedTicket();
 //void WatchHowManyTimeFlightTookOff();
 void watchFlightsWithDateTimeAndDestination();
-void showSpecificFlight(Flight F, int position);
+void showSpecificFlight(flight f, int position);

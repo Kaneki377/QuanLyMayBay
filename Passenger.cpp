@@ -1,11 +1,11 @@
 ﻿#pragma once
 #include"UI.h"
 #include"Constraint.h"
-#include"ProcessFile.h"
 #include"Passenger.h"
 #include"GlobalVariable.h"
 #include"Flight.h"
 #include"Plane.h"
+#include"ProcessingFile.h"
 int curPosPassenger = 1;
 int curPassengerPage = 1;
 int totalPassengerPage = 0;
@@ -314,7 +314,7 @@ void showListPassengerPerPage(AVLTree root, int beginIndex)
 
 	RemoveExceedMember(i, 4);
 	gotoxy(X_Page, Y_Page);
-	std::cout << curPassengerPage << "/" << totalPassengerPage;
+	cout << curPassengerPage << "/" << totalPassengerPage;
 }
 
 void swap(unsigned int& x, unsigned int& y)
@@ -451,7 +451,7 @@ void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, int idPas
 }
 
 
-void watchPassengerListOfFlight(AVLTree root, Flight F)
+void watchPassengerListOfFlight(AVLTree root, flight F)
 {
 	ShowCur(false);
 	DisplayForWatchOnly(ContentPassenger, sizeof(ContentPassenger) / sizeof(string), F.totalTicketsSold);
@@ -862,16 +862,7 @@ void gotoDetailForWatchFlightHistory()
 //		}
 //	}
 //}
-void showSpecificFlight(Flight F, int position)
-{
-	int xKeyDisplay[7] = { 1,20,45,63,80,95, 107 };// toa do X cac diem nut
-	gotoxy(xKeyDisplay[0] + 3, Y_Display + 3 + position * 3);printf("%-20s", F.idFlight);
-	gotoxy(xKeyDisplay[1] + 3, Y_Display + 3 + position * 3);printf("%-20s", F.idPlane);
-	gotoxy(xKeyDisplay[2] + 3, Y_Display + 3 + position * 3);printf("%-5d", F.totalTickets);
-	gotoxy(xKeyDisplay[3] + 3, Y_Display + 3 + position * 3);showDateTime(F.departureTime);
-	gotoxy(xKeyDisplay[4] + 5, Y_Display + 3 + position * 3);printf("%-3d", F.totalTicketsSold);
-	gotoxy(xKeyDisplay[5] + 5, Y_Display + 3 + position * 3);printf("%-3d", (F.totalTickets - F.totalTicketsSold));
-}
+
 /*Xem Cac Chuyen Bay Di Toi Cac Dia Danh & Ngay Gio Cu The*/
 void watchFlightsWithDateTimeAndDestination()
 {
@@ -939,15 +930,15 @@ void watchFlightsWithDateTimeAndDestination()
 	gotoxy(X_TitlePage - 35, Y_TitlePage);
 	cout << " Danh sach cac chuyen bay toi thanh pho " << destination;
 
-	int count = 0;
-	//for (FlightNode* search = FL.pHead;search != NULL;search = search->pNext)
-	//{
-		/*if (strcmpi(search->data.airportTo, destination.c_str()) == 0)
+	/*int count = 0;
+	for (flightNode* search = Fl.pHead;search != NULL;search = search->pNext)
+	{
+		if (strcmpi(search->data.airportTo, destination.c_str()) == 0)
 		{
-			ShowSpecificFlight(search->data, count++);
-		}*/
-	//}
-	DisplayForWatchOnly(specifedFlight, sizeof(specifedFlight) / sizeof(string), count);
+			showSpecificFlight(search->data, count++);
+		}
+	}*/
+	//DisplayForWatchOnly(specifedFlight, sizeof(specifedFlight) / sizeof(string), count);
 	int signal;
 	while (true)
 	{
@@ -960,4 +951,15 @@ void watchFlightsWithDateTimeAndDestination()
 			}
 		}
 	}
+}
+
+void showSpecificFlight(flight f, int position)
+{
+	int xKeyDisplay[7] = { 1,20,45,63,80,95, 107 };// toa do X cac diem nut
+	gotoxy(xKeyDisplay[0] + 3, Y_Display + 3 + position * 3); printf("%-20s", f.idFlight);
+	gotoxy(xKeyDisplay[1] + 3, Y_Display + 3 + position * 3); printf("%-20s", f.idPlane);
+	gotoxy(xKeyDisplay[2] + 3, Y_Display + 3 + position * 3); printf("%-5d", f.totalTickets);
+	gotoxy(xKeyDisplay[3] + 3, Y_Display + 3 + position * 3); showDateTime(f.departureTime);
+	gotoxy(xKeyDisplay[4] + 5, Y_Display + 3 + position * 3); printf("%-3d", f.totalTicketsSold);
+	gotoxy(xKeyDisplay[5] + 5, Y_Display + 3 + position * 3); printf("%-3d", (f.totalTickets - f.totalTicketsSold));
 }
