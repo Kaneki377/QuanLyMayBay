@@ -18,6 +18,7 @@ planeList PList;
 flightList fList;
 AVLTree	root;
 extern int nPassenger;
+
 int xKeyDisplay[7] = { 1,20,45,63,83,98, 115 };// toa do X cac diem nut
 char TenHocVien[100] = { "POST AND TELECOMUNICATIONS INSTITUTE OF TECHNOLOGY IN HO CHI MINH CITY" };
 char Menu[MaxItem][70] = {
@@ -435,7 +436,7 @@ void CenterMenu()
 	readFlightFromFile(fList, PList);
 
 	createAVLTree(root);
-	/*readPassengerFromFile(root);*/
+	//readPassengerFromFile(root);
 	
 
 	system("cls");

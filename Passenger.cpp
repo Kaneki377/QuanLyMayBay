@@ -11,7 +11,7 @@ int curPassengerPage = 1;
 int totalPassengerPage = 0;
 
 extern FlightList fList;
-extern planeList LA;
+extern planeList PList;
 extern string ContentPassenger[5];
 extern string ContentFlight[6];
 extern int nPassenger;
