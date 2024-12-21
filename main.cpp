@@ -3,7 +3,7 @@
 #include "GlobalVariable.h"
 #include "Plane.h"
 #include "Flight.h"
-#include "ProcessFile.h"
+#include "ProcessingFile.h"
 #include "MyLib.h"
 int main() {
 	system("color 0E");

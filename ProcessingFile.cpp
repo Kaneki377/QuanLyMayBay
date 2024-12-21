@@ -1,8 +1,9 @@
 #pragma once
 
+#define _CRT_SECURE_NO_WARNINGS
 #include "UI.h"
 #include "MyLib.h"
-#include "ProcessFile.h"
+#include "ProcessingFile.h"
 #include "Plane.h"
 #include "Flight.h"
 #include "string"
@@ -99,9 +100,9 @@ void readFlightFromFile(flightList& fl, planeList& pl)
 			fileIn >> f.status;
 
 			getline(fileIn, temp);
-			
-			cout << f.idFlight << f.airportTo << f.idPlane << 
-				f.departureTime.hour << f.departureTime.minutes << 
+
+			cout << f.idFlight << f.airportTo << f.idPlane <<
+				f.departureTime.hour << f.departureTime.minutes <<
 				f.departureTime.day << f.departureTime.month << f.departureTime.year;
 
 			for (index = 0; index < pl.size; index++) {
@@ -122,7 +123,7 @@ void saveTicketListOfOneFlight(flight& f)
 {
 }
 
-void saveFlight(flight &f, ofstream &fileOut)
+void saveFlight(flight& f, ofstream& fileOut)
 {
 	fileOut << f.idFlight << endl;
 	fileOut << f.airportTo << endl;
@@ -137,7 +138,7 @@ void saveFlight(flight &f, ofstream &fileOut)
 	saveTicketListOfOneFlight(f);
 }
 
-void writeFlightToFile(flightList &fl)
+void writeFlightToFile(flightList& fl)
 {
 	ofstream fileOut;
 	fileOut.open("FlightList.TXT", ios_base::out);
@@ -156,60 +157,60 @@ void writeFlightToFile(flightList &fl)
 	fileOut.close();
 }
 //khach hang
-//void readPassengerFromFile(AVLTree& root)
-//{
-//	ifstream filein;
-//	filein.open("PassengerList.TXT", ios_base::in);
-//
-//	string temp;
-//
-//	char lot[50];
-//
-//	//DisplayForWatchOnly(ContentPassenger,sizeof(ContentPassenger)/sizeof(string) );
-//
-//	if (filein.is_open())
-//	{
-//
-//		filein >> nPassenger;
-//		for (int i = 0; i < nPassenger;i++)
-//		{
-//			passenger P;
-//			getline(filein, temp);
-//
-//			filein >> P.idCard;
-//
-//			filein >> P.firstname;
-//			filein >> lot;
-//
-//			strcat(P.firstname, " ");
-//			strcat(P.firstname, lot);
-//
-//			filein >> P.lastName;
-//
-//			if (strcmpi(P.lastName, "1") == 0 || strcmpi(P.lastName, "0") == 0) {
-//				P.gender = strcmpi(P.lastName, "1") == 0 ? 1 : 0;
-//				strcpy(P.lastName, lot);
-//			}
-//			else {
-//				filein >> P.gender;
-//			}
-//			
-//			filein >> P.booked;
-//
-//			//cout << P.Ten << "- " << P.GioiTinh << " - "<< P.CMND<<endl;
-//			//system("pause");
-//
-//			root = addPassenger(root, P);
-//
-//
-//			//OnlySeePassengerListPerPage(P,0);
-//
-//		}
-//	}
-//
-//	filein.close();
-//}
-//
+void readPassengerFromFile(AVLTree& root)
+{
+	ifstream filein;
+	filein.open("PassengerList.TXT", ios_base::in);
+
+	string temp;
+
+	char lot[50];
+
+	//DisplayForWatchOnly(ContentPassenger,sizeof(ContentPassenger)/sizeof(string) );
+
+	if (filein.is_open())
+	{
+
+		filein >> nPassenger;
+		for (int i = 0; i < nPassenger; i++)
+		{
+			passenger P;
+			getline(filein, temp);
+
+			filein >> P.idCard;
+
+			filein >> P.firstname;
+			filein >> lot;
+
+			strcat(P.firstname, " ");
+			strcat(P.firstname, lot);
+
+			filein >> P.lastName;
+
+			if (_strcmpi(P.lastName, "1") == 0 || _strcmpi(P.lastName, "0") == 0) {
+				P.gender = _strcmpi(P.lastName, "1") == 0 ? 1 : 0;
+				strcpy(P.lastName, lot);
+			}
+			else {
+				filein >> P.gender;
+			}
+
+			filein >> P.booked;
+
+			//cout << P.Ten << "- " << P.GioiTinh << " - "<< P.CMND<<endl;
+			//system("pause");
+
+			root = addPassenger(root, P);
+
+
+			//OnlySeePassengerListPerPage(P,0);
+
+		}
+	}
+
+	filein.close();
+}
+
 ///*save 1 hanh khach*/
 //void saveOnePassenger(AVLTree& root, ofstream& fileout)
 //{

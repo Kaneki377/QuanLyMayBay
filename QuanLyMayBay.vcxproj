@@ -134,7 +134,7 @@
     <ClInclude Include="MyLib.h" />
     <ClInclude Include="Passenger.h" />
     <ClInclude Include="Plane.h" />
-    <ClInclude Include="ProcessFile.h" />
+    <ClInclude Include="ProcessingFile.h" />
     <ClInclude Include="Ticket.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
@@ -146,7 +146,7 @@
     <ClCompile Include="MyLib.cpp" />
     <ClCompile Include="Passenger.cpp" />
     <ClCompile Include="Plane.cpp" />
-    <ClCompile Include="ProcessFile.cpp" />
+    <ClCompile Include="ProcessingFile.cpp" />
     <ClCompile Include="Ticket.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
