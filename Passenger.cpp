@@ -837,7 +837,24 @@ void showHowManyTimesAirplaneTookOff(plane* A, int position)
 	gotoxy(xKeyDisplay[3] + 3, Y_Display + 3 + position * 3); printf("%-5d", A->cols);
 	gotoxy(xKeyDisplay[4] + 6, Y_Display + 3 + position * 3); printf("%-5d", A->flyTimes);
 }
-/*"7.Xem Chi Tiet So Lan Thuc Hien Chuyen Bay",*/
+
+//sắp xếp giảm dần số lượt thực hiện chuyến bay bubble_sort
+void bubbleSortByFlyTimes(plane* planes[], int size) {
+	for (int i = 0; i < size - 1; i++) {
+		// Lặp qua mảng từ đầu đến cuối, giảm dần số phần tử chưa sắp xếp
+		for (int j = 0; j < size - 1 - i; j++) {
+			// So sánh flyTimes của hai phần tử liên tiếp
+			if (planes[j]->flyTimes < planes[j + 1]->flyTimes) {
+				// Hoán đổi nếu flyTimes của planes[j] nhỏ hơn planes[j+1]
+				plane* temp = planes[j];
+				planes[j] = planes[j + 1];
+				planes[j + 1] = temp;
+			}
+		}
+	}
+}
+
+/*"7.Xem Chi Tiet So Lan Thuc Hien Chuyen Bay",*/ //câu h
 void watchHowManyTimeFlightTookOff()
 {
 	system("cls");
@@ -848,7 +865,7 @@ void watchHowManyTimeFlightTookOff()
 	string StaticsTable[5] = { "Plane Id","Airline Company" ,"Number Of Rows","Number Of Columns","Flights Times"};
 	gotoDetailForWatchFlightHistory();
 
-
+	bubbleSortByFlyTimes(PList.PList, PList.size);
 	for (int i = 0; i < PList.size; i++)
 	{
 		showHowManyTimesAirplaneTookOff(PList.PList[i], i);
