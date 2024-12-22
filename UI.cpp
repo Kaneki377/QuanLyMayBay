@@ -483,7 +483,7 @@ void CenterMenu()
 			watchFlightsWithDateTimeAndDestination();
 			break;
 		case MaxItem:
-			//writeFlightToFile(fList);
+			writeFlightToFile(fList);
 			//SavePassengerToFile(root);
 			system("color 0E");
 			Exit = true;// xac nhan thoat

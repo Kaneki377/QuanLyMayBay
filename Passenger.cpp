@@ -18,12 +18,12 @@ extern int nPassenger;
 unsigned int* arrPassengerId;
 /*Noi dung cho chuc nang thu 8*/
 string specifedFlight[6] = {
-		"Ma Chuyen Bay",
-		"So Hieu May Bay",
-		"Tong So Ve",
-		"Gio Khoi Hanh",
-		"Da Ban",
-		"Con Trong" };
+		"Flight Id",
+		"Plane Id",
+		"Total Tickes",
+		"Departure Times",
+		"Tickets Sold",
+		"UnUsed Tickets" };
 void createAVLTree(AVLTree& root)
 {
 	root = NULL;
@@ -760,27 +760,28 @@ void watchUnbookedTicket()
 {
 	system("cls");
 
-	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
-	std::cout << "Kinh moi Thay nhap Ma chuyen bay theo phan danh sach chuyen bay hien co de kiem tra thong tin --->";
-	string IDFlight;
-	CreateForm(ContentFlight, 0, 1, 30);
-	bool SaveOrNot = true;
-	bool DeleteOrNot;
-	bool MoveOrNot = false;
-	FlightNode* WatchingFlight = NULL;
+	gotoxy(X_TitlePage - 50, Y_TitlePage + 3);
+	std::cout << "Enter the Flight Id according to the existing flight list to check the information --->";
+
+	string idFlight;
+	CreateForm(ContentFlight, 0, 1, 15);
+	bool saveOrNot = true;
+	bool deleteOrNot;
+	bool moveOrNot = false;
+	flightNode *watchingFlight = NULL;
 	int ordinal = 0;
 	while (true)
 	{
 		system("color 0E");
 		ShowCur(true);
-		ConstraintForLetterAndNumber(IDFlight, MoveOrNot, ordinal, SaveOrNot, 12);
-		if (SaveOrNot == false)
+		ConstraintForLetterAndNumber(idFlight, moveOrNot, ordinal, saveOrNot, 12);
+		if (saveOrNot == false)
 		{
 			RemoveFormComplete();
 			return;
 		}
-		WatchingFlight = findFlightById(fList, IDFlight.c_str());
-		if (WatchingFlight == NULL)
+		watchingFlight = findFlightById(fList, idFlight.c_str());
+		if (watchingFlight == NULL)
 		{
 			gotoxy(X_Notification, Y_Notification + 1);
 			std::cout << "Chuyen bay khong ton tai";
@@ -796,11 +797,11 @@ void watchUnbookedTicket()
 	system("cls");
 	ShowCur(false);
 	gotoxy(X_TitlePage, Y_TitlePage);
-	std::cout << "Danh sach cho ngoi cua chuyen bay " << WatchingFlight->data.idFlight << " toi " << WatchingFlight->data.airportTo;
-	std::cout << " luc ";  showDateTime(WatchingFlight->data.departureTime);
+	std::cout << "Flight Seat Lists of id: " << watchingFlight->data.idFlight << " in -> " << watchingFlight->data.airportTo;
+	std::cout << " at -> ";  showDateTime(watchingFlight->data.departureTime);
 	gotoxy(3, 4);
 	std::cout << " Ve mau Do = ve da co Hanh khach dat ve";
-	showTicketChairBoard(WatchingFlight->data);
+	showTicketChairBoard(watchingFlight->data);
 
 	int signal;
 	while (true)
@@ -815,7 +816,7 @@ void watchUnbookedTicket()
 
 void gotoDetailForWatchFlightHistory() {
 	string GotoDetail[] = { "Chu thich" ,
-							"1.Aircraft Number = So Hieu May Bay",
+							"1.Plane Id = So Hieu May Bay",
 							"2.Airline Company = Hang May Bay",
 							"3.Number Of Rows = So luong hang ghe",
 							"4.Number Of Columns = So luong cot ghe",
@@ -844,7 +845,7 @@ void watchHowManyTimeFlightTookOff()
 	gotoxy(X_TitlePage, Y_TitlePage);
 	cout << " SO CHUYEN BAY DA THUC HIEN CUA CAC MAY BAY";
 
-	string StaticsTable[5] = { "Aircraft Number","Airline Company" ,"Number Of Rows","Number Of Columns","Flights Times"};
+	string StaticsTable[5] = { "Plane Id","Airline Company" ,"Number Of Rows","Number Of Columns","Flights Times"};
 	gotoDetailForWatchFlightHistory();
 
 
@@ -865,27 +866,21 @@ void watchHowManyTimeFlightTookOff()
 	}
 }
 
-/*Xem Cac Chuyen Bay Di Toi Cac Dia Danh & Ngay Gio Cu The*/
+/* 8.Xem Cac Chuyen Bay Di Toi Cac Dia Danh & Ngay Gio Cu The*/
 void watchFlightsWithDateTimeAndDestination()
 {
 	system("cls");
 	int ordinal = 0;
-	bool SaveOrNot = true;
-	bool MoveOrNot = false;
+	bool saveOrNot = true;
+	bool moveOrNot = false;
 	bool flag = true;
-	int DestinationExisted = -1;// tim kiem san bay den co ton tai khong
+	int destinationExisted = -1;// tim kiem san bay den co ton tai khong
 	string destination;
-	DateTime DT;
+	DateTime dt;
 	/*Man hinh mo dau*/
 	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
-	cout << "Kinh moi Thay nhap Ma chuyen bay theo phan danh sach chuyen bay hien co de kiem tra thong tin -->>        San Bay Den : ";
-	/*string ContentFlight[6] = {
-	"MaChuyenBay",
-	"SanBayDen",
-	"SoHieuMayBay",
-	"ThoiGianDi",
-	"TongSoVe",
-	"TrangThai"};*/
+	cout << "Enter the destination name to check the information -->>        Airport To: ";
+	
 	while (flag == true)
 	{
 		switch (ordinal)
@@ -894,9 +889,9 @@ void watchFlightsWithDateTimeAndDestination()
 		{
 			//CreateForm(ContentFlight,1,2,30);
 			ShowCur(true);
-			ConstraintsForLetterAndSpace(destination, MoveOrNot, ordinal, SaveOrNot, 12);
+			ConstraintsForLetterAndSpace(destination, moveOrNot, ordinal, saveOrNot, 20);
 			/*Neu nhan phim ESCAPE*/
-			if (SaveOrNot == false)
+			if (saveOrNot == false)
 			{
 				RemoveFormComplete();
 				return;
@@ -908,10 +903,10 @@ void watchFlightsWithDateTimeAndDestination()
 				gotoxy(X_Notification, Y_Notification + 1);cout << "Vui Long Khong Bo Trong";
 			}
 			/*Xu li xem co ton tai dia danh nay khong*/
-			DestinationExisted = findDestinationByAirPort(fList, destination.c_str());
+			destinationExisted = findDestinationByAirPort(fList, destination.c_str());
 			StandardName((char*)destination.c_str());
 
-			if (DestinationExisted == -1)
+			if (destinationExisted == -1)
 			{
 				gotoxy(X_Notification, Y_Notification);cout << "Thong Bao";
 				gotoxy(X_Notification, Y_Notification + 1);cout << "Khong co chuyen bay toi " << destination;
@@ -930,17 +925,17 @@ void watchFlightsWithDateTimeAndDestination()
 	}
 	system("cls");
 	gotoxy(X_TitlePage - 35, Y_TitlePage);
-	cout << " Danh sach cac chuyen bay toi thanh pho " << destination;
+	cout << " List of flights to the " << destination << " airport: ";
 
-	/*int count = 0;
-	for (flightNode* search = Fl.pHead;search != NULL;search = search->pNext)
+	int count = 0;
+	for (flightNode *search = fList.pHead;search != NULL;search = search->pNext)
 	{
-		if (strcmpi(search->data.airportTo, destination.c_str()) == 0)
+		if (_strcmpi(search->data.airportTo, destination.c_str()) == 0)
 		{
 			showSpecificFlight(search->data, count++);
 		}
-	}*/
-	//DisplayForWatchOnly(specifedFlight, sizeof(specifedFlight) / sizeof(string), count);
+	}
+	DisplayForWatchOnly(specifedFlight, sizeof(specifedFlight) / sizeof(string), count);
 	int signal;
 	while (true)
 	{
