@@ -837,7 +837,7 @@ void showHowManyTimesAirplaneTookOff(plane* A, int position)
 	gotoxy(xKeyDisplay[4] + 6, Y_Display + 3 + position * 3); printf("%-5d", A->flyTimes);
 }
 
-//sắp xếp giảm dần số lượt thực hiện chuyến bay
+//sắp xếp giảm dần số lượt thực hiện chuyến bay bubble_sort
 void bubbleSortByFlyTimes(plane* planes[], int size) {
 	for (int i = 0; i < size - 1; i++) {
 		// Lặp qua mảng từ đầu đến cuối, giảm dần số phần tử chưa sắp xếp
