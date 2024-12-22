@@ -6,7 +6,7 @@
 /*Thong tin 1 hanh khach*/
 struct Passenger
 {
-	unsigned int idCard;// day la key chinh
+	char idCard;// day la key chinh
 	char firstname[20];
 	char lastName[10];
 	int gender;// 1 la nam , 0 la nu
