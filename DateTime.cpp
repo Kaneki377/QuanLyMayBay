@@ -19,8 +19,9 @@ void initDateTime(dateTime &dt) {
 	dt.hour = localTime->tm_hour;
 	dt.minutes = localTime->tm_min;
 	dt.day = localTime->tm_mday;
-	dt.month = 1 + localTime->tm_year;
+	dt.month = 1 + localTime->tm_mon;
 	dt.year = 1900 + localTime->tm_year;
+	cout << "LOcal month by sys: " << dt.month << "local year: " << dt.year;
 }
 
 //Function kiem tra so ngay va thang co hop le va kiem tra nam nhuan
