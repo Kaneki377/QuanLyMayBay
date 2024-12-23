@@ -189,7 +189,7 @@ void readPassengerFromFile(AVLTree& root)
 
 			if (_strcmpi(P.lastName, "1") == 0 || _strcmpi(P.lastName, "0") == 0) {
 				P.gender = _strcmpi(P.lastName, "1") == 0 ? 1 : 0;
-				strcpy(P.lastName, lot);
+				strcpy_s(P.lastName, lot);
 			}
 			else {
 				filein >> P.gender;

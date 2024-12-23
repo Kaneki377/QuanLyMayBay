@@ -1,4 +1,6 @@
 ﻿#pragma once
+
+#define _CRT_SECURE_NO_WARNINGS
 #include"UI.h"
 #include"Constraint.h"
 #include"Passenger.h"
@@ -436,10 +438,10 @@ void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, char* idP
 		case 4:
 		{
 			passenger p;
-			strcpy(p.idCard, idPassenger);
+			strcpy_s(p.idCard, idPassenger);
 			//sửa 439 762
-			/*_strcpy(p.firstname, first_name.c_str());
-			_strcpy(p.lastName, last_name.c_str());*/
+			strcpy_s(p.firstname, first_name.c_str());
+			strcpy_s(p.lastName, last_name.c_str());
 			StandardName(p.firstname);
 			StandardName(p.lastName);
 			p.gender = gender;
@@ -760,7 +762,7 @@ void bookTicket(AVLTree& root)
 				nPassenger++;
 			}
 			Ticket AddingTicket;
-			strcpy(AddingTicket.CMND, IDHanhKhach);
+			strcpy_s(AddingTicket.CMND, IDHanhKhach);
 			AddingTicket.seatNumber = ChoosenTicket;
 			WatchingFlight->data.TicketList[WatchingFlight->data.totalTicketsSold] = AddingTicket;
 			WatchingFlight->data.totalTicketsSold++;

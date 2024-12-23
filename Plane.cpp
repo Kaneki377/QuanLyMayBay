@@ -249,6 +249,7 @@ void inputPlane(planeList& pl, bool EditedOrNot,bool DeleteOrNot)
 		{
 			// Edit Plane
 			if (EditedOrNot && target > -1) {
+				
 				strcpy_s(pl.PList[target]->id, ID.c_str());
 				strcpy_s(pl.PList[target]->type, Type.c_str());
 				pl.PList[target]->rows = nRow;

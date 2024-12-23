@@ -640,10 +640,10 @@ void inputFlightInFor(flightList &fl, bool editedOrNot, bool deleteOrNot)
 				  			
 			case 6: {
 				flight addingFlight;
-				strcpy(addingFlight.idFlight, idFlight.c_str());
+				strcpy_s(addingFlight.idFlight, idFlight.c_str());
 				StandardName((char*)airportTo.c_str());
-				strcpy(addingFlight.airportTo, airportTo.c_str());
-				strcpy(addingFlight.idPlane, idPlane.c_str());
+				strcpy_s(addingFlight.airportTo, airportTo.c_str());
+				strcpy_s(addingFlight.idPlane, idPlane.c_str());
 
 				addingFlight.departureTime = dt;
 				addingFlight.totalTickets = nTicketInFlight;
