@@ -19,6 +19,7 @@ int CurPosTicket = 1;
 int CurPosPreTicket = 1;
 
 extern string ContentFlight[6];
+extern string ContentFlightForInsert[4];
 extern planeList PList;
 
 void initFlight(flight &f) {
@@ -293,6 +294,7 @@ void updateFlightStatus(flightList &fl)
 	for (flightNode *search = fl.pHead; search != NULL; search = search->pNext) {
 		if (isDateTimeValid(search->data.departureTime) == false) {
 			search->data.status = 3;
+			//0. huy Chuyen, 1. Con ve, 2. Het ve, 3. Hoan tat
 		}
 	}
 }
@@ -450,7 +452,7 @@ void inputFlightInFor(flightList &fl, bool editedOrNot, bool deleteOrNot)
 	dateTime dt;
 	int numSoldTicket = 0;
 	int nTicketInFlight = 0;
-	int status = 0; //
+	int status = 1; // Status mac dinh la con ve
 	int checkIdFlight = -1; //Kiem tra ma chuyen bay ton tai hay khong
 	int checkIdPlane = -1; //Kiem tra so hieu may bay ton hay hay khong?
 	while (true) {
@@ -607,38 +609,14 @@ void inputFlightInFor(flightList &fl, bool editedOrNot, bool deleteOrNot)
 			break;
 
 			case 4: { //Nhap so ve may bay
-				ConstraintForOnlyNumber(nTicketInFlight, moveOrNot, ordinal, saveOrNot, 12, 999);
-				RemoveNotification();
-				if (saveOrNot == false) {
-					RemoveFormComplete();
-					return;
-				}
-
-				
-			}
-			
-			ordinal++;
-			break;
-
-			case 5: { //Chu thich ve status cua ve
-				// 0: Huy chuyen, 1: Con ve, 2: Het ve, 3: Hoan tat
-				gotoxy(X_Notification, Y_Notification + 1); cout << "0 = Huy     ";
-				gotoxy(X_Notification, Y_Notification + 2); cout << "1 = Con ve  ";
-				gotoxy(X_Notification, Y_Notification + 3); cout << "2 = Het ve  ";
-				gotoxy(X_Notification, Y_Notification + 4); cout << "3 = Hoan tat";
-
-				ConstraintForOnlyNumber(status, moveOrNot, ordinal, saveOrNot, 12, 4);
-				RemoveNotification();
-				
-				if (saveOrNot == false) {
-					RemoveFormComplete();
-					return;
-				}
+				plane* currentPlane = PList.PList[checkIdPlane];
+				nTicketInFlight = currentPlane->rows * currentPlane->cols; //Tinh tong so ve
+				status = 1; //Dat status = 1 (con ve)
 				ordinal++;
 				break;
 			}
 				  			
-			case 6: {
+			case 5: {
 				flight addingFlight;
 				strcpy_s(addingFlight.idFlight, idFlight.c_str());
 				StandardName((char*)airportTo.c_str());
@@ -668,7 +646,7 @@ void inputFlightInFor(flightList &fl, bool editedOrNot, bool deleteOrNot)
 				initDateTime(dt);
 				numSoldTicket = 0;
 				nTicketInFlight = 0;
-				status = 0;
+				status = 1;
 
 				RemoveNotification();
 				RemoveForm();
@@ -714,7 +692,7 @@ void menuManageFlightList(flightList &fl)
 					changePageManageFlightList(fl);
 				}
 				else if (signal == INSERT) {
-					CreateForm(ContentFlight, 0, 6, 30);
+					CreateForm(ContentFlightForInsert, 0, 4, 30);
 					inputFlightInFor(fl);
 
 					TotalFlightPage = (int)ceil((double) fl.numsOfFlight / NumberPerPage);

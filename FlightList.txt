@@ -1,4 +1,14 @@
+15
+China
+Wuhan
+Vn1187
+16
+27
+23
 12
+2024
+100
+3
 CRECH
 Praha
 VJ5431
@@ -109,6 +119,16 @@ BNW555
 2021
 100
 3
+SPA9928
+Barcelona
+VN1234
+16
+13
+23
+12
+2024
+150
+3
 USA2306
 Los Angeles
 VN1896
@@ -118,4 +138,14 @@ VN1896
 6
 2020
 90
+3
+Zimbawe
+Chichilele
+VN1187
+16
+5
+23
+12
+2024
+100
 3
