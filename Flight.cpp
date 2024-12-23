@@ -461,7 +461,7 @@ void inputFlightInFor(flightList &fl, bool editedOrNot, bool deleteOrNot)
 			{ //Nhap ma chuyen bay
 				ConstraintForLetterAndNumber(idFlight, moveOrNot, ordinal, saveOrNot, 12);
 				RemoveNotification();
-				//Neu ng{uoi dung thoat ra giua chung
+				//Neu nguoi dung thoat ra giua chung
 				if (saveOrNot == false) {
 					RemoveFormComplete();
 					return;
@@ -609,14 +609,52 @@ void inputFlightInFor(flightList &fl, bool editedOrNot, bool deleteOrNot)
 			break;
 
 			case 4: { //Nhap so ve may bay
-				plane* currentPlane = PList.PList[checkIdPlane];
-				nTicketInFlight = currentPlane->rows * currentPlane->cols; //Tinh tong so ve
-				status = 1; //Dat status = 1 (con ve)
+				//Neu o che do edit
+				if (editedOrNot) {
+					ConstraintForOnlyNumber(nTicketInFlight, moveOrNot, ordinal, saveOrNot, 12, 999);
+
+					RemoveNotification();
+					if (saveOrNot == false) {
+						RemoveFormComplete();
+						return;
+					}
+				}
+				else {
+					plane* currentPlane = PList.PList[checkIdPlane];
+					nTicketInFlight = currentPlane->rows * currentPlane->cols; //Tinh tong so ve
+				}
+				
+				ordinal++;
+				break;
+			}
+			case 5: {
+				if (editedOrNot) {
+					gotoxy(X_Notification, Y_Notification + 1); 
+					cout << "0 = Huy     ";
+					gotoxy(X_Notification, Y_Notification + 2); 
+					cout << "1 = Con ve  ";
+					gotoxy(X_Notification, Y_Notification + 3); 
+					cout << "2 = Het ve  ";
+					gotoxy(X_Notification, Y_Notification + 4); 
+					cout << "3 = Hoan tat";
+					ConstraintForOnlyNumber(status, moveOrNot, ordinal, saveOrNot, 12, 4);
+
+					RemoveNotification();
+
+					if (saveOrNot == false) {
+						RemoveFormComplete();
+						return;
+					}
+				}
+				else { //Che do Insert
+					//Mac dinh status = 1 kh insert
+					status = 1; 
+				}
 				ordinal++;
 				break;
 			}
 				  			
-			case 5: {
+			case 6: {
 				flight addingFlight;
 				strcpy_s(addingFlight.idFlight, idFlight.c_str());
 				StandardName((char*)airportTo.c_str());
