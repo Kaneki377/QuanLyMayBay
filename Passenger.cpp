@@ -18,7 +18,7 @@ extern planeList PList;
 extern string ContentPassenger[5];
 extern string ContentFlight[6];
 extern int nPassenger;
-unsigned int* arrPassengerId;
+char* arrPassengerId;
 /*Noi dung cho chuc nang thu 8*/
 string specifedFlight[6] = {
 		"Flight Id",
