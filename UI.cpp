@@ -344,7 +344,7 @@ void RemoveExceedMember(int count, int nContent)
 /* ========== Tao bang xuat thong tin ===============*/
 /*Noi dung hien thi trong bang liet ke*/
 string ContentAirplane[4] = { "ID", "Type", "Row", "Col" };
-string ContentFlight[6] = { "Id Flight","Airpot To","Id Plane","Departure Time","Total Tickets","Status" };
+string ContentFlight[6] = { "Id Flight","Airpot To","Id Plane","Dep Time","Total Tickets","Status" };
 string ContentTicket[2] = { "Ten Ve","TrangThai" };
 string ContentPassenger[5] = { "STT","CMND","Ho","Ten","GioiTinh" };
 
