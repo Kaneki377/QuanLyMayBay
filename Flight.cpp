@@ -609,6 +609,9 @@ void inputFlightInFor(flightList &fl, bool editedOrNot, bool deleteOrNot)
 			break;
 
 			case 4: { //Nhap so ve may bay
+				//Lay obj may bay hien tai
+				plane* currentPlane = PList.PList[checkIdPlane];
+
 				//Neu o che do edit
 				if (editedOrNot) {
 					ConstraintForOnlyNumber(nTicketInFlight, moveOrNot, ordinal, saveOrNot, 12, 999);
@@ -618,9 +621,20 @@ void inputFlightInFor(flightList &fl, bool editedOrNot, bool deleteOrNot)
 						RemoveFormComplete();
 						return;
 					}
+					int maxNumOfSeat = currentPlane->rows * currentPlane->cols;
+					if (nTicketInFlight > maxNumOfSeat || nTicketInFlight < 20) {
+						gotoxy(X_Notification, Y_Notification); 
+						cout << "Thong Bao";
+						gotoxy(X_Notification, Y_Notification + 1); 
+						cout << "So ve khong nam trong  ";
+						gotoxy(X_Notification, Y_Notification + 2); 
+						cout << "khoang phu hop";
+						gotoxy(X_Notification, Y_Notification + 3); cout << "20 <= So cho <=" << maxNumOfSeat;
+						break;
+					}
 				}
 				else {
-					plane* currentPlane = PList.PList[checkIdPlane];
+					
 					nTicketInFlight = currentPlane->rows * currentPlane->cols; //Tinh tong so ve
 				}
 				
