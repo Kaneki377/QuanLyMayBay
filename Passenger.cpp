@@ -318,7 +318,7 @@ void showListPassengerPerPage(AVLTree root, int beginIndex)
 
 	for (i = 0; i + beginIndex <= nPassenger && i < NumberPerPage;i++)
 	{
-		passengerNode* tempo = findPassenger(root, arrPassengerId[i + beginIndex]);
+		passengerNode* tempo = findPassenger(root, &arrPassengerId[i + beginIndex]);
 		showPassenger(tempo->data, i);
 	}
 
@@ -648,7 +648,7 @@ void bookTicket(AVLTree& root)
 	system("cls");
 
 	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
-	std::cout << "Kinh moi Thay nhap Ma chuyen bay theo phan danh sach chuyen bay hien co de kiem tra thong tin --->";
+	cout << "Kinh moi Thay nhap Ma chuyen bay theo phan danh sach chuyen bay hien co de kiem tra thong tin --->";
 	/*Kiem tra xem MaChuyenBay co ton tai*/
 
 	string result;

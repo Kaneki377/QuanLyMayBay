@@ -4,8 +4,8 @@
 #define TICKET_SOLD 1
 #define TICKET_EMPTY 0
 
-#define Limit_ID_Length 15
-#define Litmit_Word_Length 40
+#define Limit_ID_Length 16
+#define Litmit_Word_Length 41
 
 //color
 #define GREY 7
