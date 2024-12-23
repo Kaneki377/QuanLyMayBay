@@ -240,11 +240,6 @@ void ConstraintForOnlyNumber(int& result, bool& MoveOrNot, int& ordinal, bool& S
 		}// while( _kbhit() )
 	}// while(true)
 }
-#include <conio.h>  // Thư viện cần thiết cho _kbhit() và _getch()
-#include <cstring>   // Thư viện cho strcpy(), strlen()
-#include <iostream>  // Thư viện cơ bản
-
-using namespace std;
 
 void ConstraintForOnlyChar(char result[], bool& MoveOrNot, int& ordinal, bool& SaveOrNot, int distance)
 {
@@ -269,16 +264,13 @@ void ConstraintForOnlyChar(char result[], bool& MoveOrNot, int& ordinal, bool& S
 				// --- Xử lý các ký tự từ 0 đến 9 ---
 				if (48 <= signal && signal <= 57)  // Kiểm tra xem ký tự có phải là số không
 				{
-					// Tránh việc nhập số 0 đầu tiên nếu count == 0
-					if (count == 0 && signal == 48)
+					// Nếu còn chỗ trống trong chuỗi và số ký tự chưa vượt quá giới hạn
+					if (count < 13)  // Số lượng tối đa là 13 ký tự cho CCCD
 					{
-						continue;  // Bỏ qua nếu nhập 0 đầu tiên
+						result[count] = signal;  // Thêm ký tự vào vị trí cuối chuỗi
+						count++;
+						result[count] = '\0';  // Kết thúc chuỗi
 					}
-
-					// Nếu không phải số 0 đầu tiên và còn chỗ trống trong chuỗi
-					result[count] = signal;  // Thêm ký tự vào vị trí cuối chuỗi
-					count++;
-					result[count] = '\0';  // Kết thúc chuỗi
 				}
 				// --- Xử lý phím ESC (thoát) ---
 				else if (signal == 27)  // ESC key
@@ -302,6 +294,7 @@ void ConstraintForOnlyChar(char result[], bool& MoveOrNot, int& ordinal, bool& S
 		}
 	}
 }
+
 
 
 /*space la khoang thut dau dong
