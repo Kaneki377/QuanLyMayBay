@@ -5,8 +5,8 @@
 
 //Struct thong tin may bay
 struct Plane{
-	char id[15];
-	char type[40];
+	char id[16];
+	char type[41];
 	int rows;
 	int cols;
 
