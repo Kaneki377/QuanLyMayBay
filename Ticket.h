@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 struct ticket {
-	unsigned int CMND;
-	std::string seatNumber;
+	char CMND[13];
+	char seatNumber;
 };
 typedef ticket Ticket;
 
