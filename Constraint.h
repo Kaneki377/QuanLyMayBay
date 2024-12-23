@@ -23,3 +23,5 @@ void ConstraintForDateAndTime(int& result, int& DTordinal, bool& SaveOrCancel, i
 void ConstraintsForLetterAndSpace(string& result, bool& MoveOrNot, int& ordinal, bool& SaveOrNot, int distance);
 void ConstraintForOnlyGender(int& result, bool& MoveOrNot, int& ordinal, bool& SaveOrNot, int distance);
 void StandardName(char* a);
+void ConstraintForOnlyChar(char* result, bool& MoveOrNot, int& ordinal, bool& SaveOrNot, int distance);
+

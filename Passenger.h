@@ -6,7 +6,7 @@
 /*Thong tin 1 hanh khach*/
 struct Passenger
 {
-	char idCard;// day la key chinh
+	char idCard[13];// day la key chinh
 	char firstname[20];
 	char lastName[10];
 	int gender;// 1 la nam , 0 la nu
@@ -34,12 +34,12 @@ int getBalanceFactor(AVLTree root);
 AVLTree addPassenger(AVLTree& root, passenger data);
 AVLTree minValuePassenger(AVLTree root);
 AVLTree removePassenger(AVLTree& root, passenger data);
-bool findPassengerFollowID(AVLTree root, unsigned int idCardToFind);
-passengerNode* findPassenger(AVLTree root, unsigned int idCardToFind);
+bool findPassengerFollowID(AVLTree root, char idCardToFind);
+passengerNode* findPassenger(AVLTree root, char idCardToFind);
 void showPassenger(passenger P, int position);
 void showListPassengerPerPage(AVLTree root, int beginIndex);
 //void changePassengerMenuManagePerPage(AVLTree root);
-void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, int idPassenger);
+void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, char idPassenger);
 void seePassengerList(AVLTree root);
 void cancelFlightTicket(AVLTree root);
 void bookTicket(AVLTree& root);

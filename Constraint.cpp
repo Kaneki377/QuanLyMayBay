@@ -240,6 +240,69 @@ void ConstraintForOnlyNumber(int& result, bool& MoveOrNot, int& ordinal, bool& S
 		}// while( _kbhit() )
 	}// while(true)
 }
+#include <conio.h>  // Thư viện cần thiết cho _kbhit() và _getch()
+#include <cstring>   // Thư viện cho strcpy(), strlen()
+#include <iostream>  // Thư viện cơ bản
+
+using namespace std;
+
+void ConstraintForOnlyChar(char result[], bool& MoveOrNot, int& ordinal, bool& SaveOrNot, int distance)
+{
+	gotoxy(X_Add + distance, ordinal * 3 + Y_Add);  // Di chuyển con trỏ tới vị trí hiển thị
+	cout << result;  // In ra chuỗi hiện tại
+
+	int count = 0;  // Mặc định, số lượng ký tự trong chuỗi
+
+	// Đếm số ký tự hiện tại trong result
+	while (result[count] != '\0')
+	{
+		count++;
+	}
+
+	while (true)
+	{
+		while (_kbhit())  // Kiểm tra nếu có phím được nhấn
+		{
+			int signal = _getch();  // Lấy mã phím được nhấn
+			if (signal != 224 && signal != SPACE && signal != 0)
+			{
+				// --- Xử lý các ký tự từ 0 đến 9 ---
+				if (48 <= signal && signal <= 57)  // Kiểm tra xem ký tự có phải là số không
+				{
+					// Tránh việc nhập số 0 đầu tiên nếu count == 0
+					if (count == 0 && signal == 48)
+					{
+						continue;  // Bỏ qua nếu nhập 0 đầu tiên
+					}
+
+					// Nếu không phải số 0 đầu tiên và còn chỗ trống trong chuỗi
+					result[count] = signal;  // Thêm ký tự vào vị trí cuối chuỗi
+					count++;
+					result[count] = '\0';  // Kết thúc chuỗi
+				}
+				// --- Xử lý phím ESC (thoát) ---
+				else if (signal == 27)  // ESC key
+				{
+					SaveOrNot = false;
+					return;
+				}
+				// --- Xử lý phím BACKSPACE (xóa ký tự) ---
+				else if (signal == 8 && count > 0)  // BACKSPACE key
+				{
+					result[count - 1] = '\0';  // Xóa ký tự cuối chuỗi
+					count--;
+					cout << (char)8 << " " << (char)8;  // Xóa ký tự trên màn hình
+				}
+				// --- Xử lý phím ENTER (kết thúc nhập) ---
+				else if (signal == 13)  // ENTER key
+				{
+					return;  // Kết thúc nhập
+				}
+			}
+		}
+	}
+}
+
 
 /*space la khoang thut dau dong
 Limit Reach la gia tri gioi han cua no*/

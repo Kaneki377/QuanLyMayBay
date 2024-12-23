@@ -6,6 +6,7 @@
 #include"Flight.h"
 #include"Plane.h"
 #include"ProcessingFile.h"
+#include"string"
 int curPosPassenger = 1;
 int curPassengerPage = 1;
 int totalPassengerPage = 0;
@@ -257,36 +258,43 @@ AVLTree removePassenger(AVLTree& root, passenger data)
 	}
 }
 
-bool findPassengerFollowID(AVLTree root, unsigned int idCardToFind)
-{
-	if (root != NULL)
-	{
-		if (root->data.idCard == idCardToFind)
-		{
-			return true;
-		}
-		else if (root->data.idCard < idCardToFind)
-		{
-			findPassengerFollowID(root->pLeft, idCardToFind);
-		}
-		else if (root->data.idCard > idCardToFind)
-		{
-			findPassengerFollowID(root->pRight, idCardToFind);
-		}
+bool findPassengerFollowID(AVLTree root, char* idCardToFind) {
+	// Kiểm tra cây hoặc chuỗi cần tìm có hợp lệ không
+	if (root == nullptr || idCardToFind == nullptr) {
+		return false;
 	}
-	return false;
+
+	// So sánh chuỗi hiện tại với giá trị cần tìm
+	int cmp = strcmp(root->data.idCard, idCardToFind);
+
+	if (cmp == 0) {
+		return true; // Tìm thấy
+	}
+	else if (cmp > 0) {
+		return findPassengerFollowID(root->pLeft, idCardToFind); // Tìm bên trái
+	}
+	else {
+		return findPassengerFollowID(root->pRight, idCardToFind); // Tìm bên phải
+	}
 }
 
-passengerNode* findPassenger(AVLTree root, unsigned int idCardToFind)
+
+
+passengerNode* findPassenger(AVLTree root, char* idCardToFind)
 {
-	if (root == NULL) return NULL;
-	if (root->data.idCard == idCardToFind)
+	if (root == NULL)
+		return NULL;
+
+	// So sánh chuỗi bằng strcmp
+	int cmp = strcmp(root->data.idCard, idCardToFind);
+	if (cmp == 0)
 		return root;
-	if (root->data.idCard > idCardToFind)
-		findPassenger(root->pLeft, idCardToFind);
+	else if (cmp > 0)
+		return findPassenger(root->pLeft, idCardToFind); // Tìm bên trái
 	else
-		findPassenger(root->pRight, idCardToFind);
+		return findPassenger(root->pRight, idCardToFind); // Tìm bên phải
 }
+
 
 void showPassenger(passenger p, int position)
 {
@@ -349,7 +357,7 @@ void watchRoot(AVLTree root)
 		watchRoot(root->pRight);
 	}
 }
-void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, int idPassenger)
+void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, char* idPassenger)
 {
 	ShowCur(true);
 	bool SaveOrNot = true;
@@ -428,9 +436,10 @@ void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, int idPas
 		case 4:
 		{
 			passenger p;
-			p.idCard = idPassenger;
-			//strcpy(P.Ho, FirstName.c_str());
-			//strcpy(P.Ten, LastName.c_str());
+			strcpy(p.idCard, idPassenger);
+			//sửa 439 762
+			/*_strcpy(p.firstname, first_name.c_str());
+			_strcpy(p.lastName, last_name.c_str());*/
 			StandardName(p.firstname);
 			StandardName(p.lastName);
 			p.gender = gender;
@@ -530,7 +539,7 @@ void seePassengerList(AVLTree root)
 		}
 	}
 }
-/*"4.Huy Bo Ve May Bay",*/
+/*"4.Huy Bo Ve May Bay",*/  //cancel
 void cancelFlightTicket(AVLTree root)
 {
 	system("cls");
@@ -584,12 +593,14 @@ void cancelFlightTicket(AVLTree root)
 	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
 	std::cout << "Kinh moi Thay nhap CMND theo phan danh sach chuyen bay hien co de kiem tra thong tin --->";
 	CreateForm(ContentPassenger, 1, 2, 30);
-	int IDHanhKhach = 0;
+
+	//char
+	char IDHanhKhach[13] = "";
 	int target = -1;
 	while (true)
 	{
 		ShowCur(true);
-		ConstraintForOnlyNumber(IDHanhKhach, MoveOrNot, ordinal, SaveOrNot, 12, 999999);
+		ConstraintForOnlyChar(IDHanhKhach, MoveOrNot, ordinal, SaveOrNot, 12);
 		if (SaveOrNot == false)
 		{
 			RemoveFormComplete();
@@ -598,7 +609,7 @@ void cancelFlightTicket(AVLTree root)
 
 		for (int i = 0; i < WatchingFlight->data.totalTicketsSold; i++)
 		{
-			if (WatchingFlight->data.TicketList[i].CMND == IDHanhKhach) {
+			if (strcmp(WatchingFlight->data.TicketList[i].CMND, IDHanhKhach) == 0) {
 				target = i; break;
 			}
 		}
@@ -697,7 +708,8 @@ void bookTicket(AVLTree& root)
 		int ChoosenTicket = chooseTicket(WatchingFlight->data);
 
 		if (ChoosenTicket == -1) return;
-		int IDHanhKhach = 0, target = -1;
+		char IDHanhKhach[13] = "";
+		int target = -1;
 
 
 		gotoxy(X_TitlePage + 30, Y_TitlePage + 3);
@@ -705,7 +717,7 @@ void bookTicket(AVLTree& root)
 		std::cout << "Vui Long Nhap CMND ->";
 		CreateForm(ContentPassenger, 1, 2, 30);
 		ShowCur(true);
-		ConstraintForOnlyNumber(IDHanhKhach, MoveOrNot, ordinal, SaveOrNot, 12, 999999);
+		ConstraintForOnlyChar(IDHanhKhach, MoveOrNot, ordinal, SaveOrNot, 12);
 		if (SaveOrNot == false)
 		{
 			gotoxy(X_TitlePage + 30, Y_TitlePage + 3);
@@ -748,7 +760,7 @@ void bookTicket(AVLTree& root)
 				nPassenger++;
 			}
 			Ticket AddingTicket;
-			AddingTicket.CMND = IDHanhKhach;
+			strcpy(AddingTicket.CMND, IDHanhKhach);
 			AddingTicket.seatNumber = ChoosenTicket;
 			WatchingFlight->data.TicketList[WatchingFlight->data.totalTicketsSold] = AddingTicket;
 			WatchingFlight->data.totalTicketsSold++;
