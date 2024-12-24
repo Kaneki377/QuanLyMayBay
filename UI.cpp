@@ -470,7 +470,7 @@ void CenterMenu()
 			break;
 		case 5:
 			system("color 0E");
-			//seePassengerList(root);
+			seePassengerList(root);
 			break;
 		case 6:
 			system("color 0E");

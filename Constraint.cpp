@@ -241,59 +241,56 @@ void ConstraintForOnlyNumber(int& result, bool& MoveOrNot, int& ordinal, bool& S
 	}// while(true)
 }
 
-void ConstraintForOnlyChar(char result[], bool& MoveOrNot, int& ordinal, bool& SaveOrNot, int distance)
+void ConstraintForOnlyChar(string& result, bool& MoveOrNot, int& ordinal, bool& SaveOrNot, int distance)
 {
-	gotoxy(X_Add + distance, ordinal * 3 + Y_Add);  // Di chuyển con trỏ tới vị trí hiển thị
-	cout << result;  // In ra chuỗi hiện tại
-
-	int count = 0;  // Mặc định, số lượng ký tự trong chuỗi
-
-	// Đếm số ký tự hiện tại trong result
-	while (result[count] != '\0')
-	{
-		count++;
-	}
+	int lenght = (int)result.length();
+	gotoxy(X_Add + distance, ordinal * 3 + Y_Add);
+	cout << result;
+	int count = lenght;
 
 	while (true)
 	{
-		while (_kbhit())  // Kiểm tra nếu có phím được nhấn
+		while (_kbhit())
 		{
-			int signal = _getch();  // Lấy mã phím được nhấn
-			if (signal != 224 && signal != SPACE && signal != 0)
+			int signal = _getch();
+			if (signal != 224 && signal != BACKSPACE && signal != 0)
 			{
-				// --- Xử lý các ký tự từ 0 đến 9 ---
-				if (48 <= signal && signal <= 57)  // Kiểm tra xem ký tự có phải là số không
+				/*	--------tu A den Z -----				------Tu a den z -------				-----Tu 0 den 9 -----*/
+				if ((48 <= signal && signal <= 57))
 				{
-					// Nếu còn chỗ trống trong chuỗi và số ký tự chưa vượt quá giới hạn
-					if (count < 13)  // Số lượng tối đa là 13 ký tự cho CCCD
+					/*Limit_ID_Length la do dai gioi han cua no-*/
+					if (count < 12)
 					{
-						result[count] = signal;  // Thêm ký tự vào vị trí cuối chuỗi
-						count++;
-						result[count] = '\0';  // Kết thúc chuỗi
+						count++;// cap nhat bien count 
+						cout << (char)signal;// hien thi no tren man hinh nhap thong tin
+						result += (char)signal;// cap nhat ket qua vao RESULT
 					}
 				}
-				// --- Xử lý phím ESC (thoát) ---
-				else if (signal == 27)  // ESC key
+				else if (signal == ENTER)
 				{
+					MoveOrNot = true;// Enter cung tuong duong voi xuong dong 
+					return;
+				}
+
+				else if (signal == ESC) {
 					SaveOrNot = false;
 					return;
 				}
-				// --- Xử lý phím BACKSPACE (xóa ký tự) ---
-				else if (signal == 8 && count > 0)  // BACKSPACE key
-				{
-					result[count - 1] = '\0';  // Xóa ký tự cuối chuỗi
-					count--;
-					cout << (char)8 << " " << (char)8;  // Xóa ký tự trên màn hình
-				}
-				// --- Xử lý phím ENTER (kết thúc nhập) ---
-				else if (signal == 13)  // ENTER key
-				{
-					return;  // Kết thúc nhập
-				}
 			}
-		}
-	}
+			else if (signal == BACKSPACE && count > 0)
+			{
+				/* xoa ki tu khoang trang - \b dai dien cho
+				khoang trang dung tren ban phim - xoa khoang trang vua nhap*/
+				cout << "\b" << " " << "\b";
+				/* xoa di 1 ki tu o vi tri cuoi cung - cap nhat lai 1 vi tri*/
+				result.erase(result.length() - 1, 1);
+				/* vi day la BACKSPACE nen khong tinh gia tri nay vao bien count*/
+				count--;
+			}
+		}// while(_kbhit())
+	}// while(true)
 }
+
 
 
 

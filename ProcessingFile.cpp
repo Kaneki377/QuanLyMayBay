@@ -74,14 +74,16 @@ void ReadTicketListOfOneFlight(flight& f)
 	if (file.is_open())
 	{
 		file >> f.totalTicketsSold;
-		if (f.totalTicketsSold <= 0 || f.totalTicketsSold > f.totalTickets)
-		{
-			return;
-		}
 		string temp;
 		getline(file, temp);
 		f.TicketList = new Ticket[f.totalTicketsSold];
+		for (int i = 0; i < f.totalTicketsSold; i++)
+		{
+			file >> f.TicketList[i].CMND;
+			file >> f.TicketList[i].seatNumber;
+		}
 	}
+	file.close();
 }
 
 //Function doc chuyen bay tu file.
@@ -122,9 +124,9 @@ void readFlightFromFile(flightList& fl, planeList& pl)
 
 			getline(fileIn, temp);
 
-			cout << f.idFlight << f.airportTo << f.idPlane <<
+			/*cout << f.idFlight << f.airportTo << f.idPlane <<
 				f.departureTime.hour << f.departureTime.minutes <<
-				f.departureTime.day << f.departureTime.month << f.departureTime.year;
+				f.departureTime.day << f.departureTime.month << f.departureTime.year;*/
 
 			for (index = 0; index < pl.size; index++) {
 				if (_stricmp(f.idPlane, pl.PList[index]->id) == 0) {

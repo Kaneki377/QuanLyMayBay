@@ -546,9 +546,29 @@ void cancelFlightTicket(AVLTree root)
 {
 	system("cls");
 
+	// Print the list of available flights
 	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
-	std::cout << "Kinh moi Thay nhap CMND theo phan danh sach chuyen bay hien co de HUY ve -->>";
-	gotoxy(X_Notification, Y_Notification);std::cout << " Thong Bao ";
+	std::cout << "Available Flights:" << std::endl;
+
+	FlightNode* currentFlight = fList.pHead;
+	int flightCount = 0;
+	while (currentFlight != nullptr) {
+		if (currentFlight->data.status == 1) { // Assuming 1 is the status for available flights
+			std::cout << "Flight ID: " << currentFlight->data.idFlight << ", Destination: " << currentFlight->data.airportTo << ", Departure Time: ";
+			showDateTime(currentFlight->data.departureTime);
+			std::cout << std::endl;
+			flightCount++;
+		}
+		currentFlight = currentFlight->pNext;
+	}
+
+	if (flightCount == 0) {
+		std::cout << "No available flights." << std::endl;
+		return;
+	}
+
+	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
+	std::cout << "Please enter the Flight ID to cancel a ticket --->";
 	/*Kiem tra xem MaChuyenBay co ton tai*/
 	string result;
 	CreateForm(ContentFlight, 0, 1, 30);
@@ -579,7 +599,7 @@ void cancelFlightTicket(AVLTree root)
 		}
 		else
 		{
-			if (WatchingFlight->data.status == 1 || WatchingFlight->data.status == 4)
+			if (WatchingFlight->data.status == 0 || WatchingFlight->data.status == 2 || WatchingFlight->data.status == 3)
 			{
 				ShowCur(false);
 				gotoxy(X_Notification, Y_Notification + 1);
@@ -593,11 +613,11 @@ void cancelFlightTicket(AVLTree root)
 	}
 	RemoveNotification();
 	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
-	std::cout << "Kinh moi Thay nhap CMND theo phan danh sach chuyen bay hien co de kiem tra thong tin --->";
+	std::cout << "Please enter the Passenger ID to check infomation --->";
 	CreateForm(ContentPassenger, 1, 2, 30);
 
 	//char
-	char IDHanhKhach[13] = "";
+	string IDHanhKhach;
 	int target = -1;
 	while (true)
 	{
@@ -611,7 +631,7 @@ void cancelFlightTicket(AVLTree root)
 
 		for (int i = 0; i < WatchingFlight->data.totalTicketsSold; i++)
 		{
-			if (strcmp(WatchingFlight->data.TicketList[i].CMND, IDHanhKhach) == 0) {
+			if (strcmp(WatchingFlight->data.TicketList[i].CMND, IDHanhKhach.c_str()) == 0) {
 				target = i; break;
 			}
 		}
@@ -730,7 +750,7 @@ void bookTicket(AVLTree& root)
         int ChoosenTicket = chooseTicket(WatchingFlight->data);
 
         if (ChoosenTicket == -1) return;
-        char IDHanhKhach[13] = "";
+		string IDHanhKhach;
         int target = -1;
 
 
@@ -750,7 +770,7 @@ void bookTicket(AVLTree& root)
         /*Tim kiem xem cai ID nay co nam trong danh sach ve chua*/
         for (int i = 0; i < WatchingFlight->data.totalTicketsSold; i++)
         {
-            if (strcmp(WatchingFlight->data.TicketList[i].CMND, IDHanhKhach) == 0) {
+            if (strcmp(WatchingFlight->data.TicketList[i].CMND, IDHanhKhach.c_str()) == 0) {
                 target = i;
                 break;
             }
@@ -772,17 +792,17 @@ void bookTicket(AVLTree& root)
         /*Khong tim ra*/
         if (target == -1)
         {
-            passengerNode* tempora = findPassenger(root, IDHanhKhach);
+            passengerNode* tempora = findPassenger(root, const_cast<char*>(IDHanhKhach.c_str()));
             /*Neu chua ton tai thi nhap moi*/
             if (tempora == NULL) {
                 CreateForm(ContentPassenger, 1, sizeof(ContentPassenger) / sizeof(string), 27);
                 gotoxy(X_Add + 12, 0 * 3 + Y_Add);
                 std::cout << IDHanhKhach;
-                inputPassenger(root, false, false, IDHanhKhach);
+                inputPassenger(root, false, false, const_cast<char*>(IDHanhKhach.c_str()));
                 nPassenger++;
             }
             Ticket AddingTicket;
-            strcpy_s(AddingTicket.CMND, IDHanhKhach);
+			strcpy_s(AddingTicket.CMND, sizeof(AddingTicket.CMND), IDHanhKhach.c_str());
             AddingTicket.seatNumber = ChoosenTicket;
             WatchingFlight->data.TicketList[WatchingFlight->data.totalTicketsSold] = AddingTicket;
             WatchingFlight->data.totalTicketsSold++;
