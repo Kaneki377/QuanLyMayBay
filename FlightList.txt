@@ -1,14 +1,4 @@
 17
-China
-Beijing
-Vn1187
-17
-2
-23
-12
-2024
-100
-3
 CRECH
 Praha
 VJ5431
@@ -138,6 +128,16 @@ VN1234
 12
 2024
 150
+3
+Sydney22
+Sydney
+VJ5431
+19
+14
+24
+12
+2024
+20
 3
 USA2306
 Los Angeles

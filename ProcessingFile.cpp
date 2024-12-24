@@ -129,12 +129,11 @@ void readFlightFromFile(flightList& fl, planeList& pl)
 				f.departureTime.day << f.departureTime.month << f.departureTime.year;*/
 
 			for (index = 0; index < pl.size; index++) {
-				if (_stricmp(f.idPlane, pl.PList[index]->id) == 0) {
+				if (_strcmpi(f.idPlane, pl.PList[index]->id) == 0) {
 					pl.PList[index]->flyTimes++;
 				}
 			}
 			ReadTicketListOfOneFlight(f);
-			//addEndingList(fl, f);
 			insertFlightAfter(fl, f);
 		}
 		fl.numsOfFlight = numFlight;

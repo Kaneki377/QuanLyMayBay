@@ -22,14 +22,6 @@ extern string ContentFlight[6];
 extern string ContentFlightForInsert[4];
 extern planeList PList;
 
-void initFlight(flight &f) {
-	f.totalTickets = 0;
-	f.totalTicketsSold = 0;
-	f.TicketList = new Ticket[100]; //Cap phat mang dong
-	f.status = 1;
-	//Status: 0: Huy chuyen, 1:Con ve, 2: het ve, 3: hoan tat
-}
-
 void initFlightList(flightList &fl) {
 	fl.pHead = NULL;
 	fl.pTail = NULL;
@@ -83,7 +75,7 @@ void insertFlightAfter(flightList &fl, flight data)
 {
 	flightNode* newNode = createFlightNode(data);
 	//Neu danh sach rong hoac ma chuyen bay moi nho hon ma chuyen bay node dau tien
-	if (fl.pHead == NULL || _stricmp(data.idFlight, fl.pHead->data.idFlight) < 0) {
+	if (fl.pHead == NULL || _strcmpi(data.idFlight, fl.pHead->data.idFlight) < 0) {
 		newNode->pNext = fl.pHead;
 		fl.pHead = newNode;
 		if (fl.pTail == NULL) {
@@ -92,7 +84,7 @@ void insertFlightAfter(flightList &fl, flight data)
 	}
 	else {
 		flightNode* tempNode = fl.pHead;
-		while (tempNode->pNext != NULL && _stricmp(data.idFlight, tempNode->pNext->data.idFlight) > 0) {
+		while (tempNode->pNext != NULL && _strcmpi(data.idFlight, tempNode->pNext->data.idFlight) > 0) {
 			tempNode = tempNode->pNext;
 		}
 		newNode->pNext = tempNode->pNext;
@@ -110,7 +102,7 @@ int findIndexFlightById(flightList fl, const char *idFlightToFind)
 	int index = 0;
 	for (flightNode *search = fl.pHead; search != NULL; search = search->pNext) {
 		//So sanh 2 chuoi co phan biet ky tu in hoa va in thuong
-		if (_stricmp(search->data.idFlight, idFlightToFind) == 0) {
+		if (_strcmpi(search->data.idFlight, idFlightToFind) == 0) {
 			return index;
 		}
 		index++;
@@ -123,7 +115,7 @@ int findDestinationByAirPort(flightList fl, const char *airportToFind)
 {
 	int index = 0;
 	for (flightNode *search = fl.pHead; search != NULL; search = search->pNext) {
-		if (_stricmp(search->data.airportTo, airportToFind) == 0) {
+		if (_strcmpi(search->data.airportTo, airportToFind) == 0) {
 			return index;
 		}
 		index++;
@@ -194,7 +186,13 @@ bool removeHead(flightList &fl)
 	}
 
 	flightNode* tempNode = fl.pHead;
-	fl.pHead = fl.pHead->pNext;
+	if (fl.pHead == fl.pTail) { // Trường hợp danh sách chỉ có 1 phần tử
+		fl.pHead = fl.pTail = NULL;
+	}
+	else {
+		fl.pHead = fl.pHead->pNext;
+	}
+
 	delete tempNode;
 	fl.numsOfFlight--;
 
@@ -271,23 +269,6 @@ bool removeFlightById(flightList &fl, const char *idFlightToFind)
 	}
 }
 
-//Function giai phong bo nho
-bool cleanUpFlightList(flightList &fl)
-{
-	if (fl.pHead == NULL) {
-		return false;
-	}
-
-	flightNode *tempNode;
-	
-	while (fl.pHead != NULL) {
-		tempNode = fl.pHead;
-		fl.pHead = fl.pHead->pNext;
-		delete tempNode;
-	}
-	return true;
-}
-
 //Cap nhat trang thai chuyen bay
 void updateFlightStatus(flightList &fl)
 {
@@ -298,144 +279,6 @@ void updateFlightStatus(flightList &fl)
 			//0. huy Chuyen, 1. Con ve, 2. Het ve, 3. Hoan tat
 		}
 	}
-}
-
-void showTicketChairBoard(flight f)
-{
-	int x = X_TicketChair + 8;
-	int y = Y_TicketChair + 5;
-	int Limit = f.totalTickets;
-
-	// Get the plane information
-	plane* currentPlane = nullptr;
-	for (int i = 0; i < PList.size; i++) {
-		if (strcmp(PList.PList[i]->id, f.idPlane) == 0) {
-			currentPlane = PList.PList[i];
-			break;
-		}
-	}
-
-	if (currentPlane == nullptr) {
-		std::cerr << "Plane not found!" << std::endl;
-		return;
-	}
-
-	int rows = currentPlane->rows; 
-	int cols = currentPlane->cols; 
-
-	for (int i = 0; i < cols; i++) 
-	{
-		for (int j = 1; j <= rows; j++) 
-		{
-			
-			char colLabel = 'A' + i;
-			char rowLabel[3];
-			sprintf(rowLabel, "%d", j); 
-			std::string ticketLabel = std::string(1, colLabel) + rowLabel;
-
-			TicketStack(x, y, ticketLabel, checkOutTicket(f, i * rows + j));
-			gotoxy(x, y);
-			//std::cout << ticketLabel;
-
-			x += 8;
-		}
-
-		y += 5;
-		x = X_TicketChair + 8;
-	}
-
-}
-
-
-void effectTicketMenu(int index)
-{
-	ShowCur(false);
-	int Current = index;// lay vi tri cai ve hien tai
-
-	int column = (Current - 1) % 10;//(18-1)%10 = 7 ->cot thu 8
-	int row = (Current - 1) / 10;// (18-1)/10 = 1 ->hang thu 2
-
-	SetBGColor(1);// highligh vi tri hien tai
-	gotoxy(X_TicketChair + (column + 1) * 8, Y_TicketChair + (row + 1) * 5);
-	cout << char(176) << setw(3) << setfill('0') << Current << char(176);
-
-	/*Tam ve dung truoc tam ve hien tai truoc do*/
-	column = (CurPosPreTicket - 1) % 10;// 18-1 = 7 ->> cai nay dang nam cot 7
-	row = (CurPosPreTicket - 1) / 10; // 2
-
-	SetBGColor(ColorCode_Black);
-	gotoxy(X_TicketChair + (column + 1) * 8, Y_TicketChair + (row + 1) * 5);
-	cout << char(176) << setw(3) << setfill('0') << CurPosPreTicket << char(176);
-	CurPosPreTicket = Current;
-}
-
-int chooseTicket(flight& f)
-{
-	system("color 0E");
-	// tao lai vi tri chon ve
-	CurPosTicket = 1;
-	CurPosPreTicket = 1;
-
-	showTicketChairBoard(f);
-	int signal;
-	int PASS = 1;// pass dung nhu 1 cai cong tac neu enter thi thoat ra ngoai
-	SetBGColor(1);// blue
-	gotoxy(X_TicketChair + (0 + 1) * 8, Y_TicketChair + (0 + 1) * 5);// (28,9)
-	cout << char(176) << setw(3) << setfill('0') << 1 << char(176);
-
-	while (PASS)
-	{
-		signal = _getch();
-		if (signal == 0) signal = _getch();
-
-		switch (signal)
-		{
-		case KEY_DOWN:
-			if (CurPosTicket + 10 <= f.totalTickets)
-			{
-				CurPosTicket = CurPosTicket + 10;
-				effectTicketMenu(CurPosTicket);
-			}
-			break;
-		case KEY_UP:
-			if (CurPosTicket - 10 >= 1)
-			{
-				CurPosTicket = CurPosTicket - 10;
-				effectTicketMenu(CurPosTicket);
-			}
-			break;
-		case KEY_LEFT:
-			if (CurPosTicket > 1)
-			{
-				CurPosTicket--;
-				effectTicketMenu(CurPosTicket);
-			}
-			break;
-		case KEY_RIGHT:
-			if (CurPosTicket < f.totalTickets)
-			{
-				CurPosTicket++;
-				effectTicketMenu(CurPosTicket);
-			}
-			break;
-		case ESC:
-			return -1;
-		case ENTER:
-			if (checkOutTicket(f, CurPosTicket) == 1) {
-
-				gotoxy(3, 5);
-				cout << "Ve nay da co Hanh khach dat cho";
-				Sleep(1000);
-				gotoxy(3, 5);
-				SetBGColor(ColorCode_Black);
-				printf("%-50s", " ");
-				break;
-			}
-			PASS = 0;
-			return CurPosTicket;
-		}// end switch
-	}// while
-	return 0;
 }
 
 //Xuat thong tin 1 chuyen bay
@@ -540,15 +383,6 @@ void changePageManageFlightList(flightList fl)
 	cout << "Trang " << CurFlightPage << "/" << TotalFlightPage;
 }
 
-//Kiem tra thong tin chuyen bay co day du hay khong
-bool isFlightDataEmpty(flight f)
-{
-	if (strlen(f.idFlight) == 0 || strlen(f.airportTo) == 0 || f.totalTickets <= 0) {
-		return false;
-	}
-	return true;
-}
-
 void inputFlightInFor(flightList &fl, bool editedOrNot, bool deleteOrNot)
 {
 	ShowCur(true);
@@ -638,18 +472,25 @@ void inputFlightInFor(flightList &fl, bool editedOrNot, bool deleteOrNot)
 
 				flightNode *editFlight = findFlightById(fl, idFlight.c_str());
 				if (editedOrNot) {
+					idFlight = editFlight->data.idFlight;
+					airportTo = editFlight->data.airportTo;
+					idPlane = editFlight->data.idPlane;
+					dt = editFlight->data.departureTime;
+					nTicketInFlight = editFlight->data.totalTickets;
+					status = editFlight->data.status;
+
 					gotoxy(X_Add + 12, 0 * 3 + Y_Add);
-					cout << editFlight->data.idFlight;
+					cout << idFlight;
 					gotoxy(X_Add + 12, 1 * 3 + Y_Add);
-					cout << editFlight->data.airportTo;
+					cout << airportTo;
 					gotoxy(X_Add + 12, 2 * 3 + Y_Add);
-					cout << editFlight->data.idPlane;
+					cout << idPlane;
 					gotoxy(X_Add + 12, 3 * 3 + Y_Add);
-					showDateTime(editFlight->data.departureTime);
+					showDateTime(dt);
 					gotoxy(X_Add + 12, 4 * 3 + Y_Add);
-					cout << editFlight->data.totalTickets;
+					cout << nTicketInFlight;
 					gotoxy(X_Add + 12, 5 * 3 + Y_Add);
-					cout << editFlight->data.status;
+					cout << status;
 				}
 
 				ordinal++;
@@ -892,4 +733,139 @@ int checkOutTicket(flight f, int x)
 	return 0;
 }
 
+void showTicketChairBoard(flight f)
+{
+	int x = X_TicketChair + 8;
+	int y = Y_TicketChair + 5;
+	int Limit = f.totalTickets;
 
+	// Get the plane information
+	plane* currentPlane = nullptr;
+	for (int i = 0; i < PList.size; i++) {
+		if (strcmp(PList.PList[i]->id, f.idPlane) == 0) {
+			currentPlane = PList.PList[i];
+			break;
+		}
+	}
+
+	if (currentPlane == nullptr) {
+		std::cerr << "Plane not found!" << std::endl;
+		return;
+	}
+
+	int rows = currentPlane->rows;
+	int cols = currentPlane->cols;
+
+	for (int i = 0; i < cols; i++)
+	{
+		for (int j = 1; j <= rows; j++)
+		{
+
+			char colLabel = 'A' + i;
+			char rowLabel[3];
+			sprintf(rowLabel, "%d", j);
+			std::string ticketLabel = std::string(1, colLabel) + rowLabel;
+
+			TicketStack(x, y, ticketLabel, checkOutTicket(f, i * rows + j));
+			gotoxy(x, y);
+			//std::cout << ticketLabel;
+
+			x += 8;
+		}
+
+		y += 5;
+		x = X_TicketChair + 8;
+	}
+
+}
+
+void effectTicketMenu(int index)
+{
+	ShowCur(false);
+	int Current = index;// lay vi tri cai ve hien tai
+
+	int column = (Current - 1) % 10;//(18-1)%10 = 7 ->cot thu 8
+	int row = (Current - 1) / 10;// (18-1)/10 = 1 ->hang thu 2
+
+	SetBGColor(1);// highligh vi tri hien tai
+	gotoxy(X_TicketChair + (column + 1) * 8, Y_TicketChair + (row + 1) * 5);
+	cout << char(176) << setw(3) << setfill('0') << Current << char(176);
+
+	/*Tam ve dung truoc tam ve hien tai truoc do*/
+	column = (CurPosPreTicket - 1) % 10;// 18-1 = 7 ->> cai nay dang nam cot 7
+	row = (CurPosPreTicket - 1) / 10; // 2
+
+	SetBGColor(ColorCode_Black);
+	gotoxy(X_TicketChair + (column + 1) * 8, Y_TicketChair + (row + 1) * 5);
+	cout << char(176) << setw(3) << setfill('0') << CurPosPreTicket << char(176);
+	CurPosPreTicket = Current;
+}
+
+int chooseTicket(flight& f)
+{
+	system("color 0E");
+	// tao lai vi tri chon ve
+	CurPosTicket = 1;
+	CurPosPreTicket = 1;
+
+	showTicketChairBoard(f);
+	int signal;
+	int PASS = 1;// pass dung nhu 1 cai cong tac neu enter thi thoat ra ngoai
+	SetBGColor(1);// blue
+	gotoxy(X_TicketChair + (0 + 1) * 8, Y_TicketChair + (0 + 1) * 5);// (28,9)
+	cout << char(176) << setw(3) << setfill('0') << 1 << char(176);
+
+	while (PASS)
+	{
+		signal = _getch();
+		if (signal == 0) signal = _getch();
+
+		switch (signal)
+		{
+		case KEY_DOWN:
+			if (CurPosTicket + 10 <= f.totalTickets)
+			{
+				CurPosTicket = CurPosTicket + 10;
+				effectTicketMenu(CurPosTicket);
+			}
+			break;
+		case KEY_UP:
+			if (CurPosTicket - 10 >= 1)
+			{
+				CurPosTicket = CurPosTicket - 10;
+				effectTicketMenu(CurPosTicket);
+			}
+			break;
+		case KEY_LEFT:
+			if (CurPosTicket > 1)
+			{
+				CurPosTicket--;
+				effectTicketMenu(CurPosTicket);
+			}
+			break;
+		case KEY_RIGHT:
+			if (CurPosTicket < f.totalTickets)
+			{
+				CurPosTicket++;
+				effectTicketMenu(CurPosTicket);
+			}
+			break;
+		case ESC:
+			return -1;
+		case ENTER:
+			if (checkOutTicket(f, CurPosTicket) == 1) {
+
+				gotoxy(3, 5);
+				cout << "Ve nay da co Hanh khach dat cho";
+				Sleep(1000);
+				gotoxy(3, 5);
+				SetBGColor(ColorCode_Black);
+				printf("%-50s", " ");
+				break;
+			}
+			PASS = 0;
+			return CurPosTicket;
+		}// end switch
+	}// while
+	return 0;
+}

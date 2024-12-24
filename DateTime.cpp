@@ -25,7 +25,6 @@ void initDateTime(dateTime &dt) {
 
 //Function kiem tra so ngay va thang co hop le va kiem tra nam nhuan
 bool isDateTimeFormatRight(dateTime dt) {
-	nDayEachM[2] = 28;
 	if ((dt.year % 400 == 0) || (dt.year % 4 == 0 && dt.year % 100 != 0)) {
 		nDayEachM[2] = 29;
 	}
@@ -42,7 +41,6 @@ bool isDateTimeValid(dateTime dt) {
 		return false;
 	}
 
-	nDayEachM[2] = 28;
 	time_t nowTime = time(0);
 	tm* localTime = localtime(&nowTime);
 
