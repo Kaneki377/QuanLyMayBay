@@ -271,25 +271,26 @@ void CreateForm(string content[], int StartIndex, int nContent, int length)
 }
 
 /*the hien 1 o ve trong danh sach ve cua may bay*/
-void TicketStack(int x, int y, int  text, int status)
+void TicketStack(int x, int y, const std::string& ticketLabel, int status)
 {
-	SetColor(14);// yellow
-	SetBGColor(0);// black
-	/*Ve duong ve ben tren*/
+	SetColor(14);   // Màu chữ: vàng
+	SetBGColor(0);  // Màu nền: đen
+
+	/* Vẽ đường viền bên trên */
 	gotoxy(x, y - 1);
-	cout << char(176) << setw(3) << setfill(char(176)) << char(176) << char(176);
-	/*So thu tu cua cai ve do*/
+	std::cout << char(176) << std::setw(5) << std::setfill(char(176)) << char(176);
+
+	/* Hiển thị nhãn vé */
 	gotoxy(x, y);
-
-	cout << char(176) << setw(3) << setfill('0') << text << char(176);
-	//printf("%-5d",text);
-	/*ve duong ke ben duoi cua cai ve*/
-	gotoxy(x, y + 1);
 	if (status == 1) {
-		SetBGColor(ColorCode_Red);
+		SetBGColor(ColorCode_Red);  // Nếu trạng thái là 1, đổi màu nền thành đỏ
 	}
-	cout << char(176) << setw(3) << setfill(char(176)) << char(176) << char(176);
+	std::cout << char(176) << " " << ticketLabel << " " << char(176);
 
+	/* Vẽ đường viền bên dưới */
+	gotoxy(x, y + 1);
+	SetBGColor(0); // Reset màu nền về đen
+	std::cout << char(176) << std::setw(5) << std::setfill(char(176)) << char(176);
 }
 
 /*Xoa bang nhap thong tin sau khi nhap xong*/

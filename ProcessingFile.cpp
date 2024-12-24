@@ -63,6 +63,27 @@ void WritePlaneToFile(planeList& pl)
 	fileout.close();
 }
 
+void ReadTicketListOfOneFlight(flight& f)
+{
+	ifstream file;
+	char filenameve[50] = "DSV\\";
+	strcat(filenameve, f.idFlight);
+	strcat(filenameve, ".TXT");
+
+	file.open(filenameve, ios_base::in);
+	if (file.is_open())
+	{
+		file >> f.totalTicketsSold;
+		if (f.totalTicketsSold <= 0 || f.totalTicketsSold > f.totalTickets)
+		{
+			return;
+		}
+		string temp;
+		getline(file, temp);
+		f.TicketList = new Ticket[f.totalTicketsSold];
+	}
+}
+
 //Function doc chuyen bay tu file.
 void readFlightFromFile(flightList& fl, planeList& pl)
 {
@@ -110,7 +131,7 @@ void readFlightFromFile(flightList& fl, planeList& pl)
 					pl.PList[index]->flyTimes++;
 				}
 			}
-
+			ReadTicketListOfOneFlight(f);
 			//addEndingList(fl, f);
 			insertFlightAfter(fl, f);
 		}
@@ -121,7 +142,24 @@ void readFlightFromFile(flightList& fl, planeList& pl)
 
 void saveTicketListOfOneFlight(flight& f)
 {
+	ofstream file;
+	char filenameve[50] = "DSV\\";
+	strcat(filenameve, f.idFlight);
+	strcat(filenameve, ".TXT");
+	file.open(filenameve, ios_base::out);
+	if (file.is_open())
+	{
+		file << f.totalTicketsSold << endl;
+		for (int i = 0; i < f.totalTicketsSold;i++)
+		{
+			file << f.TicketList[i].CMND << endl;
+			file << f.TicketList[i].seatNumber << endl;
+		}
+	}
+	file.close();
 }
+/*Doc ghi file chuyen bay*/
+
 
 void saveFlight(flight& f, ofstream& fileOut)
 {

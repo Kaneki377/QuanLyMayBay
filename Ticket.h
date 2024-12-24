@@ -1,8 +1,8 @@
 #pragma once
-#include <string>
+
 struct ticket {
 	char CMND[13];
-	char seatNumber;
+	int seatNumber;
 };
-typedef ticket Ticket;
+typedef struct ticket Ticket;
 

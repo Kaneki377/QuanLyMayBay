@@ -13,7 +13,7 @@ void HighlightLine();
 int ScrollMenu(char Menu[MaxItem][70]);
 void CreateRow(int x, int y, string content, int length);
 void CreateForm(string content[], int StartIndex, int nContent, int length);
-void TicketStack(int x, int y, int  text, int status);
+void TicketStack(int x, int y, const std::string& ticketLabel, int status);
 int RemoveConfirm();
 void FloatingEffectWord(char Content[], int x, int y, int Color);
 void RemoveExceedMember(int count, int nContent);

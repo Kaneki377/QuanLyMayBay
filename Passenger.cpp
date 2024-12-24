@@ -645,130 +645,151 @@ void cancelFlightTicket(AVLTree root)
 /*3.Dang Ky Ve May Bay*/
 void bookTicket(AVLTree& root)
 {
-	system("cls");
+    system("cls");
 
-	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
-	cout << "Kinh moi Thay nhap Ma chuyen bay theo phan danh sach chuyen bay hien co de kiem tra thong tin --->";
-	/*Kiem tra xem MaChuyenBay co ton tai*/
+    // Print the list of available flights
+    gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
+    std::cout << "Available Flights:" << std::endl;
 
-	string result;
-	CreateForm(ContentFlight, 0, 1, 30);
-	bool flag = false;
-	bool MoveOrNot = false;
-	bool SaveOrNot = true;
-	int ordinal = 0;
-	FlightNode* WatchingFlight = NULL;
-	while (flag == false)
-	{
-		system("color 0E");
-		ShowCur(true);
-		ConstraintForLetterAndNumber(result, MoveOrNot, ordinal, SaveOrNot, 12);
-		if (SaveOrNot == false)
-		{
-			RemoveFormComplete();
-			return;
-		}
+    FlightNode* currentFlight = fList.pHead;
+    int flightCount = 0;
+    while (currentFlight != nullptr) {
+        if (currentFlight->data.status == 1) { // Assuming 1 is the status for available flights
+            std::cout << "Flight ID: " << currentFlight->data.idFlight << ", Destination: " << currentFlight->data.airportTo << ", Departure Time: ";
+            showDateTime(currentFlight->data.departureTime);
+            std::cout << std::endl;
+            flightCount++;
+        }
+        currentFlight = currentFlight->pNext;
+    }
 
-		WatchingFlight = findFlightById(fList, result.c_str());
-		if (WatchingFlight == NULL)
-		{
-			gotoxy(X_Notification, Y_Notification);
-			std::cout << " Thong Bao ";
-			gotoxy(X_Notification, Y_Notification + 1);
-			std::cout << "Chuyen bay khong ton tai       ";
-			gotoxy(X_Notification, Y_Notification + 2);
-			std::cout << "Vui long nhap lai";
+    if (flightCount == 0) {
+        std::cout << "No available flights." << std::endl;
+        return;
+    }
 
-		}
-		else
-		{
+    gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
+    std::cout << "Please enter the Flight ID to book a ticket --->";
 
-			if (WatchingFlight->data.status == 3 || WatchingFlight->data.status == 1 || WatchingFlight->data.status == 4)
-			{
-				ShowCur(false);
-				gotoxy(X_Notification, Y_Notification + 1);
-				std::cout << "Chuyen bay da HUY hoac HOAN TAT";
-				gotoxy(X_Notification, Y_Notification + 2);
-				std::cout << "Vui long nhap lai";
-				continue;
-			}
-			flag = true;
-		}
-	}
-	/*CHON VE MUON DAT*/
-	system("cls");
+    string result;
+    CreateForm(ContentFlight, 0, 1, 30);
+    bool flag = false;
+    bool MoveOrNot = false;
+    bool SaveOrNot = true;
+    int ordinal = 0;
+    FlightNode* WatchingFlight = NULL;
+    while (flag == false)
+    {
+        system("color 0E");
+        ShowCur(true);
+        ConstraintForLetterAndNumber(result, MoveOrNot, ordinal, SaveOrNot, 12);
+        if (SaveOrNot == false)
+        {
+            RemoveFormComplete();
+            return;
+        }
 
-	gotoxy(X_TitlePage - 32, Y_TitlePage);
-	std::cout << " Danh sach hanh khach co ma chuyen bay " << WatchingFlight->data.idFlight<< " toi " << WatchingFlight->data.airportTo;
-	std::cout << " luc "; showDateTime(WatchingFlight->data.departureTime);
+        WatchingFlight = findFlightById(fList, result.c_str());
+        if (WatchingFlight == NULL)
+        {
+            gotoxy(X_Notification, Y_Notification);
+            std::cout << " Thong Bao ";
+            gotoxy(X_Notification, Y_Notification + 1);
+            std::cout << "Chuyen bay khong ton tai       ";
+            gotoxy(X_Notification, Y_Notification + 2);
+            std::cout << "Vui long nhap lai";
 
-	gotoxy(3, 4);
-	std::cout << "CHU Y ->> Ve co mau Do = ve da co nguoi dat cho!!!!";
+        }
+        else
+        {
 
-	while (true) {
-		system("color 0E");
-		int ChoosenTicket = chooseTicket(WatchingFlight->data);
+            if (WatchingFlight->data.status == 2 || WatchingFlight->data.status == 0 || WatchingFlight->data.status == 3)
+            {
+                ShowCur(false);
+                gotoxy(X_Notification, Y_Notification + 1);
+                std::cout << "Chuyen bay da HUY hoac HOAN TAT";
+                gotoxy(X_Notification, Y_Notification + 2);
+                std::cout << "Vui long nhap lai";
+                continue;
+            }
+            flag = true;
+        }
+    }
+    /*CHON VE MUON DAT*/
+    system("cls");
 
-		if (ChoosenTicket == -1) return;
-		char IDHanhKhach[13] = "";
-		int target = -1;
+    gotoxy(X_TitlePage - 32, Y_TitlePage);
+    std::cout << " Danh sach hanh khach co ma chuyen bay " << WatchingFlight->data.idFlight<< " toi " << WatchingFlight->data.airportTo;
+    std::cout << " luc "; showDateTime(WatchingFlight->data.departureTime);
 
+    gotoxy(3, 4);
+    std::cout << "CHU Y ->> Ve co mau Do = ve da co nguoi dat cho!!!!";
 
-		gotoxy(X_TitlePage + 30, Y_TitlePage + 3);
-		system("color 0E");
-		std::cout << "Vui Long Nhap CMND ->";
-		CreateForm(ContentPassenger, 1, 2, 30);
-		ShowCur(true);
-		ConstraintForOnlyChar(IDHanhKhach, MoveOrNot, ordinal, SaveOrNot, 12);
-		if (SaveOrNot == false)
-		{
-			gotoxy(X_TitlePage + 30, Y_TitlePage + 3);
-			printf("%-50s", " ");
-			RemoveFormComplete();
-			continue;
-		}
-		/*Tim kiem xem cai ID nay co nam trong danh sach ve chua*/
-		for (int i = 0; i < WatchingFlight->data.totalTicketsSold; i++)
-		{
-			if (WatchingFlight->data.TicketList[i].CMND == IDHanhKhach) {
-				target = i;
-				break;
-			}
-		}
-		/*Da dat ve roi va dat them lan nua*/
-		if (target > -1) {
-			gotoxy(3, 5);
-			std::cout << "Ban da dat ve roi !!! (^_^)";
-			Sleep(1000);
-			gotoxy(3, 5);
-			printf("%-50s", " ");
+    while (true) {
+        system("color 0E");
+        int ChoosenTicket = chooseTicket(WatchingFlight->data);
+
+        if (ChoosenTicket == -1) return;
+        char IDHanhKhach[13] = "";
+        int target = -1;
 
 
-			gotoxy(X_TitlePage + 30, Y_TitlePage + 3);
-			printf("%-50s", " ");
-			RemoveFormComplete();
-			continue;
-		}
-		/*Khong tim ra*/
-		if (target == -1)
-		{
-			passengerNode* tempora = findPassenger(root, IDHanhKhach);
-			/*Neu chua ton tai thi nhap moi*/
-			if (tempora == NULL) {
-				CreateForm(ContentPassenger, 1, sizeof(ContentPassenger) / sizeof(string), 27);
-				gotoxy(X_Add + 12, 0 * 3 + Y_Add);
-				std::cout << IDHanhKhach;
-				inputPassenger(root, false, false, IDHanhKhach);
-				nPassenger++;
-			}
-			Ticket AddingTicket;
-			strcpy_s(AddingTicket.CMND, IDHanhKhach);
-			AddingTicket.seatNumber = ChoosenTicket;
-			WatchingFlight->data.TicketList[WatchingFlight->data.totalTicketsSold] = AddingTicket;
-			WatchingFlight->data.totalTicketsSold++;
-		}
-	}
+        gotoxy(X_TitlePage + 30, Y_TitlePage + 3);
+        system("color 0E");
+        std::cout << "Vui Long Nhap CMND ->";
+        CreateForm(ContentPassenger, 1, 2, 30);
+        ShowCur(true);
+        ConstraintForOnlyChar(IDHanhKhach, MoveOrNot, ordinal, SaveOrNot, 12);
+        if (SaveOrNot == false)
+        {
+            gotoxy(X_TitlePage + 30, Y_TitlePage + 3);
+            printf("%-50s", " ");
+            RemoveFormComplete();
+            continue;
+        }
+        /*Tim kiem xem cai ID nay co nam trong danh sach ve chua*/
+        for (int i = 0; i < WatchingFlight->data.totalTicketsSold; i++)
+        {
+            if (strcmp(WatchingFlight->data.TicketList[i].CMND, IDHanhKhach) == 0) {
+                target = i;
+                break;
+            }
+        }
+        /*Da dat ve roi va dat them lan nua*/
+        if (target > -1) {
+            gotoxy(3, 5);
+            std::cout << "Ban da dat ve roi !!! (^_^)";
+            Sleep(1000);
+            gotoxy(3, 5);
+            printf("%-50s", " ");
+
+
+            gotoxy(X_TitlePage + 30, Y_TitlePage + 3);
+            printf("%-50s", " ");
+            RemoveFormComplete();
+            continue;
+        }
+        /*Khong tim ra*/
+        if (target == -1)
+        {
+            passengerNode* tempora = findPassenger(root, IDHanhKhach);
+            /*Neu chua ton tai thi nhap moi*/
+            if (tempora == NULL) {
+                CreateForm(ContentPassenger, 1, sizeof(ContentPassenger) / sizeof(string), 27);
+                gotoxy(X_Add + 12, 0 * 3 + Y_Add);
+                std::cout << IDHanhKhach;
+                inputPassenger(root, false, false, IDHanhKhach);
+                nPassenger++;
+            }
+            Ticket AddingTicket;
+            strcpy_s(AddingTicket.CMND, IDHanhKhach);
+            AddingTicket.seatNumber = ChoosenTicket;
+            WatchingFlight->data.TicketList[WatchingFlight->data.totalTicketsSold] = AddingTicket;
+            WatchingFlight->data.totalTicketsSold++;
+        }
+    }
 }
+
 /*"6.Xem So Do Cho Ngoi & Danh Sach Ve Con Trong",*/
 void watchUnbookedTicket()
 {
