@@ -541,26 +541,50 @@ void seePassengerList(AVLTree root)
 		}
 	}
 }
+void drawHorizontalLine(int width) {
+	for (int i = 0; i < width; i++) {
+		std::cout << "-";
+	}
+	std::cout << std::endl;
+}
 /*"4.Huy Bo Ve May Bay",*/  //cancel
 void cancelFlightTicket(AVLTree root)
 {
 	system("cls");
 
-	// Print the list of available flights
+	// In danh sách các chuyến bay khả dụng dưới dạng bảng
 	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
 	std::cout << "Available Flights:" << std::endl;
 
+	// Vẽ tiêu đề bảng
+	drawHorizontalLine(82); // Độ rộng đường ngang
+	std::cout << "| " << std::setw(10) << "Flight ID"
+		<< " | " << std::setw(15) << "Destination"
+		<< " | " << std::setw(20) << "Departure Time"
+		<< " |" << std::setw(5) << "Ticket Sold"
+		<< " |" << std::setw(5) << "Total Ticket" << " |"
+		<< std::endl;
+	drawHorizontalLine(82);
+
 	FlightNode* currentFlight = fList.pHead;
 	int flightCount = 0;
+
 	while (currentFlight != nullptr) {
-		if (currentFlight->data.status == 1) { // Assuming 1 is the status for available flights
-			std::cout << "Flight ID: " << currentFlight->data.idFlight << ", Destination: " << currentFlight->data.airportTo << ", Departure Time: ";
-			showDateTime(currentFlight->data.departureTime);
-			std::cout << std::endl;
+		if (currentFlight->data.status == 1) { // 1 là trạng thái cho chuyến bay khả dụng
+			std::cout << "| " << std::setw(10) << currentFlight->data.idFlight
+				<< " | " << std::setw(15) << currentFlight->data.airportTo
+				<< " | " << std::setw(6);
+			showDateTime(currentFlight->data.departureTime); // Hiển thị thời gian khởi hành
+			std::cout << " |" << std::setw(11) << currentFlight->data.totalTicketsSold
+				<< " |" << std::setw(12) << currentFlight->data.totalTickets
+				<< " |" << std::endl;
 			flightCount++;
 		}
 		currentFlight = currentFlight->pNext;
 	}
+
+	// Vẽ đường ngang cuối bảng
+	drawHorizontalLine(82);
 
 	if (flightCount == 0) {
 		std::cout << "No available flights." << std::endl;
@@ -611,6 +635,9 @@ void cancelFlightTicket(AVLTree root)
 			flag = true;
 		}
 	}
+
+	system("cls");
+	watchPassengerListOfFlight(root, WatchingFlight->data);
 	RemoveNotification();
 	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
 	std::cout << "Please enter the Passenger ID to check infomation --->";
@@ -662,31 +689,50 @@ void cancelFlightTicket(AVLTree root)
 	}
 	return;
 }
+
 /*3.Dang Ky Ve May Bay*/
 void bookTicket(AVLTree& root)
 {
     system("cls");
 
-    // Print the list of available flights
-    gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
-    std::cout << "Available Flights:" << std::endl;
+	// In danh sách các chuyến bay khả dụng dưới dạng bảng
+	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
+	std::cout << "Available Flights:" << std::endl;
 
-    FlightNode* currentFlight = fList.pHead;
-    int flightCount = 0;
-    while (currentFlight != nullptr) {
-        if (currentFlight->data.status == 1) { // Assuming 1 is the status for available flights
-            std::cout << "Flight ID: " << currentFlight->data.idFlight << ", Destination: " << currentFlight->data.airportTo << ", Departure Time: ";
-            showDateTime(currentFlight->data.departureTime);
-            std::cout << std::endl;
-            flightCount++;
-        }
-        currentFlight = currentFlight->pNext;
-    }
+	// Vẽ tiêu đề bảng
+	drawHorizontalLine(82); // Độ rộng đường ngang
+	std::cout << "| " << std::setw(10) << "Flight ID"
+		<< " | " << std::setw(15) << "Destination"
+		<< " | " << std::setw(20) << "Departure Time" 
+		<< " |" << std::setw(5) << "Ticket Sold"
+		<< " |" << std::setw(5) << "Total Ticket" << " |"
+		<< std::endl;
+	drawHorizontalLine(82);
 
-    if (flightCount == 0) {
-        std::cout << "No available flights." << std::endl;
-        return;
-    }
+	FlightNode* currentFlight = fList.pHead;
+	int flightCount = 0;
+
+	while (currentFlight != nullptr) {
+		if (currentFlight->data.status == 1) { // 1 là trạng thái cho chuyến bay khả dụng
+			std::cout << "| " << std::setw(10) << currentFlight->data.idFlight
+				<< " | " << std::setw(15) << currentFlight->data.airportTo
+				<< " | " << std::setw(6);
+			showDateTime(currentFlight->data.departureTime); // Hiển thị thời gian khởi hành
+			std::cout << " |" << std::setw(11) << currentFlight->data.totalTicketsSold
+				<< " |" << std::setw(12) << currentFlight->data.totalTickets
+				<< " |" << std::endl;
+			flightCount++;
+		}
+		currentFlight = currentFlight->pNext;
+	}
+
+	// Vẽ đường ngang cuối bảng
+	drawHorizontalLine(82);
+
+	if (flightCount == 0) {
+		std::cout << "No available flights." << std::endl;
+		return;
+	}
 
     gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
     std::cout << "Please enter the Flight ID to book a ticket --->";
