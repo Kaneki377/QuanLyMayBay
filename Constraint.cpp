@@ -255,11 +255,11 @@ void ConstraintForOnlyChar(string& result, bool& MoveOrNot, int& ordinal, bool& 
 			int signal = _getch();
 			if (signal != 224 && signal != BACKSPACE && signal != 0)
 			{
-				/*	--------tu A den Z -----				------Tu a den z -------				-----Tu 0 den 9 -----*/
+				/*-----Tu 0 den 9 -----*/
 				if ((48 <= signal && signal <= 57))
 				{
 					/*Limit_ID_Length la do dai gioi han cua no-*/
-					if (count < 12)
+					if (count < 13)
 					{
 						count++;// cap nhat bien count 
 						cout << (char)signal;// hien thi no tren man hinh nhap thong tin

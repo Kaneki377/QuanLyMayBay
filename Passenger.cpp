@@ -639,8 +639,6 @@ void cancelFlightTicket(AVLTree root)
 	system("cls");
 	watchPassengerListOfFlight(root, WatchingFlight->data);
 	RemoveNotification();
-	gotoxy(X_TitlePage - 55, Y_TitlePage + 3);
-	std::cout << "Please enter the Passenger ID to check infomation --->";
 	CreateForm(ContentPassenger, 1, 2, 30);
 
 	//char
@@ -785,11 +783,11 @@ void bookTicket(AVLTree& root)
     system("cls");
 
     gotoxy(X_TitlePage - 32, Y_TitlePage);
-    std::cout << " Danh sach hanh khach co ma chuyen bay " << WatchingFlight->data.idFlight<< " toi " << WatchingFlight->data.airportTo;
-    std::cout << " luc "; showDateTime(WatchingFlight->data.departureTime);
+    std::cout << "Flight ID " << WatchingFlight->data.idFlight<< " to " << WatchingFlight->data.airportTo;
+    std::cout << " dep time: "; showDateTime(WatchingFlight->data.departureTime);
 
     gotoxy(3, 4);
-    std::cout << "CHU Y ->> Ve co mau Do = ve da co nguoi dat cho!!!!";
+    std::cout << "Notice: Ticket with red is booked!!!!";
 
     while (true) {
         system("color 0E");
@@ -802,7 +800,7 @@ void bookTicket(AVLTree& root)
 
         gotoxy(X_TitlePage + 30, Y_TitlePage + 3);
         system("color 0E");
-        std::cout << "Vui Long Nhap CMND ->";
+        std::cout << "Plaese enter CMND ->";
         CreateForm(ContentPassenger, 1, 2, 30);
         ShowCur(true);
         ConstraintForOnlyChar(IDHanhKhach, MoveOrNot, ordinal, SaveOrNot, 12);
@@ -824,7 +822,7 @@ void bookTicket(AVLTree& root)
         /*Da dat ve roi va dat them lan nua*/
         if (target > -1) {
             gotoxy(3, 5);
-            std::cout << "Ban da dat ve roi !!! (^_^)";
+            std::cout << "You are already book a ticket !!! (^_^)";
             Sleep(1000);
             gotoxy(3, 5);
             printf("%-50s", " ");

@@ -278,19 +278,19 @@ void TicketStack(int x, int y, const std::string& ticketLabel, int status)
 
 	/* Vẽ đường viền bên trên */
 	gotoxy(x, y - 1);
-	std::cout << char(176) << std::setw(5) << std::setfill(char(176)) << char(176);
+	cout << char(176) << setw(3) << setfill(char(176)) << char(176) << char(176);
 
 	/* Hiển thị nhãn vé */
 	gotoxy(x, y);
-	if (status == 1) {
-		SetBGColor(ColorCode_Red);  // Nếu trạng thái là 1, đổi màu nền thành đỏ
-	}
-	std::cout << char(176) << " " << ticketLabel << " " << char(176);
+	
+	std::cout << char(176) << ticketLabel << char(176);
 
 	/* Vẽ đường viền bên dưới */
 	gotoxy(x, y + 1);
-	SetBGColor(0); // Reset màu nền về đen
-	std::cout << char(176) << std::setw(5) << std::setfill(char(176)) << char(176);
+	if (status == 1) {
+		SetBGColor(ColorCode_Red);  // Nếu trạng thái là 1, đổi màu nền thành đỏ
+	}
+	cout << char(176) << setw(3) << setfill(char(176)) << char(176) << char(176);
 }
 
 /*Xoa bang nhap thong tin sau khi nhap xong*/
@@ -486,7 +486,7 @@ void CenterMenu()
 			break;
 		case MaxItem:
 			writeFlightToFile(fList);
-			//SavePassengerToFile(root);
+			savePassengerToFile(root);
 			system("color 0E");
 			Exit = true;// xac nhan thoat
 			system("cls");

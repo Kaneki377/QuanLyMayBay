@@ -763,7 +763,7 @@ void showTicketChairBoard(flight f)
 
 			char colLabel = 'A' + i;
 			char rowLabel[3];
-			sprintf(rowLabel, "%d", j);
+			sprintf(rowLabel, "%02d", j);
 			std::string ticketLabel = std::string(1, colLabel) + rowLabel;
 
 			TicketStack(x, y, ticketLabel, checkOutTicket(f, i * rows + j));
@@ -779,26 +779,30 @@ void showTicketChairBoard(flight f)
 
 }
 
-void effectTicketMenu(int index)
-{
+void effectTicketMenu(int index) {
 	ShowCur(false);
-	int Current = index;// lay vi tri cai ve hien tai
+	int column = (index - 1) % 10; // Tính cột của vé hiện tại
+	int row = (index - 1) / 10;    // Tính hàng của vé hiện tại
 
-	int column = (Current - 1) % 10;//(18-1)%10 = 7 ->cot thu 8
-	int row = (Current - 1) / 10;// (18-1)/10 = 1 ->hang thu 2
-
-	SetBGColor(1);// highligh vi tri hien tai
+	// Highlight vé hiện tại
+	SetBGColor(1); // Đặt màu nền xanh lam
 	gotoxy(X_TicketChair + (column + 1) * 8, Y_TicketChair + (row + 1) * 5);
-	cout << char(176) << setw(3) << setfill('0') << Current << char(176);
+	char colLabel = 'A' + row;  // Nhãn dãy
+	char rowLabel[3];
+	sprintf(rowLabel, "%02d", column + 1); // Nhãn dòng (02 số)
+	std::cout << char(176) << colLabel << rowLabel << char(176);
 
-	/*Tam ve dung truoc tam ve hien tai truoc do*/
-	column = (CurPosPreTicket - 1) % 10;// 18-1 = 7 ->> cai nay dang nam cot 7
-	row = (CurPosPreTicket - 1) / 10; // 2
+	// Bỏ highlight vé trước đó
+	column = (CurPosPreTicket - 1) % 10;
+	row = (CurPosPreTicket - 1) / 10;
 
-	SetBGColor(ColorCode_Black);
+	SetBGColor(ColorCode_Black); // Đặt màu nền đen
 	gotoxy(X_TicketChair + (column + 1) * 8, Y_TicketChair + (row + 1) * 5);
-	cout << char(176) << setw(3) << setfill('0') << CurPosPreTicket << char(176);
-	CurPosPreTicket = Current;
+	colLabel = 'A' + row; // Nhãn dãy của vé trước đó
+	sprintf(rowLabel, "%02d", column + 1);
+	std::cout << char(176) << colLabel << rowLabel << char(176);
+
+	CurPosPreTicket = index; // Cập nhật vé trước đó
 }
 
 int chooseTicket(flight& f)
@@ -813,7 +817,7 @@ int chooseTicket(flight& f)
 	int PASS = 1;// pass dung nhu 1 cai cong tac neu enter thi thoat ra ngoai
 	SetBGColor(1);// blue
 	gotoxy(X_TicketChair + (0 + 1) * 8, Y_TicketChair + (0 + 1) * 5);// (28,9)
-	cout << char(176) << setw(3) << setfill('0') << 1 << char(176);
+	cout << char(176) << setw(3) << "A01" << char(176);
 
 	while (PASS)
 	{
