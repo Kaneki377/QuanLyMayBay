@@ -270,16 +270,16 @@ bool removeFlightById(flightList &fl, const char *idFlightToFind)
 }
 
 //Cap nhat trang thai chuyen bay
-void updateFlightStatus(flightList &fl)
-{
-
-	for (flightNode *search = fl.pHead; search != NULL; search = search->pNext) {
-		if (isDateTimeValid(search->data.departureTime) == false) {
-			search->data.status = 3;
-			//0. huy Chuyen, 1. Con ve, 2. Het ve, 3. Hoan tat
-		}
-	}
-}
+//void updateFlightStatus(flightList &fl)
+//{
+//
+//	for (flightNode *search = fl.pHead; search != NULL; search = search->pNext) {
+//		if (isDateTimeValid(search->data.departureTime) == false) {
+//			search->data.status = 3;
+//			//0. huy Chuyen, 1. Con ve, 2. Het ve, 3. Hoan tat
+//		}
+//	}
+//}
 
 //Xuat thong tin 1 chuyen bay
 void showFlightInfor(flight f, int position)
@@ -332,7 +332,7 @@ void showFlightListInfor(flightList fl)
 	}
 
 	int count = -1;
-	updateFlightStatus(fl);
+	
 
 	for (flightNode *search = fl.pHead; search != NULL; search = search->pNext) {
 		count++;
@@ -351,7 +351,7 @@ void showFlightListPerPage(flightList fl, int startIndex)
 	}
 
 	int count = -1;
-	updateFlightStatus(fl);
+	
 
 	for (flightNode *search = fl.pHead; search != NULL; search = search->pNext) {
 		count++;
@@ -367,7 +367,7 @@ void showFlightListPerPage(flightList fl, int startIndex)
 	}
 
 	gotoxy(X_Page, Y_Page);
-	cout << "Trang " << CurFlightPage << "/" << TotalFlightPage;
+	cout << "Page: " << CurFlightPage << "/" << TotalFlightPage;
 }
 
 void changePageManageFlightList(flightList fl)
@@ -380,7 +380,7 @@ void changePageManageFlightList(flightList fl)
 	showFlightListPerPage(fl, (CurFlightPage - 1) * NumberPerPage);
 
 	gotoxy(X_Page, Y_Page);
-	cout << "Trang " << CurFlightPage << "/" << TotalFlightPage;
+	cout << "Page: " << CurFlightPage << "/" << TotalFlightPage;
 }
 
 void inputFlightInFor(flightList &fl, bool editedOrNot, bool deleteOrNot)
@@ -456,10 +456,6 @@ void inputFlightInFor(flightList &fl, bool editedOrNot, bool deleteOrNot)
 					cout << "Thong Bao";
 					gotoxy(X_Notification, Y_Notification + 1);
 					cout << "Id flight da ton tai";
-					gotoxy(X_Notification, Y_Notification + 2);
-					cout << "He thong khong chap nhan";
-					gotoxy(X_Notification, Y_Notification + 3);
-					cout << "Id co cung noi dung";
 					break;
 				}
 				else if (checkIdFlight < 0 && editedOrNot == true) {

@@ -48,7 +48,7 @@ bool removeHead(flightList &fl);
 bool removeEnding(flightList &fl);
 bool removeAfterAnother(flightList &fl, flightNode *tempFlight);
 bool removeFlightById(flightList &fl, const char* idFlightToFind);
-void updateFlightStatus(flightList &fl);
+//void updateFlightStatus(flightList &fl);
 void showFlightInfor(flight f, int position);
 void showFlightListInfor(flightList fl);
 void showFlightListPerPage(flightList fl, int startIndex);
