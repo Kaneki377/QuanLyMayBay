@@ -47,3 +47,4 @@ void watchUnbookedTicket();
 void watchHowManyTimeFlightTookOff();
 void watchFlightsWithDateTimeAndDestination();
 void showSpecificFlight(flight f, int position);
+void displayTree(AVLTree root);

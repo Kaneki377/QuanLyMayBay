@@ -63,35 +63,40 @@ AVLTree createTree(passenger data)
 /*BE LEFT*/
 AVLTree rightRotate(AVLTree y)
 {
+
 	AVLTree x = y->pLeft;
 	AVLTree T2 = x->pRight;
 
-	// thuc hien xoay
+	// Thực hiện xoay
 	x->pRight = y;
 	y->pLeft = T2;
-	// cap nhat chieu cao
+
+	// Cập nhật chiều cao
 	y->height = maxi(height(y->pLeft), height(y->pRight)) + 1;
 	x->height = maxi(height(x->pLeft), height(x->pRight)) + 1;
 
-	// tra ve node moi
+
 	return x;
 }
+
 /*BE RIGHT*/
 AVLTree leftRotate(AVLTree x)
 {
-	AVLTree y = x->pRight;
-	AVLTree T2 = y->pLeft;
 
-	// thuc hien phep quay
-	y->pLeft = x;
-	x->pRight = T2;
+	AVLTree y = x->pRight;  // Xoay trái sẽ di chuyển nút con phải lên làm gốc
+	AVLTree T2 = y->pLeft;  // T2 là con trái của nút con phải (y), lưu lại để gắn lại sau khi xoay
 
-	// cap nhat chieu cao
+	// Thực hiện phép xoay trái
+	y->pLeft = x;           // Nút con phải (y) sẽ trở thành gốc mới, và nút x sẽ là con trái của nó
+	x->pRight = T2;         // Cập nhật con phải của x thành con trái của y (nếu có)
+
+	// Cập nhật chiều cao cho các nút
 	x->height = maxi(height(x->pLeft), height(x->pRight)) + 1;
 	y->height = maxi(height(y->pLeft), height(y->pRight)) + 1;
 
-	return y;
+	return y;  // Trả về nút mới làm gốc
 }
+
 
 // lay gia tri can bang
 int getBalanceFactor(AVLTree root)
@@ -131,32 +136,30 @@ AVLTree addPassenger(AVLTree& root, passenger data)
 	/*neu no mat can bang thi xay ra 4 truong hop*/
 
 		// Left left case
-	if (balanceFactor > 1 &&
-		(root->pLeft != nullptr && strcmp(data.idCard, root->pLeft->data.idCard) < 0))
+	// Left left case
+	if (balanceFactor > 1 && strcmp(data.idCard, root->pLeft->data.idCard) < 0)
 	{
 		return rightRotate(root);
 	}
 	// right right case
-	if (balanceFactor < -1 &&
-		(root->pRight != nullptr && strcmp(data.idCard, root->pRight->data.idCard) > 0))
+	if (balanceFactor < -1 && strcmp(data.idCard, root->pRight->data.idCard) > 0)
 	{
 		return leftRotate(root);
 	}
 	// left right case
-	if (balanceFactor > 1 &&
-		(root->pLeft != nullptr && strcmp(data.idCard, root->pLeft->data.idCard) > 0))
+	if (balanceFactor > 1 && strcmp(data.idCard, root->pLeft->data.idCard) > 0)
 	{
 		root->pLeft = leftRotate(root->pLeft);
-		return  rightRotate(root);
+		return rightRotate(root);
 	}
 
 	// right left case
-	if (balanceFactor < -1 &&
-		(root->pRight != nullptr && strcmp(data.idCard, root->pRight->data.idCard) < 0))
+	if (balanceFactor < -1 && strcmp(data.idCard, root->pRight->data.idCard) < 0)
 	{
 		root->pRight = rightRotate(root->pRight);
 		return leftRotate(root);
 	}
+
 
 	return root;
 
@@ -358,6 +361,7 @@ void watchRoot(AVLTree root)
 		watchRoot(root->pRight);
 	}
 }
+
 void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, const char* idPassenger)
 {
 	ShowCur(true);
@@ -365,13 +369,13 @@ void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, const cha
 	bool MoveOrNot = false;
 	bool IDExisted = false;
 
-	string first_name;// Ho
-	string last_name;// Ten
-	int gender = 1;// 0 la nu , 1 la nam
+	std::string first_name; // Ho
+	std::string last_name;  // Ten
+	int gender = 1;         // 0 la nu , 1 la nam
 
 	int ordinal = 1;
-	gotoxy(X_Notification, Y_Notification);std::cout << " Thong Bao ";
-	gotoxy(X_Notification, Y_Notification + 1);std::cout << " 0 la Nu , 1 la Nam";
+	gotoxy(X_Notification, Y_Notification); std::cout << " Thong Bao ";
+	gotoxy(X_Notification, Y_Notification + 1); std::cout << " 0 la Nu , 1 la Nam";
 
 	int signal;
 	while (true)
@@ -379,17 +383,15 @@ void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, const cha
 		system("color 0E");
 		switch (ordinal)
 		{
-		case 1:// NHAP Ho
+		case 1: // NHAP Ho
 		{
-			//gotoxy(X_Notification, Y_Notification + 2);
-			//std::cout << "Ordinal: " << ordinal;
 			ConstraintsForLetterAndSpace(first_name, MoveOrNot, ordinal, SaveOrNot, 12);
 			if (SaveOrNot == false)
 			{
 				RemoveFormComplete();
 				return;
 			}
-			if (first_name == "")
+			if (first_name.empty())
 			{
 				gotoxy(X_Notification, Y_Notification);
 				std::cout << " Thong Bao ";
@@ -399,7 +401,7 @@ void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, const cha
 			ordinal++;
 		}
 		break;
-		case 2:// Nhap ten
+		case 2: // Nhap ten
 		{
 			ConstraintForOnlyLetter(last_name, MoveOrNot, ordinal, SaveOrNot, 12);
 			if (SaveOrNot == false)
@@ -407,25 +409,24 @@ void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, const cha
 				RemoveFormComplete();
 				return;
 			}
-			if (last_name == "")
+			if (last_name.empty())
 			{
-				gotoxy(X_Notification, Y_Notification);std::cout << " Thong Bao ";
-				gotoxy(X_Notification, Y_Notification + 1);std::cout << "Khong bo trong";
+				gotoxy(X_Notification, Y_Notification);
+				std::cout << " Thong Bao ";
+				gotoxy(X_Notification, Y_Notification + 1);
+				std::cout << "Khong bo trong";
 			}
 			ordinal++;
 		}
 		break;
-		case 3:// nhap gioi tinh
+		case 3: // nhap gioi tinh
 		{
 			ConstraintForOnlyGender(gender, MoveOrNot, ordinal, SaveOrNot, 12);
 			if (SaveOrNot == false)
 			{
-				
 				RemoveFormComplete();
 				return;
-				//continue;
 			}
-			// 0 la nu , 1 la nam
 			if (gender == -1)
 			{
 				gotoxy(X_Notification, Y_Notification);
@@ -439,27 +440,35 @@ void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, const cha
 		case 4:
 		{
 			passenger p;
-			strcpy_s(p.idCard, idPassenger);
-			//sửa 439 762
-			strcpy_s(p.firstname, first_name.c_str());
-			strcpy_s(p.lastName, last_name.c_str());
-			StandardName(p.firstname);
-			StandardName(p.lastName);
+			// Sử dụng strncpy_s thay vì strncpy
+			strncpy_s(p.idCard, sizeof(p.idCard), idPassenger, sizeof(p.idCard) - 1);
+			p.idCard[sizeof(p.idCard) - 1] = '\0'; // Đảm bảo chuỗi kết thúc bằng null
+
+			// Chuyển std::string sang char[]
+			strncpy_s(p.firstname, sizeof(p.firstname), first_name.c_str(), sizeof(p.firstname) - 1);
+			p.firstname[sizeof(p.firstname) - 1] = '\0'; // Đảm bảo chuỗi kết thúc bằng null
+
+			strncpy_s(p.lastName, sizeof(p.lastName), last_name.c_str(), sizeof(p.lastName) - 1);
+			p.lastName[sizeof(p.lastName) - 1] = '\0'; // Đảm bảo chuỗi kết thúc bằng null
+
 			p.gender = gender;
 			addPassenger(root, p);
 
 			gotoxy(X_Notification, Y_Notification);
 			std::cout << " Thong Bao ";
 			gotoxy(X_Notification, Y_Notification + 1);
-			std::cout << " Dat ve thanh cong !!!"<<endl;
+			std::cout << " Dat ve thanh cong !!!" << std::endl;
 			RemoveNotification();
 			RemoveFormComplete();
 			return;
 		}
 		break;
-		}/*switch(ordinal)*/
-	}/*While(true)*/
+		} /*switch(ordinal)*/
+	} /*While(true)*/
 }
+
+
+
 
 
 void watchPassengerListOfFlight(AVLTree root, flight F)
@@ -847,6 +856,7 @@ void bookTicket(AVLTree& root)
                 std::cout << IDHanhKhach;
                 inputPassenger(root, false, false, IDHanhKhach.c_str());
                 nPassenger++;
+				
             }
             Ticket AddingTicket;
 			strcpy_s(AddingTicket.CMND, sizeof(AddingTicket.CMND), IDHanhKhach.c_str());
@@ -859,6 +869,7 @@ void bookTicket(AVLTree& root)
         }
     }
 }
+
 
 /*"6.Xem So Do Cho Ngoi & Danh Sach Ve Con Trong",*/
 void watchUnbookedTicket()
