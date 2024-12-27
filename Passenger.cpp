@@ -130,21 +130,21 @@ AVLTree addPassenger(AVLTree& root, passenger data)
 
 	/*neu no mat can bang thi xay ra 4 truong hop*/
 
-	// Left left case
+		// Left left case
 	if (balanceFactor > 1 &&
-		data.idCard < root->pLeft->data.idCard)
+		(root->pLeft != nullptr && strcmp(data.idCard, root->pLeft->data.idCard) < 0))
 	{
 		return rightRotate(root);
 	}
 	// right right case
 	if (balanceFactor < -1 &&
-		data.idCard > root->pRight->data.idCard)
+		(root->pRight != nullptr && strcmp(data.idCard, root->pRight->data.idCard) > 0))
 	{
 		return leftRotate(root);
 	}
 	// left right case
 	if (balanceFactor > 1 &&
-		data.idCard > root->pLeft->data.idCard)
+		(root->pLeft != nullptr && strcmp(data.idCard, root->pLeft->data.idCard) > 0))
 	{
 		root->pLeft = leftRotate(root->pLeft);
 		return  rightRotate(root);
@@ -152,7 +152,7 @@ AVLTree addPassenger(AVLTree& root, passenger data)
 
 	// right left case
 	if (balanceFactor < -1 &&
-		data.idCard < root->pRight->data.idCard)
+		(root->pRight != nullptr && strcmp(data.idCard, root->pRight->data.idCard) < 0))
 	{
 		root->pRight = rightRotate(root->pRight);
 		return leftRotate(root);
