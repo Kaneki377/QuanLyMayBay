@@ -15,7 +15,7 @@ using namespace std;
 
 //Global var
 planeList PList;
-flightList fList;
+extern flightList fList;
 AVLTree	root;
 extern int nPassenger;
 
@@ -485,12 +485,10 @@ void CenterMenu()
 			watchFlightsWithDateTimeAndDestination();
 			break;
 		case MaxItem:
-			writeFlightToFile(fList);
 			savePassengerToFile(root);
-			//system("color 0E");
-			Exit = true;// xac nhan thoat
+			system("color 0E");
 			system("cls");
-			break;
+			exit(0);
 		}
 	}
 }

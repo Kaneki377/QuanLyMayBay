@@ -21,6 +21,7 @@ int CurPosPreTicket = 1;
 extern string ContentFlight[6];
 extern string ContentFlightForInsert[4];
 extern planeList PList;
+flightList fList;
 
 void initFlightList(flightList &fl) {
 	fl.pHead = NULL;
@@ -697,6 +698,7 @@ void menuManageFlightList(flightList &fl)
 
 					TotalFlightPage = (int)ceil((double) fl.numsOfFlight / NumberPerPage);
 					showFlightListPerPage(fl, (CurFlightPage - 1) / NumberPerPage);
+					writeFlightToFile(fList);
 				}
 				else if (signal == DEL) {
 					CreateForm(ContentFlight, 0, 1, 30);
@@ -704,6 +706,7 @@ void menuManageFlightList(flightList &fl)
 					TotalFlightPage = (int)ceil((double)fl.numsOfFlight / NumberPerPage);
 					showFlightListPerPage(fl, (CurFlightPage - 1) / NumberPerPage);
 					ShowCur(false);
+					writeFlightToFile(fList);
 				}
 				else if (signal == HOME) {
 					CreateForm(ContentFlight, 0, 6, 30);
@@ -711,6 +714,7 @@ void menuManageFlightList(flightList &fl)
 					TotalFlightPage = (int)ceil((double)fl.numsOfFlight / NumberPerPage);
 					showFlightListPerPage(fl, (CurFlightPage - 1) / NumberPerPage);
 					ShowCur(false);
+					writeFlightToFile(fList);
 				}
 			}
 		}
@@ -731,8 +735,8 @@ int checkOutTicket(flight f, int x)
 
 void showTicketChairBoard(flight f)
 {
-	int x = X_TicketChair + 8;
-	int y = Y_TicketChair + 5;
+	int x = X_TicketChair + 6;
+	int y = Y_TicketChair + 4;
 	int Limit = f.totalTickets;
 
 	// Get the plane information
@@ -766,11 +770,11 @@ void showTicketChairBoard(flight f)
 			gotoxy(x, y);
 			//std::cout << ticketLabel;
 
-			x += 8;
+			x += 6;
 		}
 
-		y += 5;
-		x = X_TicketChair + 8;
+		y += 4;
+		x = X_TicketChair + 6;
 	}
 
 }
@@ -782,7 +786,7 @@ void effectTicketMenu(int index) {
 
 	// Highlight vé hiện tại
 	SetBGColor(1); // Đặt màu nền xanh lam
-	gotoxy(X_TicketChair + (column + 1) * 8, Y_TicketChair + (row + 1) * 5);
+	gotoxy(X_TicketChair + (column + 1) * 6, Y_TicketChair + (row + 1) * 4);
 	char colLabel = 'A' + row;  // Nhãn dãy
 	char rowLabel[3];
 	sprintf(rowLabel, "%02d", column + 1); // Nhãn dòng (02 số)
@@ -793,7 +797,7 @@ void effectTicketMenu(int index) {
 	row = (CurPosPreTicket - 1) / 10;
 
 	SetBGColor(ColorCode_Black); // Đặt màu nền đen
-	gotoxy(X_TicketChair + (column + 1) * 8, Y_TicketChair + (row + 1) * 5);
+	gotoxy(X_TicketChair + (column + 1) * 6, Y_TicketChair + (row + 1) * 4);
 	colLabel = 'A' + row; // Nhãn dãy của vé trước đó
 	sprintf(rowLabel, "%02d", column + 1);
 	std::cout << char(176) << colLabel << rowLabel << char(176);
@@ -812,7 +816,7 @@ int chooseTicket(flight& f)
 	int signal;
 	int PASS = 1;// pass dung nhu 1 cai cong tac neu enter thi thoat ra ngoai
 	SetBGColor(1);// blue
-	gotoxy(X_TicketChair + (0 + 1) * 8, Y_TicketChair + (0 + 1) * 5);// (28,9)
+	gotoxy(X_TicketChair + (0 + 1) * 6, Y_TicketChair + (0 + 1) * 4);// (28,9)
 	cout << char(176) << setw(3) << "A01" << char(176);
 
 	while (PASS)

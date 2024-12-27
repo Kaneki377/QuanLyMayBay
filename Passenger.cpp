@@ -301,7 +301,7 @@ void showPassenger(passenger p, int position)
 {
 	int xKeyDisplay[7] = { 1,20,45,63,80,95, 107 };// toa do X cac diem nut
 	gotoxy(xKeyDisplay[0] + 3, Y_Display + 3 + position * 3);printf("%-5d", position + 1);
-	gotoxy(xKeyDisplay[1] + 3, Y_Display + 3 + position * 3);printf("%-12d", p.idCard);
+	gotoxy(xKeyDisplay[1] + 3, Y_Display + 3 + position * 3);printf("%-12s", p.idCard);
 	gotoxy(xKeyDisplay[2] + 3, Y_Display + 3 + position * 3);printf("%-20s", p.firstname);
 	gotoxy(xKeyDisplay[3] + 3, Y_Display + 3 + position * 3);printf("%-10s", p.lastName);
 	gotoxy(xKeyDisplay[4] + 5, Y_Display + 3 + position * 3);
@@ -452,7 +452,6 @@ void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, const cha
 			std::cout << " Thong Bao ";
 			gotoxy(X_Notification, Y_Notification + 1);
 			std::cout << " Dat ve thanh cong !!!"<<endl;
-			system("pause");
 			RemoveNotification();
 			RemoveFormComplete();
 			return;
@@ -618,9 +617,9 @@ void cancelFlightTicket(AVLTree root)
 		{
 
 			gotoxy(X_Notification, Y_Notification + 1);
-			std::cout << "Chuyen bay khong ton tai       ";
+			std::cout << "Flight is not existed! ";
 			gotoxy(X_Notification, Y_Notification + 2);
-			std::cout << "Vui long nhap lai";
+			std::cout << "Please Enter another ID Flight!";
 		}
 		else
 		{
@@ -628,9 +627,9 @@ void cancelFlightTicket(AVLTree root)
 			{
 				ShowCur(false);
 				gotoxy(X_Notification, Y_Notification + 1);
-				std::cout << "Chuyen bay da HUY hoac HOAN TAT";
+				std::cout << "Flight is CANCELED or FINISHED!";
 				gotoxy(X_Notification, Y_Notification + 2);
-				std::cout << "Vui long nhap lai";
+				std::cout << "Please Enter another ID Flight!";
 				continue;
 			}
 			flag = true;
@@ -667,9 +666,9 @@ void cancelFlightTicket(AVLTree root)
 			gotoxy(X_Notification, Y_Notification);
 			std::cout << " Thong Bao ";
 			gotoxy(X_Notification, Y_Notification + 1);
-			std::cout << "So CMND khong co";
+			std::cout << "ID Card";
 			gotoxy(X_Notification, Y_Notification + 2);
-			std::cout << "o danh sach hanh khach";
+			std::cout << "is not existed in ticket list!";
 		}
 		else break;
 	}
@@ -679,14 +678,17 @@ void cancelFlightTicket(AVLTree root)
 
 		for (int i = target; i < WatchingFlight->data.totalTicketsSold; i++)
 		{
-			WatchingFlight->data.TicketList[i - 1] = WatchingFlight->data.TicketList[i];
+			if (strcmp(WatchingFlight->data.TicketList[i].CMND, IDHanhKhach.c_str()) == 0) {
+				WatchingFlight->data.TicketList[i] = WatchingFlight->data.TicketList[i + 1];
+			}
 		}
 		WatchingFlight->data.totalTicketsSold--;
+		writeFlightToFile(fList);
 	}
 	else {
 		RemoveFormComplete();
 	}
-	return;
+	//return;
 }
 
 /*3.Dang Ky Ve May Bay*/
@@ -851,6 +853,9 @@ void bookTicket(AVLTree& root)
             AddingTicket.seatNumber = ChoosenTicket;
             WatchingFlight->data.TicketList[WatchingFlight->data.totalTicketsSold] = AddingTicket;
             WatchingFlight->data.totalTicketsSold++;
+			writeFlightToFile(fList);
+			RemoveNotification();
+			RemoveFormComplete();
         }
     }
 }
@@ -900,7 +905,7 @@ void watchUnbookedTicket()
 	std::cout << "Flight Seat Lists of id: " << watchingFlight->data.idFlight << " in -> " << watchingFlight->data.airportTo;
 	std::cout << " at -> ";  showDateTime(watchingFlight->data.departureTime);
 	gotoxy(3, 4);
-	std::cout << " Ve mau Do = ve da co Hanh khach dat ve";
+	std::cout << " Red Ticked is booked!";
 	showTicketChairBoard(watchingFlight->data);
 
 	int signal;
