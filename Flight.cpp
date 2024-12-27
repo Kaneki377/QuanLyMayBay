@@ -807,7 +807,7 @@ void effectTicketMenu(int index) {
 
 int chooseTicket(flight& f)
 {
-	system("color 0E");
+	//system("color 0E");
 	// tao lai vi tri chon ve
 	CurPosTicket = 1;
 	CurPosPreTicket = 1;

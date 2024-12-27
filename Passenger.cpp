@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#define _CRT_SECURE_NO_WARNINGS
 #include"UI.h"
 #include"Constraint.h"
 #include"Passenger.h"
@@ -112,11 +111,11 @@ AVLTree addPassenger(AVLTree& root, passenger data)
 	{
 		return createTree(data);
 	}
-	if (data.idCard < root->data.idCard)
+	if (strcmp(data.idCard, root->data.idCard) < 0)
 	{
 		root->pLeft = addPassenger(root->pLeft, data);
 	}
-	else if (data.idCard > root->data.idCard)
+	else if (strcmp(data.idCard, root->data.idCard) > 0)
 	{
 		root->pRight = addPassenger(root->pRight, data);
 	}
@@ -183,11 +182,11 @@ AVLTree removePassenger(AVLTree& root, passenger data)
 		return root;
 	}
 
-	if (data.idCard < root->data.idCard)
+	if (strcmp(data.idCard, root->data.idCard) < 0)
 	{
 		root->pLeft = removePassenger(root->pLeft, data);
 	}
-	else if (data.idCard > root->data.idCard)
+	else if (strcmp(data.idCard, root->data.idCard) > 0)
 	{
 		root->pRight = removePassenger(root->pRight, data);
 	}
@@ -282,7 +281,7 @@ bool findPassengerFollowID(AVLTree root, char* idCardToFind) {
 
 
 
-passengerNode* findPassenger(AVLTree root, char* idCardToFind)
+passengerNode* findPassenger(AVLTree root, const char* idCardToFind)
 {
 	if (root == NULL)
 		return NULL;
@@ -359,7 +358,7 @@ void watchRoot(AVLTree root)
 		watchRoot(root->pRight);
 	}
 }
-void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, char* idPassenger)
+void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, const char* idPassenger)
 {
 	ShowCur(true);
 	bool SaveOrNot = true;
@@ -382,6 +381,8 @@ void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, char* idP
 		{
 		case 1:// NHAP Ho
 		{
+			//gotoxy(X_Notification, Y_Notification + 2);
+			//std::cout << "Ordinal: " << ordinal;
 			ConstraintsForLetterAndSpace(first_name, MoveOrNot, ordinal, SaveOrNot, 12);
 			if (SaveOrNot == false)
 			{
@@ -395,10 +396,8 @@ void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, char* idP
 				gotoxy(X_Notification, Y_Notification + 1);
 				std::cout << "Khong bo trong";
 			}
-
 			ordinal++;
 		}
-
 		break;
 		case 2:// Nhap ten
 		{
@@ -421,8 +420,10 @@ void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, char* idP
 			ConstraintForOnlyGender(gender, MoveOrNot, ordinal, SaveOrNot, 12);
 			if (SaveOrNot == false)
 			{
+				
 				RemoveFormComplete();
 				return;
+				//continue;
 			}
 			// 0 la nu , 1 la nam
 			if (gender == -1)
@@ -445,13 +446,13 @@ void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, char* idP
 			StandardName(p.firstname);
 			StandardName(p.lastName);
 			p.gender = gender;
-
 			addPassenger(root, p);
 
 			gotoxy(X_Notification, Y_Notification);
 			std::cout << " Thong Bao ";
 			gotoxy(X_Notification, Y_Notification + 1);
-			std::cout << " Dat ve thanh cong !!!";
+			std::cout << " Dat ve thanh cong !!!"<<endl;
+			system("pause");
 			RemoveNotification();
 			RemoveFormComplete();
 			return;
@@ -790,7 +791,7 @@ void bookTicket(AVLTree& root)
     std::cout << "Notice: Ticket with red is booked!!!!";
 
     while (true) {
-        system("color 0E");
+        //system("color 0E");
         int ChoosenTicket = chooseTicket(WatchingFlight->data);
 
         if (ChoosenTicket == -1) return;
@@ -800,8 +801,8 @@ void bookTicket(AVLTree& root)
 
         gotoxy(X_TitlePage + 30, Y_TitlePage + 3);
         system("color 0E");
-        std::cout << "Plaese enter CMND ->";
-        CreateForm(ContentPassenger, 1, 2, 30);
+        std::cout << "Plaese enter IDCard ->";
+        CreateForm(ContentPassenger, 1, 2, 27);
         ShowCur(true);
         ConstraintForOnlyChar(IDHanhKhach, MoveOrNot, ordinal, SaveOrNot, 12);
         if (SaveOrNot == false)
@@ -836,13 +837,13 @@ void bookTicket(AVLTree& root)
         /*Khong tim ra*/
         if (target == -1)
         {
-            passengerNode* tempora = findPassenger(root, const_cast<char*>(IDHanhKhach.c_str()));
+            passengerNode* tempora = findPassenger(root, IDHanhKhach.c_str());
             /*Neu chua ton tai thi nhap moi*/
             if (tempora == NULL) {
                 CreateForm(ContentPassenger, 1, sizeof(ContentPassenger) / sizeof(string), 27);
                 gotoxy(X_Add + 12, 0 * 3 + Y_Add);
                 std::cout << IDHanhKhach;
-                inputPassenger(root, false, false, const_cast<char*>(IDHanhKhach.c_str()));
+                inputPassenger(root, false, false, IDHanhKhach.c_str());
                 nPassenger++;
             }
             Ticket AddingTicket;

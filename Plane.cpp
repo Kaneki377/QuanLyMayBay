@@ -216,9 +216,9 @@ void inputPlane(planeList& pl, bool EditedOrNot,bool DeleteOrNot)
 				cout << " Input Required! ";
 				break;
 			}
-			if (nRow < 20) {
+			if (nRow < 10) {
 				gotoxy(X_Notification, Y_Notification + 1);
-				cout << " Row must be >= 20";
+				cout << " Row must be >= 10";
 				break;
 			}
 			index++;
@@ -237,9 +237,9 @@ void inputPlane(planeList& pl, bool EditedOrNot,bool DeleteOrNot)
 				cout << " Input Required! ";
 				break;
 			}
-			if (nCol < 5) {
+			if (nCol < 2) {
 				gotoxy(X_Notification, Y_Notification + 1);
-				cout << " Col must be >= 5";
+				cout << " Col must be >= 2";
 				break;
 			}
 			index++;

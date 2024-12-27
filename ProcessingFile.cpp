@@ -202,14 +202,11 @@ void readPassengerFromFile(AVLTree& root)
 	filein.open("PassengerList.TXT", ios_base::in);
 
 	string temp;
-
 	char lot[50];
-
-	//DisplayForWatchOnly(ContentPassenger,sizeof(ContentPassenger)/sizeof(string) );
+	//DisplayForWatchOnly(ContentPassenger, sizeof(ContentPassenger) / sizeof(string));
 
 	if (filein.is_open())
 	{
-
 		filein >> nPassenger;
 		for (int i = 0; i < nPassenger; i++)
 		{
@@ -217,7 +214,6 @@ void readPassengerFromFile(AVLTree& root)
 			getline(filein, temp);
 
 			filein >> P.idCard;
-
 			filein >> P.firstname;
 			filein >> lot;
 
@@ -234,15 +230,11 @@ void readPassengerFromFile(AVLTree& root)
 				filein >> P.gender;
 			}
 
-			filein >> P.booked;
-
-			//cout << P.Ten << "- " << P.GioiTinh << " - "<< P.CMND<<endl;
+			//filein >> P.booked; // Read the booked field
+			//cout << P.lastName << "- " << P.gender << " - "<< P.idCard<<endl;
 			//system("pause");
 
 			root = addPassenger(root, P);
-
-
-			//OnlySeePassengerListPerPage(P,0);
 
 		}
 	}
@@ -250,14 +242,16 @@ void readPassengerFromFile(AVLTree& root)
 	filein.close();
 }
 
+
 /*save 1 hanh khach*/
 void saveOnePassenger(AVLTree& root, ofstream& fileout)
 {
+	
 	fileout << root->data.idCard << endl;
 	fileout << root->data.firstname << endl;
 	fileout << root->data.lastName << endl;
 	fileout << root->data.gender << endl;
-	fileout << "0" << endl;//book ve hay chua
+	//fileout << root->data.booked << endl; // Save the actual value of booked
 }
 
 void savePassengerList(AVLTree& root, ofstream& fileout)

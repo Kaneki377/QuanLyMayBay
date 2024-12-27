@@ -410,8 +410,6 @@ void ConstraintForOnlyGender(int& result, bool& MoveOrNot, int& ordinal, bool& S
 	}// while(true)
 }
 
-
-
 /*Chuan hoa chuoi string ta nhap vao*/
 void StandardName(char* a)
 {

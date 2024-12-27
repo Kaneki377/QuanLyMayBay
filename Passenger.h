@@ -10,7 +10,7 @@ struct Passenger
 	char firstname[20];
 	char lastName[10];
 	int gender;// 1 la nam , 0 la nu
-	bool booked;// kiem tra xem da mua ve chua
+	//bool booked;// kiem tra xem da mua ve chua
 };
 typedef struct Passenger passenger;
 
@@ -35,11 +35,11 @@ AVLTree addPassenger(AVLTree& root, passenger data);
 AVLTree minValuePassenger(AVLTree root);
 AVLTree removePassenger(AVLTree& root, passenger data);
 bool findPassengerFollowID(AVLTree root, char* idCardToFind);
-passengerNode* findPassenger(AVLTree root, char* idCardToFind);
+passengerNode* findPassenger(AVLTree root, string idCardToFind);
 void showPassenger(passenger P, int position);
 void showListPassengerPerPage(AVLTree root, int beginIndex);
 //void changePassengerMenuManagePerPage(AVLTree root);
-void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, char* idPassenger);
+void inputPassenger(AVLTree& root, bool editedOrNot, bool deleteOrNot, string idPassenger);
 void seePassengerList(AVLTree root);
 void cancelFlightTicket(AVLTree root);
 void bookTicket(AVLTree& root);

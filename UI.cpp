@@ -487,10 +487,9 @@ void CenterMenu()
 		case MaxItem:
 			writeFlightToFile(fList);
 			savePassengerToFile(root);
-			system("color 0E");
+			//system("color 0E");
 			Exit = true;// xac nhan thoat
 			system("cls");
-			//ThankYouAndGoodBye();
 			break;
 		}
 	}
